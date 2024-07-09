@@ -1,10 +1,10 @@
 
-CC = cc -Wall -Wextra -Werror -g -fsanitize=address
+CC = cc -g -fsanitize=address
 
 NAME = cub3d
 MLX_NAME = libmlx42.a
 MLX_FLAGS = -Iinclude -lglfw -L"/Users/emagueri/.brew/opt/glfw/lib/"
-SRC = main.c
+SRC = main.c draw_objects.c
 OBJ = $(SRC:.c=.o)
 
 
