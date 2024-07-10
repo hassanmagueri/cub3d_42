@@ -3,5 +3,9 @@
         "cub3d.h": "c",
         "mlx42.h": "c",
         "stdio.h": "c"
-    }
+    },
+    "cSpell.words": [
+        "xinc",
+        "Yinc"
+    ]
 }

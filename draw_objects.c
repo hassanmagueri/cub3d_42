@@ -6,31 +6,34 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:46 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/09 12:15:56 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/10 10:41:36 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./cub3d.h"
 
-mlx_image_t	*draw_line(t_mlx *mlx, t_point p1, t_point p2, int color)
+mlx_image_t	*draw_line(t_data *data, t_point p1, t_point p2, int color)
 {
 	mlx_image_t *line;
 	int i;
-	int dx = abs(p1.x - p2.x);
-	int dy = abs(p1.y - p2.y);
-	int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
-	float Xinc = dx / (float)steps;
-	float Yinc = dy / (float)steps;
+	float dx = fabs(p1.x - p2.x);
+	float dy = fabs(p1.y - p2.y);
+	int steps = fabs(dx) > fabs(dy) ? fabs(dx) : fabs(dy);
+	float xinc = dx / (float)steps;
+	float yinc = dy / (float)steps;
 
 	i = 0;
-	line = mlx_new_image(mlx->mlx, dx * dx / 2, dy * dy / 2 + 1);
+	line = mlx_new_image(data->mlx, dx * dx, dy * dy);
 	float X = p1.x;
 	float Y = p1.y;
+
 	for (int i = 0; i <= steps; i++)
 	{
+		printf("x: %f\n", X);
+		printf("y: %f\n", Y);
 		mlx_put_pixel(line, X, Y, color);
-		X += Xinc;
-		Y += Yinc;
+		X += xinc;
+		Y += yinc;
 	}
 	return (line);
 }
@@ -44,7 +47,7 @@ t_point	new_point(int x, int y)
 	return p;
 }
 
-mlx_image_t	*draw_circle(t_mlx *mlx, int radius, int color)
+mlx_image_t	*draw_circle(t_data *data, int radius, int color)
 {
 	mlx_image_t *circle;
 	t_point center;
@@ -52,7 +55,7 @@ mlx_image_t	*draw_circle(t_mlx *mlx, int radius, int color)
 	int y;
 
 	center = new_point(radius, radius);
-	circle = mlx_new_image(mlx->mlx, radius * 2, radius * 2);
+	circle = mlx_new_image(data->mlx, radius * 2, radius * 2);
 	x = 0;
 	while (x < (radius * 2))
 	{
@@ -68,14 +71,14 @@ mlx_image_t	*draw_circle(t_mlx *mlx, int radius, int color)
 	return circle;
 }
 
-mlx_image_t	*draw_react(t_mlx *mlx, t_point p, int color)
+mlx_image_t	*draw_react(t_data *data, t_point p, int color)
 {
 	mlx_image_t *rect;
 	int i;
 	int j;
 
 	i = 1;
-	rect = mlx_new_image(mlx->mlx, p.width, p.height);
+	rect = mlx_new_image(data->mlx, p.width, p.height);
 	while (i < p.height - 1)
 	{
 		j = 1;
