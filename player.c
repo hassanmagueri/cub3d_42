@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:51:11 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/13 09:50:59 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/13 17:10:07 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_player new_player(t_data *data)
 {
 	t_player player;
 
-	player.img = mlx_new_image(data->mlx, TILE_SIZE * 5, TILE_SIZE * 5);
+	player.img = mlx_new_image(data->mlx, TILE_SIZE * 20, TILE_SIZE * 20);
 	player.x = player.img->width / 2;
 	player.y = player.img->height / 2;
 	player.angle = degtorad(DEG);
@@ -41,7 +41,7 @@ t_player new_player(t_data *data)
 	player.rotation_speed = 3;
 	player.walk_direction = 0;
 	player.move_speed = 3;
-	player.radius = 160;
+	player.radius = 150;
 	data->player = player;
 	return player;
 }
@@ -80,12 +80,15 @@ int draw_player(t_data *data, t_point point_image)
 {
 	mlx_image_t	*img;
 	int			radius;
+	t_player player;
 
+	player = data->player;
 	radius = 8;
 	img = data->player.img;
-	draw_circle(data, radius, 0xFF0000FF, img);
+	t_circle c = new_circle(player.x, player.y, 8, 0xFF0000FF);
+	draw_circle(c, img);
 	create_vector_player(data);
-	mlx_image_to_window(data->mlx, img, point_image.x, point_image.y);
+	mlx_image_to_window(data->mlx, img, 0, 0);
 	data->player_img = img;
 	return (1);
 }
@@ -113,7 +116,7 @@ int	update_player(t_data *data)
 	printf("angle %f\n", data->player.angle);
 	data->player.angle += angle_rotate;
 	new_x = lround(x + (cos(data->player.angle) * move_step));
-	new_y = lround(y + (sin(data->player.angle) * move_step));	
+	new_y = lround(y + (sin(data->player.angle) * move_step));
 	printf("old x : %d\n", x);
 	printf("old y : %d\n", y);
 	printf("new x : %d\n", new_x);

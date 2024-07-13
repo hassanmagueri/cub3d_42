@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/13 09:50:18 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/13 17:06:50 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,22 @@ typedef struct s_map
 	
 } t_map;
 
+typedef struct s_rect
+{
+	int x;
+	int y;
+	int side;
+	int color;
+}t_rect;
+
+typedef struct s_circle
+{
+	int x;
+	int y;
+	int radius;
+	int color;
+}t_circle;
+
 
 typedef struct s_player
 {
@@ -61,9 +77,11 @@ typedef struct s_data
 
 // ===================== draw objects =====================
 t_point		new_point(int x, int y);
-int			draw_circle(t_data *data, int radius, int color, mlx_image_t *image);
+t_rect		new_rect(int x, int y, int side, int color);
+t_circle	new_circle(int x, int y, int radius, int color);
+int			draw_circle(t_circle circle, mlx_image_t *image);
 int			draw_line(t_data *data, t_point p1, t_point p2, int color, mlx_image_t *image);
-int			draw_react(t_data *data, t_point p, int color,mlx_image_t *image);
+int			draw_react(t_rect rect, mlx_image_t *image);
 
 // ================== player object ==================
 t_player	new_player(t_data *data);

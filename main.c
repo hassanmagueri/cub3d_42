@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/13 08:23:49 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/13 16:55:04 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,9 @@ int render_map(t_data *data)
 	p.y = 0;
 	p.width = TILE_SIZE;
 	p.height = TILE_SIZE;
-	mlx_image_t *rect_img = mlx_new_image(data->mlx, TILE_SIZE ,TILE_SIZE);
+	mlx_image_t *rect_img = mlx_new_image(data->mlx, TILE_SIZE * 20,TILE_SIZE * 20);
 	data->player = new_player(data);
 	mlx_image_t *player_img = data->player.img;
-	draw_react(data, p, 0xFFFFFFFF, rect_img);
 	data->player.img = player_img;
 	while (i < 12)
 	{
@@ -81,7 +80,10 @@ int render_map(t_data *data)
 		while (j < 14)
 		{
 			if (data->grid[i][j] == '1')
-				mlx_image_to_window(data->mlx, rect_img, j * TILE_SIZE, i * TILE_SIZE);
+			{
+				t_rect r = new_rect(i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, 0xFFFFFFFF);
+				draw_react(r, rect_img);
+			}
 			if (data->grid[i][j] == 'P')
 			{
 				x = (j * TILE_SIZE) + TILE_SIZE / 2 - (player_img->width / 2) + radius;
@@ -91,6 +93,7 @@ int render_map(t_data *data)
 		}
 		i++;
 	}
+	mlx_image_to_window(data->mlx, rect_img,0, 0);
 	draw_player(data, new_point(x, y));
 	return (1);
 }
@@ -113,7 +116,7 @@ int32_t main(void)
 		"10110101010011",
 		"11111111111111"
 		};
-	data.mlx = mlx_init(WIDTH, HEIGHT, "cub3D", false);
+	data.mlx = mlx_init(WIDTH * 2, HEIGHT * 2, "cub3D", false);
 	data.grid = grid;
 	render_map(&data);
 	// mlx_image_t *img = draw_line(&data, new_point(0, 0), new_point(100, 100), 0xB54E1AFF);
