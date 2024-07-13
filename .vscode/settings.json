@@ -2,7 +2,10 @@
     "files.associations": {
         "cub3d.h": "c",
         "mlx42.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "parse.h": "c",
+        "get_next_line.h": "c",
+        "unistd.h": "c"
     },
     "cSpell.words": [
         "degtorad",
