@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/13 17:12:33 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/13 19:32:16 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ typedef struct s_circle
 
 typedef struct s_player
 {
-	int	x;
-	int	y;
+	double	x;
+	double	y;
 	double angle;
 	double rotation_angle; // -1 1
 	int rotation_speed;
@@ -76,7 +76,7 @@ typedef struct s_data
 } t_data;
 
 // ===================== draw objects =====================
-t_point		new_point(int x, int y);
+t_point		new_point(double x, double y);
 t_rect		new_rect(int x, int y, int side, int color);
 t_circle	new_circle(int x, int y, int radius, int color);
 int			draw_circle(t_circle circle, mlx_image_t *image);
@@ -84,7 +84,7 @@ int			draw_line(t_data *data, t_point p1, t_point p2, int color, mlx_image_t *im
 int			draw_react(t_rect rect, mlx_image_t *image);
 
 // ================== player object ==================
-t_player	new_player(t_data *data);
+t_player	new_player(t_data *data, int x, int y);
 int			draw_player(t_data *data, t_point point_image);
 int			create_vector_player(t_data *data);
 int			update_player(t_data *data);

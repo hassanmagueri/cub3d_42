@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:46 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/13 17:02:36 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/13 20:37:08 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int draw_line(t_data *data, t_point p1, t_point p2, int color, mlx_image_t *imag
 	return (1);
 }
 
-t_point	new_point(int x, int y)
+t_point	new_point(double x, double y)
 {
 	t_point p;
 
