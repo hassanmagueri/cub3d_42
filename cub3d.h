@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/13 19:32:16 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/14 10:23:36 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_player
 typedef struct s_data
 {
 	char		(*grid)[14];
+	// int			;
 	mlx_t		*mlx;
 	t_player	player;
 	mlx_image_t	*player_img;

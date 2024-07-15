@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:51:11 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/14 09:01:02 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/15 10:35:50 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,19 @@ int low(int n1, int n2)
 	if (n2 < n1)
 		n1 = n2;
 	return n1;
+}
+
+int xtoj(int x)
+{
+	int j = x / 64;
+	printf("j: %d\n", j);
+	return (x / 64);
+}
+int ytoi(int y)
+{
+	int i = y / 64;
+	printf("i: %d\n", i);
+	return (y / 64);
 }
 
 t_player new_player(t_data *data, int x, int y)
@@ -93,27 +106,34 @@ int draw_player(t_data *data, t_point point_image)
 	return (1);
 }
 
-void	ft_reset_img(mlx_image_t *img)
+void	reset_img(mlx_image_t *img)
 {
 	for (int i = 0; i < img->height; i++)
 		for (int j = 0; j < img->width; j++)
 			mlx_put_pixel(img,j,i, 0);	
 }
 
+// t_point translate_to_index(t_point p)
+// {
+// 	t_point res;
+
+	
+// }
+
 // int	update_player(t_data *data, t_player player_ins)
 int	update_player(t_data *data)
 {
-	double			x,y;
-	double			new_x,new_y;
 	t_player	*player;
+	double		new_x,new_y;
+	double		angle_rotate;
+	double		walk_inside;
 
 	player = &data->player;
-	x = player->x;
-	y = player->y;
-	ft_reset_img(player->img);
-	double angle_rotate = player->rotation_angle * player->rotation_speed;
+	printf("x: %f, y: %f\n", player->x, player->y);
+	reset_img(player->img);
+	angle_rotate = player->rotation_angle * player->rotation_speed;
 	player->angle += angle_rotate;
-	double walk_inside = 0;
+	walk_inside = 0;
 	if (abs(player->walk_direction) == 2)
 	{
 		player->walk_direction /= 2;
@@ -122,8 +142,12 @@ int	update_player(t_data *data)
 	int move_step = player->walk_direction * 3;
 	new_x = player->x + (cos(player->angle + walk_inside) * move_step);
 	new_y = player->y + (sin(player->angle + walk_inside) * move_step);
-	player->x = new_x;
-	player->y = new_y;
+	printf("cub type: %c\n", data->grid[ytoi(new_y)][xtoj(new_x + 5)]);
+	if (data->grid[ytoi(new_y + 10)][xtoj(new_x + 10)] != '1')
+	{
+		player->x = new_x;
+		player->y = new_y;
+	}
 	draw_player(data, new_point(new_x, new_y));
 	player->walk_direction = 0;
 	player->rotation_angle = 0;
