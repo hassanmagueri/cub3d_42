@@ -430,10 +430,11 @@ void parse_map(t_data *data)
     i = 0;
     while (data->map[i])
     {
-        line = ft_strtrim(data->map[i], " ");
+        if (data->map[i][0])
+            line = ft_strtrim(data->map[i], " ");
         if (validate_char(line[0]))
             ft_putendl_fd_color("Error\nInvalid character", 2, RED);
-        if (validate_char(line[ft_strlen(line)]))
+        if (validate_char(line[ft_strlen(line) - 1]))
             ft_putendl_fd_color("Error\nInvalid character", 2, RED);
         i++;
     }
@@ -479,8 +480,89 @@ void parse_map(t_data *data)
         data->map[i] = line;
         i++;
     }
-    i = 0;
+    int x = 0;
+    int y = 0;
+    while (data->map[y])
+    {
+        x = 0;
+        while (data->map[y][x])
+        {
+            if (data->map[y][x] == '0')
+            {
+                if (data->map[y][x + 1] == '$' || data->map[y][x - 1] == '$' || data->map[y + 1][x] == '$' || data->map[y - 1][x] == '$')
+                    ft_putendl_fd_color("Error\nInvalid map - adjacent to '0' is a space", 2, RED);
+            }
+            x++;
+        }
+        y++;
+    }
+    x = 0;
+    y = 0;
+    int count = 0;
+    while (data->map[y])
+    {
+        x = 0;
+        while (data->map[y][x])
+        {
+            if (data->map[y][x] != '$' && data->map[y][x] != '0' && data->map[y][x] != '1' && data->map[y][x] != 'N' && data->map[y][x] != 'S' && data->map[y][x] != 'E' && data->map[y][x] != 'W')
+                ft_putendl_fd_color("Error\nInvalid character in map", 2, RED);
+            if (data->map[y][x] == 'N' || data->map[y][x] == 'S' || data->map[y][x] == 'W' || data->map[y][x] == 'E')
+                count++;
+            x++;
+        }
+        y++;
+    }
+    if (count != 1)
+        ft_putendl_fd_color("Error\nMap must contain exactly one start position ('N', 'S', 'E', or 'W')", 2, RED);
 }
+void init_clrs_dirs(t_data *data)
+{
+    int i;
+
+    i = 0;
+    data->floor.red = 0;
+    data->floor.green = 0;
+    data->floor.blue = 0;
+    data->ceiling.red = 0;
+    data->ceiling.green = 0;
+    data->ceiling.blue = 0;
+    while (data->dirs[i])
+    {
+        char **out = ft_split(data->dirs[i], ' ');
+        if (!out)
+            ft_putendl_fd_color("Error\nmalloc failure", 2, RED);
+        if (!ft_strcmp(out[0], "NO"))
+            data->NO = out[1];
+        else if (!ft_strcmp(out[0], "SO"))
+            data->SO = out[1];
+        else if (!ft_strcmp(out[0], "WE"))
+            data->WE = out[1];
+        else
+            data->EA = out[1];
+        i++;
+    }
+    i = 0;
+    while (data->clrs[i])
+    {
+        char *clr = ft_strtrim(data->clrs[i], " ");
+
+        char **clrs = ft_split(clr + 1, ',');
+        if (clr[0] == 'F')
+        {
+            data->floor.red = ft_atoi(clrs[0]);
+            data->floor.green = ft_atoi(clrs[1]);
+            data->floor.blue = ft_atoi(clrs[2]);
+        }
+        else if (clr[0] == 'C')
+        {
+            data->ceiling.red = ft_atoi(clrs[0]);
+            data->ceiling.green = ft_atoi(clrs[1]);
+            data->ceiling.blue = ft_atoi(clrs[2]);
+        }
+        i++;
+    }
+}
+
 int main()
 {
     t_data data;
@@ -490,4 +572,12 @@ int main()
     validate_all_dirs(&data);
     validate_colors(&data);
     parse_map(&data);
+    init_clrs_dirs(&data);
+    printf("%d\n", data.floor.red);
+    printf("%d\n", data.floor.green);
+    printf("%d\n", data.floor.blue);
+    puts("=========================");
+    printf("%d\n", data.ceiling.red);
+    printf("%d\n", data.ceiling.green);
+    printf("%d\n", data.ceiling.blue);
 }

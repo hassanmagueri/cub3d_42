@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:12:02 by belguabd          #+#    #+#             */
-/*   Updated: 2024/07/13 20:00:40 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/07/15 10:29:39 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,25 @@
 #define COLORS_H
 #define RED "\033[31m"
 #endif
+typedef struct t_colors
+{
+    int red;
+    int green;
+    int blue;
+} t_clr;
 
 typedef struct s_data
 {
+    char *NO;
+    char *SO;
+    char *WE;
+    char *EA;
     char **map_data;
     char **dirs;
     char **clrs;
     char **map;
-    char **top_map;
-    
+    t_clr floor;
+    t_clr ceiling;
 } t_data;
 
 int ft_strcmp(char *str1, char *str2);
