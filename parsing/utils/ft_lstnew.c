@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/08 02:37:25 by belguabd          #+#    #+#             */
-/*   Updated: 2024/07/13 21:09:32 by belguabd         ###   ########.fr       */
+/*   Created: 2023/11/11 23:17:56 by belguabd          #+#    #+#             */
+/*   Updated: 2024/07/13 09:24:00 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "../parse.h"
 
-# include <unistd.h>
-# include <fcntl.h>
-# include <limits.h>
-# include <stdlib.h>
-# include <stdbool.h>
+t_data	*ft_lstnew(void *content)
+{
+	t_data	*newstr;
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 44
-# endif
-
-char	*get_next_line(int fd);
-size_t	ft_strlen(const char *s);
-char	*ft_strdup(const char *s1);
-char	*ft_strjoin(char *line, char *buffer);
-#endif
+	newstr = (t_data *)malloc(sizeof(t_data));
+	if (!newstr)
+		return (NULL);
+	newstr->content = content;
+	newstr->next = NULL;
+	return (newstr);
+}

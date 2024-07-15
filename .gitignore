@@ -1,2 +1,5 @@
 .vscode/
 parsing/libft/
+parsing/utils.c
+parsing/txt.txt
+draw.tldr
