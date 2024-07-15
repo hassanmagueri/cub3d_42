@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/10 10:28:13 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/14 08:52:03 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,50 @@ int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
 	return (r << 24 | g << 16 | b << 8 | a);
 }
 
+// void ft_
+
 void	ft_hook(void *param)
 {
-	t_data *mlx = param;
-	mlx_image_t *player;
+	t_data *data = param;
+	t_player player;
 
-	player = mlx->player.img;
-	if (mlx_is_key_down(mlx->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(mlx->mlx);
-	if (mlx_is_key_down(mlx->mlx, MLX_KEY_UP))
-		player->instances[0].y -= 5;
-	if (mlx_is_key_down(mlx->mlx, MLX_KEY_DOWN))
-		player->instances[0].y += 5;
-	if (mlx_is_key_down(mlx->mlx, MLX_KEY_LEFT))
-		player->instances[0].x -= 5;
-	if (mlx_is_key_down(mlx->mlx, MLX_KEY_RIGHT))
-		player->instances[0].x += 5;
+	player = data->player;
+	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(data->mlx);
+	if (mlx_is_key_down(data->mlx, MLX_KEY_S) || mlx_is_key_down(data->mlx, MLX_KEY_DOWN))
+	{
+		data->player.walk_direction = 1;
+		update_player(data);
+	}
+	if (mlx_is_key_down(data->mlx, MLX_KEY_W) || mlx_is_key_down(data->mlx, MLX_KEY_UP))
+	{
+		data->player.walk_direction = -1;
+		update_player(data);
+	}
+	if (mlx_is_key_down(data->mlx, MLX_KEY_D))
+	{
+		data->player.walk_direction = -2;
+		update_player(data);
+	}
+	if (mlx_is_key_down(data->mlx, MLX_KEY_A))
+	{
+		data->player.walk_direction = 2;
+		update_player(data);
+	}
+	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
+	{
+		data->player.rotation_angle = degtorad(1);
+		update_player(data);
+		
+	}
+	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
+	{
+		data->player.rotation_angle = degtorad(-1);
+		update_player(data);
+	}
+	// 	player->instances[0].x -= 1;
+	// if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
+	// 	player->instances[0].x += 1;
 }
 
 int render_map(t_data *data)
@@ -42,12 +70,13 @@ int render_map(t_data *data)
 
 	t_point p;
 	int x, y;
+	int radius = 8;
 	p.x = 0;
 	p.y = 0;
 	p.width = TILE_SIZE;
 	p.height = TILE_SIZE;
-	mlx_image_t *rect = draw_react(data, p, 0xFFFFFFFF);
-	mlx_image_t *player_img = draw_circle(data, 5, 0xFF0000FF);
+	mlx_image_t *rect_img = mlx_new_image(data->mlx, TILE_SIZE * 20,TILE_SIZE * 20);
+	mlx_image_t *player_img = data->player.img;
 	data->player.img = player_img;
 	while (i < 12)
 	{
@@ -55,18 +84,23 @@ int render_map(t_data *data)
 		while (j < 14)
 		{
 			if (data->grid[i][j] == '1')
-				mlx_image_to_window(data->mlx, rect, j * TILE_SIZE, i * TILE_SIZE);
+			{
+				t_rect r = new_rect(i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, 0xFFFFFFFF);
+				draw_react(r, rect_img);
+			}
 			if (data->grid[i][j] == 'P')
 			{
-				x = (j * TILE_SIZE) + TILE_SIZE / 2 - (player_img->width / 2);
-				y = (i * TILE_SIZE) + TILE_SIZE / 2 - (player_img->height / 2);
+				x = j * TILE_SIZE + TILE_SIZE / 2;
+				y = i * TILE_SIZE + TILE_SIZE / 2;
 			}
 			j++;
 		}
 		i++;
 	}
-	new_player(data, new_point(x, y), player_img);
-	mlx_image_to_window(data->mlx, player_img, x, y);
+	data->player = new_player(data, x, y);
+	mlx_image_to_window(data->mlx, rect_img,0, 0);
+	mlx_image_to_window(data->mlx, data->player.img, 0, 0);
+	draw_player(data, new_point(x, y));
 	return (1);
 }
 
@@ -82,18 +116,23 @@ int32_t main(void)
 		"10110101010011",
 		"10110001010011",
 		"10110001010011",
+		"10110101010111",
+		"10110001011P11",
+		"10110101010111",
 		"10110101010011",
-		"10110001010P11",
-		"10110101010011",
-		"10110101010011",
-		"11111111111111"};
+		"11111111111111"
+		};
 	data.mlx = mlx_init(WIDTH * 2, HEIGHT * 2, "cub3D", false);
 	data.grid = grid;
 	render_map(&data);
-	mlx_image_t *img = draw_line(&data, new_point(0, 0), new_point(731, 559), 0xFF0000FF);
-	mlx_image_to_window(data.mlx, img, 0, 0);
+	// mlx_image_t *img = draw_line(&data, new_point(0, 0), new_point(100, 100), 0xB54E1AFF);
+	// mlx_image_to_window(data.mlx, img, data.player.x, data.player.y);
+	
 	mlx_loop_hook(data.mlx, ft_hook, &data);
+
+	// mlx_image_t *img = mlx_new_image(data.mlx, 80,80);
+	// draw_line(data.mlx, new_point(0, 0), new_point(45, 5), 0XFFFFFFFF, img);
+	// mlx_image_to_window(data.mlx, img, 64,64);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);
-	return (EXIT_SUCCESS);
 }

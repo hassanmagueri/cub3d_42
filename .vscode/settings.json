@@ -8,6 +8,7 @@
         "unistd.h": "c"
     },
     "cSpell.words": [
+        "degtorad",
         "xinc",
         "Yinc"
     ]
