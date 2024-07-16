@@ -6,15 +6,16 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:46 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/13 20:37:08 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:34:04 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./cub3d.h"
 
-int draw_line(t_data *data, t_point p1, t_point p2, int color, mlx_image_t *image)
+int draw_line(t_line line, mlx_image_t *image)
 {
-	mlx_image_t *line;
+	t_point p1 = line.p1;
+	t_point p2 = line.p2;
 	int i;
 	float dx = fabs(p1.x - p2.x) == 0 ? 1 : fabs(p1.x - p2.x);
 	float dy = fabs(p1.y - p2.y) == 0 ? 1: fabs(p1.y - p2.y);
@@ -28,7 +29,7 @@ int draw_line(t_data *data, t_point p1, t_point p2, int color, mlx_image_t *imag
 
 	for (int i = 0; i <= steps; i++)
 	{
-		mlx_put_pixel(image, X, Y, color);
+		mlx_put_pixel(image, X, Y, line.color);
 		X += xinc;
 		Y += yinc;
 	}
@@ -84,7 +85,7 @@ int	draw_circle(t_circle circle, mlx_image_t *image)
 	int y;
 
 	center = new_point(image->width / 2, image->height / 2);
-	set_background(image, BACKGROUND);
+	// set_background(image, BACKGROUND);
 	// x = center.x - radius;
 	x = circle.x - circle.radius;
 	while (x < circle.x + circle.radius)

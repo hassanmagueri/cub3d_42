@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:51:11 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/15 10:35:50 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/16 02:02:20 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,21 @@ int create_vector_player(t_data *data)
 {
 	t_player player = data->player;
 	t_point p2;
+	t_line line;
 
 	p2 = new_point(
 		data->player.x + (cos(player.angle) * player.radius),
 		data->player.y + (sin(player.angle) * player.radius)
 	);
-	draw_line(data, new_point(data->player.x, data->player.y),
-				p2, 0xFFFF00FF, data->player.img);
+	line = new_line(
+			new_point(player.x, player.y),
+			p2, 0xFFFF00FF
+		);
+	draw_line(line, data->player.img);
 	return (1);
 }
 
-int draw_player(t_data *data, t_point point_image)
+int draw_player(t_data *data)
 {
 	mlx_image_t	*img;
 	int			radius;
@@ -98,7 +102,7 @@ int draw_player(t_data *data, t_point point_image)
 	player = data->player;
 	radius = 8;
 	img = data->player.img;
-	t_circle c = new_circle(point_image.x, point_image.y, 8, 0xFF0000FF);
+	t_circle c = new_circle(player.x, player.y, 8, 0xFF0000FF);
 	draw_circle(c, img);
 	create_vector_player(data);
 	// mlx_image_to_window(data->mlx, img, 0, 0);
@@ -120,6 +124,28 @@ void	reset_img(mlx_image_t *img)
 	
 // }
 
+bool is_wall(char (*map)[14], int x, int y)
+{
+	int	i;
+	int	j;
+
+	i = (y + P_RAD) / 64;
+	j = x / 64;
+	if (map[i][j] == '1')
+		return (false);
+	i = (y - P_RAD) / 64;
+	if (map[i][j] == '1')
+		return (false);
+	i = y / 64;
+	j = (x + P_RAD) / 64;
+	if (map[i][j] == '1')
+		return (false);
+	j = (x - P_RAD) / 64;
+	if (map[i][j] == '1')
+		return (false);
+	return (true);
+}
+
 // int	update_player(t_data *data, t_player player_ins)
 int	update_player(t_data *data)
 {
@@ -129,7 +155,6 @@ int	update_player(t_data *data)
 	double		walk_inside;
 
 	player = &data->player;
-	printf("x: %f, y: %f\n", player->x, player->y);
 	reset_img(player->img);
 	angle_rotate = player->rotation_angle * player->rotation_speed;
 	player->angle += angle_rotate;
@@ -142,13 +167,13 @@ int	update_player(t_data *data)
 	int move_step = player->walk_direction * 3;
 	new_x = player->x + (cos(player->angle + walk_inside) * move_step);
 	new_y = player->y + (sin(player->angle + walk_inside) * move_step);
-	printf("cub type: %c\n", data->grid[ytoi(new_y)][xtoj(new_x + 5)]);
-	if (data->grid[ytoi(new_y + 10)][xtoj(new_x + 10)] != '1')
+	if (is_wall(data->grid, new_x, new_y))
 	{
 		player->x = new_x;
 		player->y = new_y;
 	}
-	draw_player(data, new_point(new_x, new_y));
+	draw_player(data);
+	cast_rays(NULL, *player);
 	player->walk_direction = 0;
 	player->rotation_angle = 0;
 	return (1);

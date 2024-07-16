@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/14 20:26:34 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:45:25 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,6 @@ void	ft_hook(void *param)
 		data->player.rotation_angle = degtorad(-1);
 		update_player(data);
 	}
-	// 	player->instances[0].x -= 1;
-	// if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
-	// 	player->instances[0].x += 1;
 }
 
 int render_map(t_data *data)
@@ -100,7 +97,8 @@ int render_map(t_data *data)
 	data->player = new_player(data, x, y);
 	mlx_image_to_window(data->mlx, rect_img,0, 0);
 	mlx_image_to_window(data->mlx, data->player.img, 0, 0);
-	draw_player(data, new_point(x, y));
+	draw_player(data);
+	cast_rays(NULL, data->player);
 	return (1);
 }
 
@@ -125,14 +123,7 @@ int32_t main(void)
 	data.mlx = mlx_init(WIDTH * 2, HEIGHT * 2, "cub3D", false);
 	data.grid = grid;
 	render_map(&data);
-	// mlx_image_t *img = draw_line(&data, new_point(0, 0), new_point(100, 100), 0xB54E1AFF);
-	// mlx_image_to_window(data.mlx, img, data.player.x, data.player.y);
-	
 	mlx_loop_hook(data.mlx, ft_hook, &data);
-
-	// mlx_image_t *img = mlx_new_image(data.mlx, 80,80);
-	// draw_line(data.mlx, new_point(0, 0), new_point(45, 5), 0XFFFFFFFF, img);
-	// mlx_image_to_window(data.mlx, img, 64,64);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);
 }

@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/14 10:23:36 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/16 02:27:44 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,43 @@
 # define WIDTH  TILE_SIZE * 14
 # define HEIGHT TILE_SIZE * 12
 
+# define P_RAD 10
+
+# define RAY_RAD 100
+# define FOV 60 * (M_PI / 180)
+# define NUM_RAYS 1
+
+// ============= define colors ===========
+#define BLACK         0x000000FF
+#define WHITE         0xFFFFFFFF
+#define RED           0xFF0000FF
+#define LIME          0x00FF00FF
+#define BLUE          0x0000FFFF
+#define YELLOW        0xFFFF00FF
+#define CYAN          0x00FFFFFF
+#define MAGENTA       0xFF00FFFF
+
+// Shades of grey with full opacity
+#define DARK_GREY     0x404040FF
+#define GREY          0x808080FF
+#define LIGHT_GREY    0xC0C0C0FF
+
+// Semi-transparent colors (50% opacity)
+#define SEMI_BLACK    0x00000080
+#define SEMI_WHITE    0xFFFFFF80
+#define SEMI_RED      0xFF000080
+#define SEMI_LIME     0x00FF0080
+#define SEMI_BLUE     0x0000FF80
+#define SEMI_YELLOW   0xFFFF0080
+#define SEMI_CYAN     0x00FFFF80
+#define SEMI_MAGENTA  0xFF00FF80
+
 typedef struct s_point
 {
-	double x;
-	double y;
-	int width;
-	int height;
+	double	x;
+	double	y;
+	int		width;
+	int		height;
 } t_point;
 
 typedef struct s_map
@@ -44,7 +75,14 @@ typedef struct s_rect
 	int y;
 	int side;
 	int color;
-}t_rect;
+} t_rect;
+
+typedef struct s_line
+{
+	t_point p1;
+	t_point p2;
+	int color;
+} t_line;
 
 typedef struct s_circle
 {
@@ -52,7 +90,12 @@ typedef struct s_circle
 	int y;
 	int radius;
 	int color;
-}t_circle;
+} t_circle;
+
+typedef struct s_ray
+{
+	double ray_angle;
+} t_ray;
 
 
 typedef struct s_player
@@ -73,6 +116,7 @@ typedef struct s_data
 	// int			;
 	mlx_t		*mlx;
 	t_player	player;
+	t_ray rays[320];
 	mlx_image_t	*player_img;
 } t_data;
 
@@ -80,13 +124,14 @@ typedef struct s_data
 t_point		new_point(double x, double y);
 t_rect		new_rect(int x, int y, int side, int color);
 t_circle	new_circle(int x, int y, int radius, int color);
+t_line		new_line(t_point p1,t_point p2, int color);
 int			draw_circle(t_circle circle, mlx_image_t *image);
-int			draw_line(t_data *data, t_point p1, t_point p2, int color, mlx_image_t *image);
+int			draw_line(t_line line, mlx_image_t *image);
 int			draw_react(t_rect rect, mlx_image_t *image);
 
 // ================== player object ==================
 t_player	new_player(t_data *data, int x, int y);
-int			draw_player(t_data *data, t_point point_image);
+int			draw_player(t_data *data);
 int			create_vector_player(t_data *data);
 int			update_player(t_data *data);
 
@@ -95,6 +140,9 @@ mlx_image_t		*clear_image(mlx_t *mlx, mlx_image_t *img);
 double degtorad(int deg);
 double radtodeg(double rad);
 
-
+// ================== ray functions ==================
+t_ray	new_ray(t_player player, double ray_angle);
+int		cast_rays(t_ray *rays, t_player player);
+bool is_wall(char (*map)[14], int x, int y);
 #endif
 
