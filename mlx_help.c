@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:30:52 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/13 19:58:37 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:27:16 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,17 @@ mlx_image_t		*clear_image(mlx_t *mlx, mlx_image_t *img)
 	return (img);
 }
 
+t_line new_line(t_point p1,t_point p2, int color)
+{
+	t_line line;
+
+	line.p1.x = p1.x;
+	line.p1.y = p1.y;
+	line.p2.x = p2.x;
+	line.p2.y = p2.y;
+	line.color = color;
+	return (line);
+}
 t_rect new_rect(int x, int y, int side, int color)
 {
 	t_rect rect;
