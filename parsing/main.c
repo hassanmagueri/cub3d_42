@@ -514,6 +514,21 @@ void parse_map(t_data *data)
     }
     if (count != 1)
         ft_putendl_fd_color("Error\nMap must contain exactly one start position ('N', 'S', 'E', or 'W')", 2, RED);
+    y = 0;
+    while (data->map[y])
+    {
+        x = 0;
+        while (data->map[y][x])
+        {
+            if (data->map[y][x] == 'N' || data->map[y][x] == 'S' || data->map[y][x] == 'E' || data->map[y][x] == 'W')
+            {
+                if (data->map[y][x + 1] == '$' || data->map[y][x - 1] == '$' || data->map[y + 1][x] == '$' || data->map[y - 1][x] == '$')
+                    ft_putendl_fd_color("Error\nSpace is not surrounded by '1'", 2, RED);
+            }
+            x++;
+        }
+        y++;
+    }
 }
 void init_clrs_dirs(t_data *data)
 {
@@ -545,7 +560,8 @@ void init_clrs_dirs(t_data *data)
     while (data->clrs[i])
     {
         char *clr = ft_strtrim(data->clrs[i], " ");
-
+        if (clr[ft_strlen(clr) - 1] == ',')
+            ft_putendl_fd_color("Error\nInvalid colors", 2, RED);
         char **clrs = ft_split(clr + 1, ',');
         if (clr[0] == 'F')
         {
