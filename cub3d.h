@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/16 02:27:44 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:01:16 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CUB3D_H
 # include <stdio.h>
 # include <unistd.h>
+# include <string.h>
 # include <stdlib.h>
 # include <math.h>
 # include <stdbool.h>
@@ -29,7 +30,7 @@
 
 # define RAY_RAD 100
 # define FOV 60 * (M_PI / 180)
-# define NUM_RAYS 1
+# define NUM_RAYS 100
 
 // ============= define colors ===========
 #define BLACK         0x000000FF
@@ -141,8 +142,8 @@ double degtorad(int deg);
 double radtodeg(double rad);
 
 // ================== ray functions ==================
-t_ray	new_ray(t_player player, double ray_angle);
-int		cast_rays(t_ray *rays, t_player player);
+t_ray new_ray(t_data *data, double ray_angle);
+int cast_rays(t_ray *rays, t_data *data);
 bool is_wall(char (*map)[14], int x, int y);
 #endif
 

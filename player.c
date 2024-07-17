@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:51:11 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/16 02:02:20 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/17 12:45:26 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_player new_player(t_data *data, int x, int y)
 	player.y = y;
 	player.angle = degtorad(DEG);
 	player.rotation_angle = 0;
-	player.rotation_speed = 3;
+	player.rotation_speed = 1;
 	player.walk_direction = 0;
 	player.move_speed = 3;
 	player.radius = 150;
@@ -97,7 +97,7 @@ int draw_player(t_data *data)
 {
 	mlx_image_t	*img;
 	int			radius;
-	t_player player;
+	t_player	player;
 
 	player = data->player;
 	radius = 8;
@@ -129,21 +129,30 @@ bool is_wall(char (*map)[14], int x, int y)
 	int	i;
 	int	j;
 
-	i = (y + P_RAD) / 64;
-	j = x / 64;
-	if (map[i][j] == '1')
-		return (false);
-	i = (y - P_RAD) / 64;
-	if (map[i][j] == '1')
-		return (false);
+	
 	i = y / 64;
-	j = (x + P_RAD) / 64;
+	j = x / 64;
+	if (i < 0 || j < 0 || i >= 12 || j >= 14)
+		return false;
 	if (map[i][j] == '1')
-		return (false);
-	j = (x - P_RAD) / 64;
-	if (map[i][j] == '1')
-		return (false);
-	return (true);
+		return (true);
+	return (false);
+	// j = x / 64;
+	// i = (y + P_RAD) / 64;
+	// j = x / 64;
+	// if (map[i][j] == '1')
+	// 	return (false);
+	// i = (y - P_RAD) / 64;
+	// if (map[i][j] == '1')
+	// 	return (false);
+	// i = y / 64;
+	// j = (x + P_RAD) / 64;
+	// if (map[i][j] == '1')
+	// 	return (false);
+	// j = (x - P_RAD) / 64;
+	// if (map[i][j] == '1')
+	// 	return (false);
+	// return (true);
 }
 
 // int	update_player(t_data *data, t_player player_ins)
@@ -167,13 +176,13 @@ int	update_player(t_data *data)
 	int move_step = player->walk_direction * 3;
 	new_x = player->x + (cos(player->angle + walk_inside) * move_step);
 	new_y = player->y + (sin(player->angle + walk_inside) * move_step);
-	if (is_wall(data->grid, new_x, new_y))
+	if (!is_wall(data->grid, new_x, new_y))
 	{
 		player->x = new_x;
 		player->y = new_y;
 	}
 	draw_player(data);
-	cast_rays(NULL, *player);
+	cast_rays(NULL, data);
 	player->walk_direction = 0;
 	player->rotation_angle = 0;
 	return (1);

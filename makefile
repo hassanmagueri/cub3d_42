@@ -8,13 +8,13 @@ SRC = main.c draw_objects.c player.c mlx_help.c ray.c
 OBJ = $(SRC:.c=.o)
 
 
-all: $(NAME) clean # !!!
+all: $(NAME) # !!!
 
 $(NAME): $(OBJ) cub3d.h
 	$(CC) $(MLX_FLAGS) $(MLX_NAME) $(OBJ) -o $(NAME)
 
 %.o: %.c cub3d.h
-	$(CC) -c $< -o $@ 
+	$(CC) -c $< -o $@  
 
 clean:
 	rm -f $(OBJ)

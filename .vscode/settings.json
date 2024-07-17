@@ -5,7 +5,10 @@
         "stdio.h": "c",
         "parse.h": "c",
         "get_next_line.h": "c",
-        "unistd.h": "c"
+        "unistd.h": "c",
+        "stdbool.h": "c",
+        "math.h": "c",
+        "stdlib.h": "c"
     },
     "cSpell.words": [
         "degtorad",

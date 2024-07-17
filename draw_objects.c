@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:46 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/15 18:34:04 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/17 14:59:03 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int draw_line(t_line line, mlx_image_t *image)
 	float dx = fabs(p1.x - p2.x) == 0 ? 1 : fabs(p1.x - p2.x);
 	float dy = fabs(p1.y - p2.y) == 0 ? 1: fabs(p1.y - p2.y);
 	int steps = dx > dy ? fabs(dx) : fabs(dy);
-	float xinc = (p1.x - p2.x) / steps;
-	float yinc =  (p1.y - p2.y) / steps;
+	float xinc = (p2.x - p1.x) / steps;
+	float yinc =  (p2.y - p1.y) / steps;
 
 	i = 0;
 	float X = p1.x;
@@ -29,7 +29,8 @@ int draw_line(t_line line, mlx_image_t *image)
 
 	for (int i = 0; i <= steps; i++)
 	{
-		mlx_put_pixel(image, X, Y, line.color);
+		if (X < image->width && X >= 0 && Y >= 0 && Y < image->width)
+			mlx_put_pixel(image, X, Y, line.color);
 		X += xinc;
 		Y += yinc;
 	}
