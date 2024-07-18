@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/17 15:01:16 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/18 13:37:06 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@
 # include "MLX42.h"
 
 # define TILE_SIZE 64
-# define DEG 90
+# define DEG M_PI * 180 / M_PI
 # define BACKGROUND 0xFD42EE55
 # define WIDTH  TILE_SIZE * 14
 # define HEIGHT TILE_SIZE * 12
 
-# define P_RAD 10
+# define P_RAD 8
 
 # define RAY_RAD 100
 # define FOV 60 * (M_PI / 180)
-# define NUM_RAYS 100
+# define NUM_RAYS 1
 
 // ============= define colors ===========
 #define BLACK         0x000000FF
