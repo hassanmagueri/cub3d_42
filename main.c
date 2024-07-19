@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/17 12:33:06 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/18 12:20:17 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,9 @@ int render_map(t_data *data)
 	}
 	data->player = new_player(data, x, y);
 	mlx_image_to_window(data->mlx, data->player.img, 0, 0);
-	draw_player(data);
-	cast_rays(NULL, data);
+	// draw_player(data);
+	// cast_rays(NULL, data);
+	update_player(data);
 	return (1); 
 }
 
@@ -149,8 +150,8 @@ int32_t main(void)
 		"10110001010011",
 		"10110000010011",
 		"10110101010011",
-		"10010000P10011",
-		"10000000010011",
+		"1001P000010011",
+		"10001000010011",
 		"10000100010111",
 		"10010001011011",
 		"10110101010111",

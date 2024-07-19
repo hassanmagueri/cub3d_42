@@ -6,11 +6,13 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:10:59 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/18 12:56:47 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/07/19 11:50:32 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./cub3d.h"
+
+
 
 int cast_rays(t_ray *rays, t_data *data)
 {
