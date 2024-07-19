@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:10:59 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/18 15:11:16 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/19 11:50:32 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int cast_rays(t_ray *rays, t_data *data)
 	
 // 	int playerYd = y_rect - player.y;
 // 	// dy = (double)TILE_SIZE * 0 + playerYd;
-// 	dy = -playerYd;
+// 	dy = (double)TILE_SIZE * 0 - playerYd;
 // 	dx = dy / tan(ray_angle);
 // 	int i = 0;
 
