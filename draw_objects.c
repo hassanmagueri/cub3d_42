@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:46 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/18 15:07:04 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/20 08:30:09 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	draw_react(t_rect rect, mlx_image_t *image)
 	int j;
 	int border_with;
 
-	border_with = 0;
+	border_with = 1;
 	i = rect.x;
 	while (i < rect.x + rect.side - border_with)
 	{

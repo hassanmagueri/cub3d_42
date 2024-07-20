@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:51:11 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/18 12:20:54 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/20 09:28:47 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	reset_img(mlx_image_t *img)
 {
 	for (int i = 0; i < img->height; i++)
 		for (int j = 0; j < img->width; j++)
-			mlx_put_pixel(img,j,i, 0);	
+			mlx_put_pixel(img,j,i, 0);
 }
 
 // t_point translate_to_index(t_point p)
@@ -134,25 +134,25 @@ bool is_wall(char (*map)[14], int x, int y)
 	j = x / 64;
 	if (i < 0 || j < 0 || i >= 12 || j >= 14)
 		return false;
-	// if (map[i][j] == '1')
-	// 	return (true);
-	// return (false);
-	j = x / 64;
-	i = (y + P_RAD) / 64;
-	j = x / 64;
-	if (map[i][j] == '1')
-		return (true);
-	i = (y - P_RAD) / 64;
-	if (map[i][j] == '1')
-		return (true);
-	i = y / 64;
-	j = (x + P_RAD) / 64;
-	if (map[i][j] == '1')
-		return (true);
-	j = (x - P_RAD) / 64;
 	if (map[i][j] == '1')
 		return (true);
 	return (false);
+	// j = x / 64;
+	// i = (y + P_RAD) / 64;
+	// j = x / 64;
+	// if (map[i][j] == '1')
+	// 	return (true);
+	// i = (y - P_RAD) / 64;
+	// if (map[i][j] == '1')
+	// 	return (true);
+	// i = y / 64;
+	// j = (x + P_RAD) / 64;
+	// if (map[i][j] == '1')
+	// 	return (true);
+	// j = (x - P_RAD) / 64;
+	// if (map[i][j] == '1')
+	// 	return (true);
+	// return (false);
 }
 
 // int	update_player(t_data *data, t_player player_ins)
