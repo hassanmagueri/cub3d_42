@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/21 11:36:58 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/21 12:20:36 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 
 # define RAY_RAD 100
 # define FOV 60 * (M_PI / 180)
-# define NUM_RAYS 1
+# define NUM_RAYS 100
 
 // ============= define colors ===========
 # define BLACK         0x000000FF

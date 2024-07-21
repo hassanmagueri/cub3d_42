@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:10:59 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/21 11:37:10 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/21 12:35:43 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int cast_rays(t_ray *rays, t_data *data)
 	angle = player.angle - FOV / 2;
 	while (i < NUM_RAYS)
 	{
+		// new_ray(data, normalize_angle(angle));
 		// vertical_ray(data, normalize_angle(angle));
 		horizontal_ray(data, normalize_angle(angle));
 		angle += FOV / NUM_RAYS;
@@ -91,42 +92,35 @@ int vertical_ray(t_data *data, double ray_angle)
 }
 int horizontal_ray(t_data *data, double ray_angle)
 {
+	int 		player_tile_y;
+	int 		player_y_distance;
+	int			direction;
 	double		dy;
 	double		dx;
 	t_line		line;
 	t_player	player;
-	int player_tile_y;
-	int player_y_distance;
-
-
 
 	player = data->player;
-	int direction = -1;
+	direction = -1;
 	player_tile_y = ((((int)player.y) / TILE_SIZE)) * TILE_SIZE;
 	if (ray_angle < M_PI)
 	{
 		direction = 1;
-		player_tile_y = ((((int)player.y + 1) / TILE_SIZE)) * TILE_SIZE;
+		player_tile_y = ((((int)player.y) / TILE_SIZE) + 1) * TILE_SIZE;
 	}
 	player_y_distance = (player_tile_y - player.y) * direction;
-	dy = -player_y_distance;
-	// dy = ((double)TILE_SIZE * 0 + player_y_distance) * direction
+	dy = player_y_distance * direction;
 	dx = dy / tan(ray_angle);
-	int i = 1;
+	int i = 0;
 	while (i < 14)
 	{
-		if (is_wall(data->grid, player.x + dx,
-				player.y + dy))
+		if (is_wall(data->grid, player.x + direction + dx,
+				player.y+ direction + dy))
 			break;
 		dy = ((double)TILE_SIZE * i + player_y_distance) * direction;
 		dx = dy / tan(ray_angle);
 		i++;
 	}
-	
-	printf("player_y_distance: %d\n", player_y_distance);
-	printf("dy: %f\n", dy);
-	printf("i: %d\n", i);
-	printf("--------------------------------\n");
 	line = new_line(
 		new_point(player.x, player.y),
 		new_point(player.x + dx, player.y + dy),
@@ -152,7 +146,7 @@ int horizontal_ray(t_data *data, double ray_angle)
 // 	y_rect = (((int)player.y / TILE_SIZE)) * TILE_SIZE;
 	
 // 	int playerYd = y_rect - player.y;
-// 	// dy = playerYd;
+// 	// dy = (double)TILE_SIZE * 0 + playerYd;
 // 	dy = -playerYd;
 // 	dx = dy / tan(ray_angle);
 // 	int i = 0;
@@ -177,7 +171,7 @@ int horizontal_ray(t_data *data, double ray_angle)
 // 	return ray;
 // }
 
-// t_ray new_ray(t_data *data, double ray_angle)
+// int	new_ray(t_data *data, double ray_angle)
 // {
 // 	int			len;
 // 	double		dy;
@@ -219,5 +213,5 @@ int horizontal_ray(t_data *data, double ray_angle)
 // 		SEMI_YELLOW
 // 	);
 // 	draw_line(line, player.img);
-// 	return ray;
+// 	return 0;
 // }
