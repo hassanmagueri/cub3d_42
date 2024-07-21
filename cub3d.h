@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/21 12:20:36 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:18:57 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ typedef struct s_circle
 
 typedef struct s_ray
 {
+	double dx;
+	double dy;
 	double ray_angle;
 } t_ray;
 
@@ -146,7 +148,7 @@ double radtodeg(double rad);
 int new_ray(t_data *data, double ray_angle);
 int cast_rays(t_ray *rays, t_data *data);
 bool is_wall(char (*map)[14], int x, int y);
-int horizontal_ray(t_data *data, double ray_angle);
-int vertical_ray(t_data *data, double ray_angle);
+t_ray horizontal_ray(t_data *data, double ray_angle);
+t_ray vertical_ray(t_data *data, double ray_angle);
 #endif
 

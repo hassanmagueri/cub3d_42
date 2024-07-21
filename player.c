@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:51:11 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/21 11:48:31 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/21 20:04:20 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_player new_player(t_data *data, int x, int y)
 	player.y = y;
 	player.angle = degtorad(DEG);
 	player.rotation_angle = 0;
-	player.rotation_speed = 1;
+	player.rotation_speed = 3;
 	player.walk_direction = 0;
 	player.move_speed = 3;
 	player.radius = 150;
@@ -114,11 +114,16 @@ int draw_player(t_data *data)
 	return (1);
 }
 
-void	reset_img(mlx_image_t *img)
+mlx_image_t	*reset_img(t_data *data)
 {
-	for (int i = 0; i < img->height; i++)
-		for (int j = 0; j < img->width; j++)
-			mlx_put_pixel(img, j, i, 0);
+	
+	// mlx_delete_image(data->mlx, data->player.img);
+	// return mlx_new_image(data->mlx, WIDTH, HEIGHT);
+
+	for (int i = 0; i < data->player.img->height; i++)
+		for (int j = 0; j < data->player.img->width; j++)
+			mlx_put_pixel(data->player.img, j, i, 0);
+	return data->player.img;
 }
 
 // t_point translate_to_index(t_point p)
@@ -168,7 +173,8 @@ int	update_player(t_data *data)
 	double		walk_inside;
 
 	player = &data->player;
-	reset_img(player->img);
+	player->img =  reset_img(data);
+	// mlx_image_to_window(data->mlx, data->player.img, 0, 0);
 	angle_rotate = player->rotation_angle * player->rotation_speed;
 	player->angle += angle_rotate;
 	walk_inside = 0;
@@ -177,7 +183,7 @@ int	update_player(t_data *data)
 		player->walk_direction /= 2;
 		walk_inside = degtorad(90);
 	}
-	int move_step = player->walk_direction * 3;
+	int move_step = player->walk_direction * 5;
 	new_x = player->x + (cos(player->angle + walk_inside) * move_step);
 	new_y = player->y + (sin(player->angle + walk_inside) * move_step);
 	if (!is_wall(data->grid, new_x, new_y))
