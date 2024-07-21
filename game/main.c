@@ -201,5 +201,5 @@ int main()
     mlx_loop(data.mlx);
     mlx_terminate(data.mlx);
 
-    return EXIT_SUCCESS;
+    
 }
