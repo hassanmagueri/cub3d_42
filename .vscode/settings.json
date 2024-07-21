@@ -8,7 +8,13 @@
         "unistd.h": "c",
         "stdbool.h": "c",
         "math.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "array": "c",
+        "iterator": "c",
+        "string": "c",
+        "string_view": "c",
+        "vector": "c",
+        "complex": "c"
     },
     "cSpell.words": [
         "degtorad",

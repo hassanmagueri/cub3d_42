@@ -34,7 +34,7 @@ char *get_first_char(char *line)
     j = 0;
     new_ret = (char *)malloc(sizeof(char) * 2);
     if (!new_ret)
-        ft_putendl_fd_color("Error\nmalloc failure", 2, RED);
+        ft_putendl_fd_color("Error\nmalloc failure", 2, RED_E);
     i = 0;
     while (line[i] && line[i] == ' ')
         i++;
@@ -48,7 +48,7 @@ char *get_two_char(char *line)
     int j = 0;
     char *re_line = malloc(3);
     if (!re_line)
-        ft_putendl_fd_color("Error\nmalloc failure", 2, RED);
+        ft_putendl_fd_color("Error\nmalloc failure", 2, RED_E);
     while (line[i] && line[i] == ' ')
         i++;
     while (j < 2 && line[i])
@@ -120,7 +120,7 @@ int find_dirs(char **data)
         return (-1);
     return (0);
 }
-void validate_top_map(t_data *data)
+void validate_top_map(t_data_p *data)
 {
     int fd;
     int fd1;
@@ -129,10 +129,10 @@ void validate_top_map(t_data *data)
 
     char **top_map = (char **)malloc(sizeof(char *) * 7);
     if (!top_map)
-        ft_putendl_fd_color("Error\nmalloc failure", 2, RED);
+        ft_putendl_fd_color("Error\nmalloc failure", 2, RED_E);
     fd = open("map.cub", O_RDONLY);
     if (fd < 0)
-        ft_putendl_fd_color("Error\nOpen failure", 2, RED);
+        ft_putendl_fd_color("Error\nOpen failure", 2, RED_E);
     int i = 0;
     int j = 0;
     while (data->map_data[i])
@@ -145,11 +145,11 @@ void validate_top_map(t_data *data)
     }
     top_map[j] = NULL;
     if (find_colors(top_map))
-        ft_putendl_fd_color("Error\nInvalid top map", 2, RED);
+        ft_putendl_fd_color("Error\nInvalid top map", 2, RED_E);
     if (find_dirs(top_map))
-        ft_putendl_fd_color("Error\nInvalid top map", 2, RED);
+        ft_putendl_fd_color("Error\nInvalid top map", 2, RED_E);
 }
-int get_count_map(t_data *data, int i)
+int get_count_map(t_data_p *data, int i)
 {
     int count;
 
@@ -161,7 +161,7 @@ int get_count_map(t_data *data, int i)
     }
     return (count);
 }
-void set_map(t_data *data)
+void set_map(t_data_p *data)
 {
     int i;
     int j;
@@ -170,12 +170,12 @@ void set_map(t_data *data)
     data->dirs = (char **)malloc(sizeof(char *) * 5);
     data->clrs = (char **)malloc(sizeof(char *) * 3);
     if (!data->clrs)
-        ft_putendl_fd_color("Error\n malloc failure", 2, RED);
+        ft_putendl_fd_color("Error\n malloc failure", 2, RED_E);
     if (!data->dirs)
-        ft_putendl_fd_color("Error\n malloc failure", 2, RED);
+        ft_putendl_fd_color("Error\n malloc failure", 2, RED_E);
     int fd = open("map.cub", O_RDONLY);
     if (fd < 0)
-        ft_putendl_fd_color("Error\nopen failure", 2, RED);
+        ft_putendl_fd_color("Error\nopen failure", 2, RED_E);
     i = 0;
     j = 0;
     int z = 0;
@@ -207,7 +207,7 @@ void set_map(t_data *data)
     int count = get_count_map(data, i);
     data->map = (char **)malloc(sizeof(char *) * (count + 1));
     if (!data->map)
-        ft_putendl_fd_color("Error\nmalloc failure", 2, RED);
+        ft_putendl_fd_color("Error\nmalloc failure", 2, RED_E);
     j = 0;
     while (data->map_data[i])
     {
@@ -216,14 +216,14 @@ void set_map(t_data *data)
     }
     data->map[j] = NULL;
 }
-void load_map_data(t_data *data)
+void load_map_data(t_data_p *data)
 {
     int fd;
     char *line;
 
     fd = open("map.cub", O_RDONLY, 0666);
     if (fd < 0)
-        ft_putendl_fd_color("Error\nOpen failure", 2, RED);
+        ft_putendl_fd_color("Error\nOpen failure", 2, RED_E);
     line = get_next_line(fd);
     int count = 0;
     while (line)
@@ -234,12 +234,12 @@ void load_map_data(t_data *data)
     close(fd);
     fd = open("map.cub", O_RDONLY, 0666);
     if (fd < 0)
-        ft_putendl_fd_color("Error\nOpen failure", 2, RED);
+        ft_putendl_fd_color("Error\nOpen failure", 2, RED_E);
     data->map_data = (char **)malloc(sizeof(char *) * (count + 1));
     if (!data->map_data)
-        ft_putendl_fd_color("Error\nmalloc failure", 2, RED);
+        ft_putendl_fd_color("Error\nmalloc failure", 2, RED_E);
     int i;
-
+    
     i = 0;
     line = get_next_line(fd);
     while (line)
@@ -258,7 +258,7 @@ int get_len_dirs(char **args)
         i++;
     return (i);
 }
-void validate_all_dirs(t_data *data)
+void validate_all_dirs(t_data_p *data)
 {
     int i;
     char **out;
@@ -268,9 +268,9 @@ void validate_all_dirs(t_data *data)
     {
         out = ft_split(data->dirs[i], ' ');
         if (!out)
-            ft_putendl_fd_color("Error\nmalloc failure", 2, RED);
+            ft_putendl_fd_color("Error\nmalloc failure", 2, RED_E);
         if (get_len_dirs(out) != 2)
-            ft_putendl_fd_color("Error\nInvalid directions", 2, RED);
+            ft_putendl_fd_color("Error\nInvalid directions", 2, RED_E);
         i++;
     }
     i = 0;
@@ -281,7 +281,7 @@ void validate_all_dirs(t_data *data)
             j++;
         j += 2;
         if (data->dirs[i][j] != ' ')
-            ft_putendl_fd_color("Error\nInvalid directions", 2, RED);
+            ft_putendl_fd_color("Error\nInvalid directions", 2, RED_E);
 
         i++;
     }
@@ -349,24 +349,24 @@ void validate_color(char *clr)
 
     line = ft_strtrim(clr + 1, " ");
     if (check_comma(line))
-        ft_putendl_fd_color("Error\nInvalid color", 2, RED);
+        ft_putendl_fd_color("Error\nInvalid color", 2, RED_E);
     char **out = ft_split(line, ',');
     i = 0;
     while (out[i])
     {
         if (check_is_number(out[i]))
-            ft_putendl_fd_color("Error\nInvalid color", 2, RED);
+            ft_putendl_fd_color("Error\nInvalid color", 2, RED_E);
         i++;
     }
     i = 0;
     while (out[i])
     {
         if (ft_atoi(out[i]) > 255)
-            ft_putendl_fd_color("Error\nInvalid color (value > 255)", 2, RED);
+            ft_putendl_fd_color("Error\nInvalid color (value > 255)", 2, RED_E);
         i++;
     }
 }
-void validate_colors(t_data *data)
+void validate_colors(t_data_p *data)
 {
     int i;
     char *clr;
@@ -377,7 +377,7 @@ void validate_colors(t_data *data)
         int j = 0;
         clr = ft_strtrim(data->clrs[i], " ");
         if (clr[j + 1] != ' ')
-            ft_putendl_fd_color("Error\nInvalid colors", 2, RED);
+            ft_putendl_fd_color("Error\nInvalid colors", 2, RED_E);
         i++;
     }
     i = 0;
@@ -401,7 +401,7 @@ int validate_line(char *line)
     }
     return (0);
 }
-int get_len_map(t_data *data)
+int get_len_map(t_data_p *data)
 {
     int i;
 
@@ -416,7 +416,7 @@ int validate_char(char chr)
         return (-1);
     return (0);
 }
-void parse_map(t_data *data)
+void parse_map(t_data_p *data)
 {
     int i;
     char *line;
@@ -424,18 +424,18 @@ void parse_map(t_data *data)
     int to_find;
 
     if (validate_line(data->map[0]))
-        ft_putendl_fd_color("Error\nInvalid character", 2, RED);
+        ft_putendl_fd_color("Error\nInvalid character", 2, RED_E);
     if (validate_line(data->map[get_len_map(data) - 1]))
-        ft_putendl_fd_color("Error\nInvalid character", 2, RED);
+        ft_putendl_fd_color("Error\nInvalid character", 2, RED_E);
     i = 0;
     while (data->map[i])
     {
         if (data->map[i][0])
             line = ft_strtrim(data->map[i], " ");
         if (validate_char(line[0]))
-            ft_putendl_fd_color("Error\nInvalid character", 2, RED);
+            ft_putendl_fd_color("Error\nInvalid character", 2, RED_E);
         if (validate_char(line[ft_strlen(line) - 1]))
-            ft_putendl_fd_color("Error\nInvalid character", 2, RED);
+            ft_putendl_fd_color("Error\nInvalid character", 2, RED_E);
         i++;
     }
 
@@ -490,7 +490,7 @@ void parse_map(t_data *data)
             if (data->map[y][x] == '0')
             {
                 if (data->map[y][x + 1] == '$' || data->map[y][x - 1] == '$' || data->map[y + 1][x] == '$' || data->map[y - 1][x] == '$')
-                    ft_putendl_fd_color("Error\nInvalid map - adjacent to '0' is a space", 2, RED);
+                    ft_putendl_fd_color("Error\nInvalid map - adjacent to '0' is a space", 2, RED_E);
             }
             x++;
         }
@@ -505,7 +505,7 @@ void parse_map(t_data *data)
         while (data->map[y][x])
         {
             if (data->map[y][x] != '$' && data->map[y][x] != '0' && data->map[y][x] != '1' && data->map[y][x] != 'N' && data->map[y][x] != 'S' && data->map[y][x] != 'E' && data->map[y][x] != 'W')
-                ft_putendl_fd_color("Error\nInvalid character in map", 2, RED);
+                ft_putendl_fd_color("Error\nInvalid character in map", 2, RED_E);
             if (data->map[y][x] == 'N' || data->map[y][x] == 'S' || data->map[y][x] == 'W' || data->map[y][x] == 'E')
                 count++;
             x++;
@@ -513,7 +513,7 @@ void parse_map(t_data *data)
         y++;
     }
     if (count != 1)
-        ft_putendl_fd_color("Error\nMap must contain exactly one start position ('N', 'S', 'E', or 'W')", 2, RED);
+        ft_putendl_fd_color("Error\nMap must contain exactly one start position ('N', 'S', 'E', or 'W')", 2, RED_E);
     y = 0;
     while (data->map[y])
     {
@@ -523,14 +523,14 @@ void parse_map(t_data *data)
             if (data->map[y][x] == 'N' || data->map[y][x] == 'S' || data->map[y][x] == 'E' || data->map[y][x] == 'W')
             {
                 if (data->map[y][x + 1] == '$' || data->map[y][x - 1] == '$' || data->map[y + 1][x] == '$' || data->map[y - 1][x] == '$')
-                    ft_putendl_fd_color("Error\nSpace is not surrounded by '1'", 2, RED);
+                    ft_putendl_fd_color("Error\nSpace is not surrounded by '1'", 2, RED_E);
             }
             x++;
         }
         y++;
     }
 }
-void init_clrs_dirs(t_data *data)
+void init_clrs_dirs(t_data_p *data)
 {
     int i;
 
@@ -545,7 +545,7 @@ void init_clrs_dirs(t_data *data)
     {
         char **out = ft_split(data->dirs[i], ' ');
         if (!out)
-            ft_putendl_fd_color("Error\nmalloc failure", 2, RED);
+            ft_putendl_fd_color("Error\nmalloc failure", 2, RED_E);
         if (!ft_strcmp(out[0], "NO"))
             data->NO = out[1];
         else if (!ft_strcmp(out[0], "SO"))
@@ -561,7 +561,7 @@ void init_clrs_dirs(t_data *data)
     {
         char *clr = ft_strtrim(data->clrs[i], " ");
         if (clr[ft_strlen(clr) - 1] == ',')
-            ft_putendl_fd_color("Error\nInvalid colors", 2, RED);
+            ft_putendl_fd_color("Error\nInvalid colors", 2, RED_E);
         char **clrs = ft_split(clr + 1, ',');
         if (clr[0] == 'F')
         {
@@ -577,23 +577,4 @@ void init_clrs_dirs(t_data *data)
         }
         i++;
     }
-}
-
-int main()
-{
-    t_data data;
-    load_map_data(&data);
-    validate_top_map(&data);
-    set_map(&data);
-    validate_all_dirs(&data);
-    validate_colors(&data);
-    parse_map(&data);
-    init_clrs_dirs(&data);
-    printf("%d\n", data.floor.red);
-    printf("%d\n", data.floor.green);
-    printf("%d\n", data.floor.blue);
-    puts("=========================");
-    printf("%d\n", data.ceiling.red);
-    printf("%d\n", data.ceiling.green);
-    printf("%d\n", data.ceiling.blue);
 }
