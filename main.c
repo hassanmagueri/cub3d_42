@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/18 12:20:17 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/20 22:00:41 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,10 +123,13 @@ int render_map(t_data *data)
 				draw_react(r, map_img);
 				if (i == 0)
 					mlx_put_string(data->mlx, ft_itoa(j * TILE_SIZE), i * TILE_SIZE + TILE_SIZE / 4, j * TILE_SIZE + TILE_SIZE / 4);
+				if (j == 0)
+					mlx_put_string(data->mlx, ft_itoa(i * TILE_SIZE), i * TILE_SIZE + TILE_SIZE / 4, j * TILE_SIZE + TILE_SIZE / 4);
 			}
 			if (data->grid[i][j] == 'P')
 			{
 				x = j * TILE_SIZE + TILE_SIZE / 2;
+				// 
 				y = i * TILE_SIZE + TILE_SIZE / 2;
 			}
 			j++;
@@ -141,21 +144,21 @@ int render_map(t_data *data)
 	return (1); 
 }
 
-int32_t main(void)
+int32_t	main(void)
 {
 	t_data data;
 	char grid[][14] = {
 		"11111111111111",
 		"10110001111111",
 		"10110001010011",
-		"10110000010011",
-		"10110101010011",
-		"1001P000010011",
+		"10110000010001",
+		"10110101000011",
+		"10010000000001",
 		"10001000010011",
-		"10000100010111",
+		"10000100000101",
 		"10010001011011",
-		"10110101010111",
-		"10000101010011",
+		"101101P1000111",
+		"10000101000011",
 		"11111111111111"
 		};
 	data.mlx = mlx_init(WIDTH, HEIGHT, "cub3D", false);

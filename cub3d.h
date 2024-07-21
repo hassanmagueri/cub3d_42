@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/18 15:30:49 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/21 11:36:58 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@
 # include <unistd.h>
 # include <string.h>
 # include <stdlib.h>
+# include <float.h>
 # include <math.h>
 # include <stdbool.h>
 # include "MLX42.h"
 
 # define TILE_SIZE 64
-# define DEG M_PI * 180 / M_PI
+# define DEG 180
 # define BACKGROUND 0xFD42EE55
 # define WIDTH  TILE_SIZE * 14
 # define HEIGHT TILE_SIZE * 12
@@ -33,29 +34,29 @@
 # define NUM_RAYS 1
 
 // ============= define colors ===========
-#define BLACK         0x000000FF
-#define WHITE         0xFFFFFFFF
-#define RED           0xFF0000FF
-#define LIME          0x00FF00FF
-#define BLUE          0x0000FFFF
-#define YELLOW        0xFFFF00FF
-#define CYAN          0x00FFFFFF
-#define MAGENTA       0xFF00FFFF
+# define BLACK         0x000000FF
+# define WHITE         0xFFFFFFFF
+# define RED           0xFF0000FF
+# define LIME          0x00FF00FF
+# define BLUE          0x0000FFFF
+# define YELLOW        0xFFFF00FF
+# define CYAN          0x00FFFFFF
+# define MAGENTA       0xFF00FFFF
 
 // Shades of grey with full opacity
-#define DARK_GREY     0x404040FF
-#define GREY          0x808080FF
-#define LIGHT_GREY    0xC0C0C0FF
+# define DARK_GREY     0x404040FF
+# define GREY          0x808080FF
+# define LIGHT_GREY    0xC0C0C0FF
 
 // Semi-transparent colors (50% opacity)
-#define SEMI_BLACK    0x00000080
-#define SEMI_WHITE    0xFFFFFF80
-#define SEMI_RED      0xFF000080
-#define SEMI_LIME     0x00FF0080
-#define SEMI_BLUE     0x0000FF80
-#define SEMI_YELLOW   0xFFFF0080
-#define SEMI_CYAN     0x00FFFF80
-#define SEMI_MAGENTA  0xFF00FF80
+# define SEMI_BLACK    0x00000080
+# define SEMI_WHITE    0xFFFFFF80
+# define SEMI_RED      0xFF000080
+# define SEMI_LIME     0x00FF0080
+# define SEMI_BLUE     0x0000FF80
+# define SEMI_YELLOW   0xFFFF0080
+# define SEMI_CYAN     0x00FFFF80
+# define SEMI_MAGENTA  0xFF00FF80
 
 typedef struct s_point
 {
@@ -142,8 +143,10 @@ double degtorad(int deg);
 double radtodeg(double rad);
 
 // ================== ray functions ==================
-t_ray new_ray(t_data *data, double ray_angle);
+int new_ray(t_data *data, double ray_angle);
 int cast_rays(t_ray *rays, t_data *data);
 bool is_wall(char (*map)[14], int x, int y);
+int horizontal_ray(t_data *data, double ray_angle);
+int vertical_ray(t_data *data, double ray_angle);
 #endif
 

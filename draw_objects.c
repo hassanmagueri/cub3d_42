@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:46 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/20 08:30:09 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/20 20:58:59 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,10 @@ void set_background(mlx_image_t *image, int color)
 
 int	draw_circle(t_circle circle, mlx_image_t *image)
 {
-	t_point center;
 	int x;
 	int y;
 
-	center = new_point(image->width / 2, image->height / 2);
-	// set_background(image, BACKGROUND);
+	set_background(image, BACKGROUND);
 	// x = center.x - radius;
 	x = circle.x - circle.radius;
 	while (x < circle.x + circle.radius)

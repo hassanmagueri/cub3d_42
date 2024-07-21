@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:51:11 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/20 09:28:47 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/20 20:49:18 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,11 @@ int create_vector_player(t_data *data)
 	);
 	line = new_line(
 			new_point(player.x, player.y),
-			p2, 0xFFFF00FF
+			new_point(
+				data->player.x + (cos(player.angle) * player.radius),
+				data->player.y + (sin(player.angle) * player.radius)
+			)
+			, 0xFFFF00FF
 		);
 	draw_line(line, data->player.img);
 	return (1);
@@ -114,7 +118,7 @@ void	reset_img(mlx_image_t *img)
 {
 	for (int i = 0; i < img->height; i++)
 		for (int j = 0; j < img->width; j++)
-			mlx_put_pixel(img,j,i, 0);
+			mlx_put_pixel(img, j, i, 0);
 }
 
 // t_point translate_to_index(t_point p)
