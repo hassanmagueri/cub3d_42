@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:10:59 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/21 19:25:01 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/23 21:36:54 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,38 +27,39 @@ t_ray low_ray(t_ray ray1, t_ray ray2)
 	double hyp1;
 	double hyp2;
 
-	hyp1 = pow(ray1.dx, 2) + pow(ray1.dx, 2);
-	hyp2 = pow(ray2.dx, 2) + pow(ray2.dx, 2);
+	hyp1 = pow(ray1.dx, 2) + pow(ray1.dy, 2);
+	hyp2 = pow(ray2.dx, 2) + pow(ray2.dy, 2);
+	// if (hyp1 == 0)
+	// 	return ray2;
+	// if (hyp2 == 0)
+	// 	return ray1;
 	if (hyp1 < hyp2)
 		return ray1;
 	return ray2;
 }
 
-int cast_rays(t_ray *rays, t_data *data)
+int cast_rays(char (*map)[14], t_player player)
 {
 	double	angle;
 	int		i;
-	t_player player;
-	t_ray vr;
-	t_ray hr;
-	t_ray ray;
+	t_ray	vr;
+	t_ray	hr;
+	t_ray	ray;
 
-	player = data->player;
 	i = 0;
 	angle = player.angle - FOV / 2;
 	while (i < NUM_RAYS)
 	{
-		vr = vertical_ray(data, normalize_angle(angle));
-		hr = horizontal_ray(data, normalize_angle(angle));
+		vr = vertical_ray(player, map, normalize_angle(angle));
+		hr = horizontal_ray(player, map, normalize_angle(angle));
 		ray = low_ray(vr, hr);
-		// ray = vr; // ??
-		// ray = hr; // ??
+		// ray = hr;
+		// ray = vr;
 		draw_line(
 			new_line(
-				new_point(ray.dx + player.x, ray.dy + player.y),
-				new_point(player.x,player.y),SEMI_YELLOW
-			),
-			data->player.img
+				(t_point){ray.dx + player.x, ray.dy + player.y},
+				(t_point){player.x,player.y}, SEMI_YELLOW),
+				player.img
 		);
 		angle += FOV / NUM_RAYS;
 		i++;
@@ -66,79 +67,109 @@ int cast_rays(t_ray *rays, t_data *data)
 	return 0;
 }
 
-
-
-t_ray vertical_ray(t_data *data, double ray_angle)
+bool check_is_wall(char (*map)[14], int x, int y, int direct)
 {
-	double dx, dy;
-    t_line line;
-    t_player player;
-    int player_tile_x, player_x_distance, direction;
+	int	i;
+	int	j;
 
-    player = data->player;
-	direction = 1;
+	i = y / TILE_SIZE;
+	j = x / TILE_SIZE;
+	if (i < 0 || j < 0 || i >= 12 || j >= 14)
+		return false;
+	if (map[i][j] == '1'
+		|| (map[i][j + 1 * direct] == '1' && map[i + 1 * direct][j] == '1')
+		|| (map[i + 1 * direct][j] == '1' && map[i][j - 1 * direct] == '1')
+		)
+		return (true);
+	return (false);
+}
+
+t_ray vertical_ray(t_player player, char (*map)[14], double ray_angle)
+{
+    int		player_tile_x;
+	int		player_x_distance;
+	int		direct;
+	double	dx;
+	double	dy;
+
+	direct = 1;
 	player_tile_x = (((int)player.x / TILE_SIZE) + 1) * TILE_SIZE;
-    if (ray_angle > M_PI / 2 && ray_angle < M_PI * 1.5) {
-		direction = -1;
+    if (ray_angle > M_PI / 2 && ray_angle < M_PI * 1.5) 
+	{
+		direct = -1;
 		player_tile_x = ((int)player.x / TILE_SIZE) * TILE_SIZE;
     }
-    player_x_distance = (player_tile_x - player.x) * direction;
-    dx = player_x_distance * direction;
+    player_x_distance = (player_tile_x - player.x) * direct;
+    dx = player_x_distance * direct;
 	dy = dx * tan(ray_angle);
     int i = 1;
     while (i < 14) {
-		int new_dx =  player.x + dx + direction;
-		int new_dy = player.y + (dx + direction) * tan(ray_angle);
-    	if (is_wall(data->grid, new_dx, new_dy)
-			|| (is_wall(data->grid, new_dx + TILE_SIZE * direction * -1, new_dy)
-				&& is_wall(data->grid, new_dx, new_dy + TILE_SIZE * direction *- 1))
-		)
+		int new_dx =  player.x + dx + direct;
+		int new_dy = player.y + (dx + direct) * tan(ray_angle);
+    	if (check_is_wall(map, new_dx, new_dy, 0))
 		    break;
-        dx = ((double)TILE_SIZE * i + player_x_distance) * direction;
+        dx += (double)TILE_SIZE * direct;
         dy = dx * tan(ray_angle);
         i++;
     }
-	t_ray ray = {dx, dy, ray_angle};
-	return ray;
+	printf("dx: %f\n", dx);
+	printf("dy: %f\n", dy);
+	// if ((ray_angle >= M_PI_2 - 0.111 && ray_angle <= M_PI_2 + 0.111)
+	// 	|| (-ray_angle >= M_PI_2+M_PI - 0.111 && -ray_angle <= M_PI_2+M_PI + 0.111))
+	// {
+	// 	dx = __DBL_MAX__;
+	// 	dy = __DBL_MAX__;
+	// }
+	printf("----------------------------------------------------------------\n");
+	return ((t_ray){dx, dy, ray_angle});
 }
-t_ray horizontal_ray(t_data *data, double ray_angle)
+t_ray	horizontal_ray(t_player player, char (*map)[14], double ray_angle)
 {
 	int 		player_tile_y;
 	int 		player_y_distance;
-	int			direction;
+	int			direct;
 	double		dy;
 	double		dx;
-	t_player	player;
 
-	player = data->player;
-	direction = -1;
+	direct = -1;
 	player_tile_y = ((((int)player.y) / TILE_SIZE)) * TILE_SIZE;
 	if (ray_angle < M_PI)
 	{
-		direction = 1;
+		direct = 1;
 		player_tile_y = ((((int)player.y) / TILE_SIZE) + 1) * TILE_SIZE;
 	}
-	player_y_distance = (player_tile_y - player.y) * direction;
-	dy = player_y_distance * direction;
+	player_y_distance = (player_tile_y - player.y) * direct;
+	printf("player_y_distance: %d\n", player_y_distance);
+	dy = player_y_distance * direct;
 	dx = dy / tan(ray_angle);
 	int i = 0;
+	double new_dy;
+	double new_dx;
 	while (i < 14)
 	{
-		double new_dx =player.x + (direction + dy) / tan(ray_angle);
-		double new_dy = player.y + direction + dy;
-		if (is_wall( data->grid, new_dx, new_dy)
-			|| (is_wall( data->grid, new_dx + TILE_SIZE * -direction, new_dy)
-			&& is_wall( data->grid, new_dx, new_dy + TILE_SIZE * -direction))
-			|| (is_wall( data->grid, new_dx + TILE_SIZE * direction, new_dy)
-			&& is_wall( data->grid, new_dx, new_dy + TILE_SIZE * -direction))
-		)
+		int n = direct;
+		// if (direct == -1)
+		// 	n = direct;
+		new_dy = player.y + direct + dy; // * 10
+		new_dx = player.x + (dy + direct) / tan(ray_angle);
+		if (check_is_wall(map, new_dx, new_dy, -direct))
 			break;
-		dy = ((double)TILE_SIZE * i + player_y_distance) * direction;
+		dy += (double)TILE_SIZE * direct;
 		dx = dy / tan(ray_angle);
 		i++;
 	}
-	t_ray ray = {dx, dy, ray_angle};
-	return (ray);
+	printf("dx: %f\n", dx);
+	printf("dy: %f\n", dy);
+	// if (i != 0)
+	// 	dy -= TILE_SIZE * direct;
+	// dx = dy / tan(ray_angle);
+	// if ((ray_angle >= M_PI - 0.111 && ray_angle <= M_PI + 0.111)
+	// 	|| (ray_angle < 0.211 || ray_angle > 2 * M_PI - 0.211))
+	// {
+	// 	dx = __DBL_MAX__;
+	// 	dy = __DBL_MAX__;
+	// }
+	return ((t_ray){dx, dy, ray_angle});
 }
 // t_ray new_ray(t_data *data, double ray_angle)
 // {

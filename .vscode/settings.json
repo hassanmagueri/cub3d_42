@@ -8,7 +8,8 @@
         "unistd.h": "c",
         "stdbool.h": "c",
         "math.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "string.h": "c"
     },
     "cSpell.words": [
         "degtorad",

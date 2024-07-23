@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:46 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/21 15:38:35 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/23 20:43:01 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,18 +104,18 @@ int	draw_circle(t_circle circle, mlx_image_t *image)
 
 int	draw_react(t_rect rect, mlx_image_t *image)
 {
-	int i;
-	int j;
-	int border_with;
+	double i;
+	double j;
+	// do border_with;
 
-	border_with = 0;
-	i = rect.x + border_with;
-	while (i < rect.x + rect.side - border_with)
+	// border_with = 0;
+	i = rect.x;
+	while (i < rect.x + rect.side )
 	{
-		j = rect.y + border_with;
-		while (j < rect.y + rect.side - border_with)
+		j = rect.y;
+		while (j < rect.y + rect.side)
 		{
-			mlx_put_pixel(image, j, i, rect.color);
+			mlx_put_pixel(image, j, i, SEMI_BLACK);
 			j++;
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/21 19:18:57 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/23 21:42:49 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,19 @@
 # include "MLX42.h"
 
 # define TILE_SIZE 64
-# define DEG 180
 # define BACKGROUND 0xFD42EE55
+
 # define WIDTH  TILE_SIZE * 14
 # define HEIGHT TILE_SIZE * 12
 
+# define DEG 90
 # define P_RAD 8
+# define ROT_SPEED 3
+# define MOVE_SPEED 7
 
-# define RAY_RAD 100
+# define NUM_RAYS 1000
 # define FOV 60 * (M_PI / 180)
-# define NUM_RAYS 100
+# define RAY_RAD 1
 
 // ============= define colors ===========
 # define BLACK         0x000000FF
@@ -62,8 +65,6 @@ typedef struct s_point
 {
 	double	x;
 	double	y;
-	int		width;
-	int		height;
 } t_point;
 
 typedef struct s_map
@@ -73,8 +74,8 @@ typedef struct s_map
 
 typedef struct s_rect
 {
-	int x;
-	int y;
+	double x;
+	double y;
 	int side;
 	int color;
 } t_rect;
@@ -117,10 +118,8 @@ typedef struct s_player
 typedef struct s_data
 {
 	char		(*grid)[14];
-	// int			;
 	mlx_t		*mlx;
 	t_player	player;
-	t_ray rays[320];
 	mlx_image_t	*player_img;
 } t_data;
 
@@ -143,12 +142,13 @@ int			update_player(t_data *data);
 mlx_image_t		*clear_image(mlx_t *mlx, mlx_image_t *img);
 double degtorad(int deg);
 double radtodeg(double rad);
+mlx_image_t		*new_image_to_window(mlx_t *mlx, int width, int height);
 
 // ================== ray functions ==================
 int new_ray(t_data *data, double ray_angle);
-int cast_rays(t_ray *rays, t_data *data);
+int cast_rays(char (*map)[14], t_player player);
 bool is_wall(char (*map)[14], int x, int y);
-t_ray horizontal_ray(t_data *data, double ray_angle);
-t_ray vertical_ray(t_data *data, double ray_angle);
+t_ray horizontal_ray(t_player player, char (*map)[14], double ray_angle);
+t_ray vertical_ray(t_player player, char (*map)[14], double ray_angle);
 #endif
 
