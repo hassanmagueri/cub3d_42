@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:51:11 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/23 21:24:09 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/25 17:38:26 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,8 @@ int	update_player(t_data *data)
 	if (!is_wall(data->grid, new_x, new_y))
 		(1) && (player->x = new_x, player->y = new_y);
 	draw_player(data);
-	cast_rays(data->grid, data->player);
+	cast_rays(data->grid, data->player, &data->rays);
+	project_walls(data);
 	player->walk_direction = 0;
 	player->rotation_angle = 0;
 	return (1);

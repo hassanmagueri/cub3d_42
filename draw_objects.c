@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:46 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/23 20:43:01 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/25 18:34:08 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,28 @@ int	draw_react(t_rect rect, mlx_image_t *image)
 		while (j < rect.y + rect.side)
 		{
 			mlx_put_pixel(image, j, i, SEMI_BLACK);
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
+
+int	draw_wall(t_wall wall, mlx_image_t *image)
+{
+	double i;
+	double j;
+	// do border_with;
+
+	// border_with = 0;
+	i = wall.x;
+	while (i < (wall.x + wall.width))
+	{
+		j = wall.y;
+		while (j < (wall.y + wall.height))
+		{
+			if (i <= image->width && i >= 0 && j >= 0 && j <= image->height)
+				mlx_put_pixel(image, i, j, wall.color);
 			j++;
 		}
 		i++;
