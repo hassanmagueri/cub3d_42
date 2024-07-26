@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/23 21:41:54 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/26 08:01:58 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static size_t	get_digits(int n)
+static size_t get_digits(int n)
 {
-	size_t	i;
+	size_t i;
 
 	i = 1;
 	while (n /= 10)
@@ -22,11 +22,11 @@ static size_t	get_digits(int n)
 	return (i);
 }
 
-char			*ft_itoa(int n)
+char *ft_itoa(int n)
 {
-	char		*str_num;
-	size_t		digits;
-	long int	num;
+	char *str_num;
+	size_t digits;
+	long int num;
 
 	num = n;
 	digits = get_digits(n);
@@ -53,7 +53,7 @@ int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
 	return (r << 24 | g << 16 | b << 8 | a);
 }
 
-void	ft_hook(void *param)
+void ft_hook(void *param)
 {
 	t_data *data = param;
 	t_player *player;
@@ -79,35 +79,46 @@ void	ft_hook(void *param)
 
 int render_map(t_data *data)
 {
-	mlx_image_t	*map_img;
-	mlx_image_t	*player_img = data->player.img;
-	int			i;
-	int			j;
+	mlx_image_t *map_img;
+	mlx_image_t *player_img = data->player.img;
+	int i;
+	int j;
 
 	i = 0;
 	data->player.img = player_img;
 	map_img = new_image_to_window(data->mlx, TILE_SIZE * 20, TILE_SIZE * 20);
-	while (i < 12)
+	while (i < data->height)
 	{
 		j = 0;
-		while (j < 14)
+		while (j < data->width)
 		{
-			if (data->grid[i][j] == '1')
+			if (data->map[i][j] == '1')
 				draw_react((t_rect){i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, LIGHT_GREY}, map_img);
-			if (data->grid[i][j] == 'P')
+			if (data->map[i][j] == 'N')
 				data->player = new_player(data, j * TILE_SIZE + TILE_SIZE / 2,
-					i * TILE_SIZE + TILE_SIZE / 2);
+										  i * TILE_SIZE + TILE_SIZE / 2);
 			j++;
 		}
 		i++;
 	}
 	update_player(data);
-	return (1); 
+	return (1);
 }
 
-int32_t	main(void)
+int32_t main(int ac, char const **av)
 {
+
 	t_data data;
+	load_map_data(&data);
+	validate_top_map(&data);
+	set_map(&data);
+	validate_all_dirs(&data);
+	validate_colors(&data);
+	parse_map(&data);
+	init_clrs_dirs(&data);
+	printf("%d\n",data.width);
+	printf("%d\n",data.height);
+
 	// char grid[][14] = {
 	// 	"111111",
 	// 	"1P1101",
@@ -115,20 +126,20 @@ int32_t	main(void)
 	// 	"101101",
 	// 	"111111"
 	// 	};
-	char grid[][14] = {
-		"11111111111111",
-		"10000011111111",
-		"10000000101001",
-		"10000001000111",
-		"10000010010111",
-		"100000P0000001",
-		"10000000000011",
-		"10000000000101",
-		"10000000000001",
-		"10000000000001",
-		"10000000000001",
-		"11111111111111"
-		};
+	// char grid[][14] = {
+	// 	"11111111111111",
+	// 	"10000011111111",
+	// 	"10000000101001",
+	// 	"10000001000111",
+	// 	"10000010010111",
+	// 	"100000P0000001",
+	// 	"10000000000011",
+	// 	"10000000000101",
+	// 	"10000000000001",
+	// 	"10000000000001",
+	// 	"10000000000001",
+	// 	"11111111111111"
+	// 	};
 	// char grid[][14] = {
 	// 	"11111111111111",
 	// 	"10110001111111",
@@ -144,7 +155,6 @@ int32_t	main(void)
 	// 	"11111111111111"
 	// 	};
 	data.mlx = mlx_init(WIDTH, HEIGHT, "cub3D", false);
-	data.grid = grid;
 	render_map(&data);
 	// mlx_image_t *img = mlx_new_image(data.mlx, 1000, 1000);
 	// draw_line(

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:10:59 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/23 21:36:54 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/25 23:10:58 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_ray low_ray(t_ray ray1, t_ray ray2)
 	return ray2;
 }
 
-int cast_rays(char (*map)[14], t_player player)
+int cast_rays(char **map, t_player player)
 {
 	double	angle;
 	int		i;
@@ -67,7 +67,7 @@ int cast_rays(char (*map)[14], t_player player)
 	return 0;
 }
 
-bool check_is_wall(char (*map)[14], int x, int y, int direct)
+bool check_is_wall(char **map, int x, int y, int direct)
 {
 	int	i;
 	int	j;
@@ -84,7 +84,7 @@ bool check_is_wall(char (*map)[14], int x, int y, int direct)
 	return (false);
 }
 
-t_ray vertical_ray(t_player player, char (*map)[14], double ray_angle)
+t_ray vertical_ray(t_player player, char **map, double ray_angle)
 {
     int		player_tile_x;
 	int		player_x_distance;
@@ -123,7 +123,7 @@ t_ray vertical_ray(t_player player, char (*map)[14], double ray_angle)
 	printf("----------------------------------------------------------------\n");
 	return ((t_ray){dx, dy, ray_angle});
 }
-t_ray	horizontal_ray(t_player player, char (*map)[14], double ray_angle)
+t_ray	horizontal_ray(t_player player, char **map, double ray_angle)
 {
 	int 		player_tile_y;
 	int 		player_y_distance;
@@ -156,6 +156,7 @@ t_ray	horizontal_ray(t_player player, char (*map)[14], double ray_angle)
 			break;
 		dy += (double)TILE_SIZE * direct;
 		dx = dy / tan(ray_angle);
+		
 		i++;
 	}
 	printf("dx: %f\n", dx);
