@@ -1,5 +1,5 @@
 
-CC = cc -g -fsanitize=address #-Wall -Wextra -Werror
+CC = cc -g -fsanitize=address #-Wall -Wextra -Werror0
 
 
 #==============folders==============#

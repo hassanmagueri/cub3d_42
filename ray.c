@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:10:59 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/31 14:58:56 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/07/31 17:33:03 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_ray low_ray(t_ray ray1, t_ray ray2)
 	return ray2;
 }
 
-int cast_rays(char **map, t_player player , t_ray (*rays_ref)[NUM_RAYS])
+int cast_rays(t_map map, t_player player , t_ray (*rays_ref)[NUM_RAYS])
 {
 	double	angle;
 	int		i;
@@ -49,10 +49,11 @@ int cast_rays(char **map, t_player player , t_ray (*rays_ref)[NUM_RAYS])
 	
 	i = 0;
 	angle = player.angle - FOV / 2;
-	while (i < NUM_RAYS)
+	while (i < 1)
 	{
 		vr = vertical_ray(player, map, normalize_angle(angle));
 		hr = horizontal_ray(player, map, normalize_angle(angle));
+		printf("ray: %d\n", i);
 		(*rays_ref)[i] = low_ray(vr, hr);
 		draw_line(
 			new_line(
@@ -67,24 +68,26 @@ int cast_rays(char **map, t_player player , t_ray (*rays_ref)[NUM_RAYS])
 	return 0;
 }
 
-bool check_is_wall(char **map, int x, int y, int direct)
+bool check_is_wall(t_map map, int x, int y, int direct)
 {
-	int	i;
-	int	j;
-
+	char	**layout;
+	int		i;
+	int		j;
+	
+	layout = map.layout;
 	i = y / TILE_SIZE;
 	j = x / TILE_SIZE;
-	if (i < 0 || j < 0 || i >= 12 || j >= 14)
+	if (i < 0 || j < 0 || i >= map.height || j >= map.width)
 		return false;
-	if (map[i][j] == '1'
-		|| (map[i][j + 1 * direct] == '1' && map[i + 1 * direct][j] == '1')
-		|| (map[i + 1 * direct][j] == '1' && map[i][j - 1 * direct] == '1')
+	if (layout[i][j] == '1'
+		|| (layout[i][j + 1 * direct] == '1' && layout[i + 1 * direct][j] == '1')
+		|| (layout[i + 1 * direct][j] == '1' && layout[i][j - 1 * direct] == '1')
 		)
 		return (true);
 	return (false);
 }
 
-t_ray vertical_ray(t_player player, char **map, double ray_angle)
+t_ray vertical_ray(t_player player, t_map map, double ray_angle)
 {
     int		player_tile_x;
 	int		player_x_distance;
@@ -103,7 +106,7 @@ t_ray vertical_ray(t_player player, char **map, double ray_angle)
     dx = player_x_distance * direct;
 	dy = dx * tan(ray_angle);
     int i = 1;
-    while (i < 14) {
+    while (i < map.height) {
 		int new_dx =  player.x + dx + direct;
 		int new_dy = player.y + (dx + direct) * tan(ray_angle);
     	if (check_is_wall(map, new_dx, new_dy, 0))
@@ -114,7 +117,7 @@ t_ray vertical_ray(t_player player, char **map, double ray_angle)
     }
 	return ((t_ray){dx, dy, ray_angle});
 }
-t_ray	horizontal_ray(t_player player, char **map, double ray_angle)
+t_ray	horizontal_ray(t_player player, t_map map, double ray_angle)
 {
 	int 		player_tile_y;
 	int 		player_y_distance;
@@ -135,7 +138,7 @@ t_ray	horizontal_ray(t_player player, char **map, double ray_angle)
 	int i = 0;
 	double new_dy;
 	double new_dx;
-	while (i < 14)
+	while (i < map.width)
 	{
 		int n = direct;
 		new_dy = player.y + direct + dy; // * 10

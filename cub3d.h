@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/31 14:52:02 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/07/31 17:20:03 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 #include "MLX42.h"
 #include "utils/get_next_line/get_next_line.h"
 
-#define TILE_SIZE 64
+#define TILE_SIZE 32
 #define BACKGROUND 0xFD42EE55
 
 #define WIDTH TILE_SIZE * 14
@@ -78,11 +78,6 @@ typedef struct s_point
 	double y;
 } t_point;
 
-typedef struct s_map
-{
-
-} t_map;
-
 typedef struct s_rect
 {
 	double x;
@@ -134,6 +129,14 @@ typedef struct s_player
 	mlx_image_t *img;
 	int radius;
 } t_player;
+
+typedef struct s_map
+{
+	size_t	width;
+	size_t	height;
+	char	**layout;
+} t_map;
+
 typedef struct s_data
 {
 	char *NO;
@@ -143,15 +146,16 @@ typedef struct s_data
 	char **map_data;
 	char **dirs;
 	char **clrs;
-	char **map;
-	int width;
-	int height;
+	// char **map;
+	// int width;
+	// int height;
+	t_map map;
 	t_clr floor;
 	t_clr ceiling;
-	mlx_t *mlx;
-	t_player player;
-	mlx_image_t *player_img;
-	t_ray (*rays_ref)[NUM_RAYS];
+	mlx_t		*mlx;
+	t_player	player;
+	mlx_image_t	*player_img;
+	t_ray rays_ref[NUM_RAYS];
 } t_data;
 // ===================== functions parsing =====================
 int ft_strcmp(char *str1, char *str2);
@@ -192,8 +196,10 @@ mlx_image_t *new_image_to_window(mlx_t *mlx, int width, int height);
 
 // ================== ray functions ==================
 int new_ray(t_data *data, double ray_angle);
-int cast_rays(char **map, t_player player , t_ray (*rays_ref)[NUM_RAYS]);
-bool is_wall(char **map, int x, int y);
-t_ray horizontal_ray(t_player player, char **map, double ray_angle);
-t_ray vertical_ray(t_player player, char **map, double ray_angle);
+int cast_rays(t_map map, t_player player , t_ray (*rays_ref)[NUM_RAYS]);
+// bool is_wall(t_map map, int x, int y);
+bool	is_wall(t_data *data, int x, int y);
+
+t_ray horizontal_ray(t_player player, t_map map, double ray_angle);
+t_ray vertical_ray(t_player player, t_map map, double ray_angle);
 #endif

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/31 14:55:06 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/07/31 17:35:59 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <stdio.h>
 
 static size_t get_digits(int n)
 {
@@ -85,21 +86,22 @@ int render_map(t_data *data)
 	int j;
 
 	i = 0;
-	data->player.img = player_img;
-	map_img = new_image_to_window(data->mlx, TILE_SIZE * 20, TILE_SIZE * 20);
-	while (i < data->height)
+	map_img = new_image_to_window(data->mlx, TILE_SIZE * data->map.width, TILE_SIZE * data->map.height);
+	while (i < data->map.height)
 	{
 		j = 0;
-		while (j < data->width)
+		while (j < data->map.width)
 		{
-			if (data->map[i][j] == '1')
+			if (data->map.layout[i][j] == '1')
 				draw_react((t_rect){i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, LIGHT_GREY}, map_img);
-			if (data->map[i][j] == 'N')
+			if (data->map.layout[i][j] == 'N')
+			{
 				data->player = new_player(data, j * TILE_SIZE + TILE_SIZE / 2,
-										  i * TILE_SIZE + TILE_SIZE / 2);
+											i * TILE_SIZE + TILE_SIZE / 2);
+			}
 			j++;
 		}
-		break;
+		
 		i++;
 	}
 	update_player(data);
@@ -117,8 +119,14 @@ int32_t main(int ac, char const **av)
 	validate_colors(&data);
 	parse_map(&data);
 	init_clrs_dirs(&data);
-	printf("%d\n",data.width);
-	printf("%d\n",data.height);
+	// data.map = data.map_data;
+	printf("width %zu\n",data.map.width);
+	printf("height %zu\n",data.map.height);
+	int i=0;
+	while (data.map.layout[i]) {
+	printf("%s\n", data.map.layout[i++]);
+	}
+	// exit(0);
 
 	// char grid[][14] = {
 	// 	"111111",
@@ -155,7 +163,7 @@ int32_t main(int ac, char const **av)
 	// 	"10000101000011",
 	// 	"11111111111111"
 	// 	};
-	data.mlx = mlx_init(data.width * TILE_SIZE,data.height * TILE_SIZE, "cub3D", false);
+	data.mlx = mlx_init(data.map.width * TILE_SIZE,data.map.height * TILE_SIZE, "cub3D", false);
 	render_map(&data);
 	// mlx_image_t *img = mlx_new_image(data.mlx, 1000, 1000);
 	// draw_line(

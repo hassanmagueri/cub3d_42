@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:51:11 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/31 15:00:49 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/07/31 17:20:29 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ t_player new_player(t_data *data, int x, int y)
 {
 	t_player player;
 
-	player.img = new_image_to_window(data->mlx, TILE_SIZE * 20, TILE_SIZE * 20);
+	player.img = new_image_to_window(data->mlx, TILE_SIZE * data->map.width, TILE_SIZE * data->map.height);
+	printf("init width: %u\n", player.img->width * TILE_SIZE);
 	player.x = x;
 	player.y = y;
 	player.angle = degtorad(DEG);
@@ -102,10 +103,14 @@ mlx_image_t	*reset_img(t_data *data)
 {
 	// mlx_delete_image(data->mlx, data->player.img);
 	// return mlx_new_image(data->mlx, WIDTH, HEIGHT);
-
-	for (size_t i = 0; i < data->player.img->height; i++)
-		for (size_t j = 0; j < data->player.img->width; j++)
-			mlx_put_pixel(data->player.img, j, i, 0);
+	printf("width: %d, height: %d\n", data->player.img->width, data->player.img->height);
+	size_t i;
+	for (i = 0; i  < data->player.img->width; i++)
+	{
+		size_t j;
+		for (j = 0; j < data->player.img->height; j++)
+			mlx_put_pixel(data->player.img, i, j, 0);
+	}
 	return data->player.img;
 }
 
@@ -116,15 +121,18 @@ mlx_image_t	*reset_img(t_data *data)
 	
 // }
 
-bool is_wall(char **map, int x, int y)
+// bool is_wall(char **map, int x, int y)
+bool	is_wall(t_data *data, int x, int y)
 {
 	int	i;
 	int	j;
 
-	
+	char	**map;
+
+	map = data->map.layout;
 	i = y / TILE_SIZE;
 	j = x / TILE_SIZE;
-	if (i < 0 || j < 0 || i >= 12 || j >= 14)
+	if (i < 0 || j < 0 || i >= data->map.height || j >= data->map.width)
 		return false;
 	// if (map[i][j] == '1')
 	// 	return (true);
@@ -166,10 +174,10 @@ int	update_player(t_data *data)
 	int move_step = player->walk_direction * MOVE_SPEED;
 	new_x = player->x + (cos(player->angle + walk_inside) * move_step);
 	new_y = player->y + (sin(player->angle + walk_inside) * move_step);
-	if (!is_wall(data->map, new_x, new_y))
+	if (!is_wall(data, new_x, new_y))
 		(1) && (player->x = new_x, player->y = new_y);
 	draw_player(data);
-	cast_rays(data->map, data->player ,data->rays_ref);
+	cast_rays(data->map, data->player ,&data->rays_ref);
 	player->walk_direction = 0;
 	player->rotation_angle = 0;
 	return (1);

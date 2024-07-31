@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 23:28:47 by belguabd          #+#    #+#             */
-/*   Updated: 2024/07/26 07:54:34 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/07/31 17:14:44 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,16 +216,16 @@ void set_map(t_data *data)
 	while (!data->map_data[i][0])
 		i++;
 	int count = get_count_map(data, i);
-	data->map = (char **)malloc(sizeof(char *) * (count + 1));
-	if (!data->map)
+	data->map.layout = (char **)malloc(sizeof(char *) * (count + 1));
+	if (!data->map.layout)
 		ft_putendl_fd_color("Error\nmalloc failure", 2, RED_E);
 	j = 0;
 	while (data->map_data[i])
 	{
-		data->map[j++] = data->map_data[i];
+		data->map.layout[j++] = data->map_data[i];
 		i++;
 	}
-	data->map[j] = NULL;
+	data->map.layout[j] = NULL;
 }
 void load_map_data(t_data *data)
 {
@@ -417,7 +417,7 @@ int get_len_map(t_data *data)
 	int i;
 
 	i = 0;
-	while (data->map[i])
+	while (data->map.layout[i])
 		i++;
 	return (i);
 }
@@ -434,15 +434,15 @@ void parse_map(t_data *data)
 	int lg_line;
 	int to_find;
 
-	if (validate_line(data->map[0]))
+	if (validate_line(data->map.layout[0]))
 		ft_putendl_fd_color("Error\nInvalid character", 2, RED_E);
-	if (validate_line(data->map[get_len_map(data) - 1]))
+	if (validate_line(data->map.layout[get_len_map(data) - 1]))
 		ft_putendl_fd_color("Error\nInvalid character", 2, RED_E);
 	i = 0;
-	while (data->map[i])
+	while (data->map.layout[i])
 	{
-		if (data->map[i][0])
-			line = ft_strtrim(data->map[i], " ");
+		if (data->map.layout[i][0])
+			line = ft_strtrim(data->map.layout[i], " ");
 		if (validate_char(line[0]))
 			ft_putendl_fd_color("Error\nInvalid character", 2, RED_E);
 		if (validate_char(line[ft_strlen(line) - 1]))
@@ -452,10 +452,10 @@ void parse_map(t_data *data)
 
 	i = 0;
 	to_find = 0;
-	lg_line = ft_strlen(data->map[i]);
-	while (data->map[i])
+	lg_line = ft_strlen(data->map.layout[i]);
+	while (data->map.layout[i])
 	{
-		int current_length = ft_strlen(data->map[i]);
+		int current_length = ft_strlen(data->map.layout[i]);
 		if (lg_line < current_length)
 		{
 			to_find = i;
@@ -464,21 +464,21 @@ void parse_map(t_data *data)
 		i++;
 	}
 
-	int len = ft_strlen(data->map[to_find]);
+	int len = ft_strlen(data->map.layout[to_find]);
 	int length = len;
 	i = 0;
-	while (data->map[i])
+	while (data->map.layout[i])
 	{
 		int j = 0;
 		len = length;
 		char *line = (char *)malloc(sizeof(char) * (length + 1));
-		while (data->map[i][j])
+		while (data->map.layout[i][j])
 		{
 
-			if (data->map[i][j] == ' ')
+			if (data->map.layout[i][j] == ' ')
 				line[j] = '$';
 			else
-				line[j] = data->map[i][j];
+				line[j] = data->map.layout[i][j];
 
 			j++;
 		}
@@ -488,19 +488,19 @@ void parse_map(t_data *data)
 			line[j++] = '$';
 		}
 		line[j] = '\0';
-		data->map[i] = line;
+		data->map.layout[i] = line;
 		i++;
 	}
 	int x = 0;
 	int y = 0;
-	while (data->map[y])
+	while (data->map.layout[y])
 	{
 		x = 0;
-		while (data->map[y][x])
+		while (data->map.layout[y][x])
 		{
-			if (data->map[y][x] == '0')
+			if (data->map.layout[y][x] == '0')
 			{
-				if (data->map[y][x + 1] == '$' || data->map[y][x - 1] == '$' || data->map[y + 1][x] == '$' || data->map[y - 1][x] == '$')
+				if (data->map.layout[y][x + 1] == '$' || data->map.layout[y][x - 1] == '$' || data->map.layout[y + 1][x] == '$' || data->map.layout[y - 1][x] == '$')
 					ft_putendl_fd_color("Error\nInvalid map - adjacent to '0' is a space", 2, RED_E);
 			}
 			x++;
@@ -510,14 +510,14 @@ void parse_map(t_data *data)
 	x = 0;
 	y = 0;
 	int count = 0;
-	while (data->map[y])
+	while (data->map.layout[y])
 	{
 		x = 0;
-		while (data->map[y][x])
+		while (data->map.layout[y][x])
 		{
-			if (data->map[y][x] != '$' && data->map[y][x] != '0' && data->map[y][x] != '1' && data->map[y][x] != 'N' && data->map[y][x] != 'S' && data->map[y][x] != 'E' && data->map[y][x] != 'W')
+			if (data->map.layout[y][x] != '$' && data->map.layout[y][x] != '0' && data->map.layout[y][x] != '1' && data->map.layout[y][x] != 'N' && data->map.layout[y][x] != 'S' && data->map.layout[y][x] != 'E' && data->map.layout[y][x] != 'W')
 				ft_putendl_fd_color("Error\nInvalid character in map", 2, RED_E);
-			if (data->map[y][x] == 'N' || data->map[y][x] == 'S' || data->map[y][x] == 'W' || data->map[y][x] == 'E')
+			if (data->map.layout[y][x] == 'N' || data->map.layout[y][x] == 'S' || data->map.layout[y][x] == 'W' || data->map.layout[y][x] == 'E')
 				count++;
 			x++;
 		}
@@ -526,14 +526,14 @@ void parse_map(t_data *data)
 	if (count != 1)
 		ft_putendl_fd_color("Error\nMap must contain exactly one start position ('N', 'S', 'E', or 'W')", 2, RED_E);
 	y = 0;
-	while (data->map[y])
+	while (data->map.layout[y])
 	{
 		x = 0;
-		while (data->map[y][x])
+		while (data->map.layout[y][x])
 		{
-			if (data->map[y][x] == 'N' || data->map[y][x] == 'S' || data->map[y][x] == 'E' || data->map[y][x] == 'W')
+			if (data->map.layout[y][x] == 'N' || data->map.layout[y][x] == 'S' || data->map.layout[y][x] == 'E' || data->map.layout[y][x] == 'W')
 			{
-				if (data->map[y][x + 1] == '$' || data->map[y][x - 1] == '$' || data->map[y + 1][x] == '$' || data->map[y - 1][x] == '$')
+				if (data->map.layout[y][x + 1] == '$' || data->map.layout[y][x - 1] == '$' || data->map.layout[y + 1][x] == '$' || data->map.layout[y - 1][x] == '$')
 					ft_putendl_fd_color("Error\nSpace is not surrounded by '1'", 2, RED_E);
 			}
 			x++;
@@ -541,10 +541,10 @@ void parse_map(t_data *data)
 		y++;
 	}
 	y = 0;
-	while (data->map[y])
+	while (data->map.layout[y])
 		y++;
-	data->width = ft_strlen(data->map[0]);
-	data->height = y;
+	data->map.width = ft_strlen(data->map.layout[0]);
+	data->map.height = y;
 }
 void init_clrs_dirs(t_data *data)
 {
