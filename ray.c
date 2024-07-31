@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:10:59 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/31 17:33:03 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/07/31 17:45:42 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ t_ray vertical_ray(t_player player, t_map map, double ray_angle)
     dx = player_x_distance * direct;
 	dy = dx * tan(ray_angle);
     int i = 1;
-    while (i < map.height) {
+    while (i < map.width) {
 		int new_dx =  player.x + dx + direct;
 		int new_dy = player.y + (dx + direct) * tan(ray_angle);
     	if (check_is_wall(map, new_dx, new_dy, 0))
@@ -138,7 +138,7 @@ t_ray	horizontal_ray(t_player player, t_map map, double ray_angle)
 	int i = 0;
 	double new_dy;
 	double new_dx;
-	while (i < map.width)
+	while (i < map.height)
 	{
 		int n = direct;
 		new_dy = player.y + direct + dy; // * 10
