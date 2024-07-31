@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:10:59 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/25 23:10:58 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/07/31 14:58:56 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,32 +38,32 @@ t_ray low_ray(t_ray ray1, t_ray ray2)
 	return ray2;
 }
 
-int cast_rays(char **map, t_player player)
+int cast_rays(char **map, t_player player , t_ray (*rays_ref)[NUM_RAYS])
 {
 	double	angle;
 	int		i;
 	t_ray	vr;
 	t_ray	hr;
-	t_ray	ray;
+	// t_ray	rays[NUM_RAYS];
 
+	
 	i = 0;
 	angle = player.angle - FOV / 2;
 	while (i < NUM_RAYS)
 	{
 		vr = vertical_ray(player, map, normalize_angle(angle));
 		hr = horizontal_ray(player, map, normalize_angle(angle));
-		ray = low_ray(vr, hr);
-		// ray = hr;
-		// ray = vr;
+		(*rays_ref)[i] = low_ray(vr, hr);
 		draw_line(
 			new_line(
-				(t_point){ray.dx + player.x, ray.dy + player.y},
+				(t_point){(*rays_ref)[i].dx + player.x, (*rays_ref)[i].dy + player.y},
 				(t_point){player.x,player.y}, SEMI_YELLOW),
 				player.img
 		);
 		angle += FOV / NUM_RAYS;
 		i++;
 	}
+	// rays_ref = rays; 
 	return 0;
 }
 
@@ -88,7 +88,7 @@ t_ray vertical_ray(t_player player, char **map, double ray_angle)
 {
     int		player_tile_x;
 	int		player_x_distance;
-	int		direct;
+	int		direct;	
 	double	dx;
 	double	dy;
 
@@ -112,15 +112,6 @@ t_ray vertical_ray(t_player player, char **map, double ray_angle)
         dy = dx * tan(ray_angle);
         i++;
     }
-	printf("dx: %f\n", dx);
-	printf("dy: %f\n", dy);
-	// if ((ray_angle >= M_PI_2 - 0.111 && ray_angle <= M_PI_2 + 0.111)
-	// 	|| (-ray_angle >= M_PI_2+M_PI - 0.111 && -ray_angle <= M_PI_2+M_PI + 0.111))
-	// {
-	// 	dx = __DBL_MAX__;
-	// 	dy = __DBL_MAX__;
-	// }
-	printf("----------------------------------------------------------------\n");
 	return ((t_ray){dx, dy, ray_angle});
 }
 t_ray	horizontal_ray(t_player player, char **map, double ray_angle)
@@ -132,14 +123,13 @@ t_ray	horizontal_ray(t_player player, char **map, double ray_angle)
 	double		dx;
 
 	direct = -1;
-	player_tile_y = ((((int)player.y) / TILE_SIZE)) * TILE_SIZE;
+	player_tile_y = (((int)player.y) / TILE_SIZE) * TILE_SIZE;
 	if (ray_angle < M_PI)
 	{
 		direct = 1;
 		player_tile_y = ((((int)player.y) / TILE_SIZE) + 1) * TILE_SIZE;
 	}
 	player_y_distance = (player_tile_y - player.y) * direct;
-	printf("player_y_distance: %d\n", player_y_distance);
 	dy = player_y_distance * direct;
 	dx = dy / tan(ray_angle);
 	int i = 0;
@@ -148,8 +138,6 @@ t_ray	horizontal_ray(t_player player, char **map, double ray_angle)
 	while (i < 14)
 	{
 		int n = direct;
-		// if (direct == -1)
-		// 	n = direct;
 		new_dy = player.y + direct + dy; // * 10
 		new_dx = player.x + (dy + direct) / tan(ray_angle);
 		if (check_is_wall(map, new_dx, new_dy, -direct))
@@ -159,17 +147,6 @@ t_ray	horizontal_ray(t_player player, char **map, double ray_angle)
 		
 		i++;
 	}
-	printf("dx: %f\n", dx);
-	printf("dy: %f\n", dy);
-	// if (i != 0)
-	// 	dy -= TILE_SIZE * direct;
-	// dx = dy / tan(ray_angle);
-	// if ((ray_angle >= M_PI - 0.111 && ray_angle <= M_PI + 0.111)
-	// 	|| (ray_angle < 0.211 || ray_angle > 2 * M_PI - 0.211))
-	// {
-	// 	dx = __DBL_MAX__;
-	// 	dy = __DBL_MAX__;
-	// }
 	return ((t_ray){dx, dy, ray_angle});
 }
 // t_ray new_ray(t_data *data, double ray_angle)

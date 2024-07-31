@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/26 08:01:58 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/07/31 14:55:06 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ int render_map(t_data *data)
 										  i * TILE_SIZE + TILE_SIZE / 2);
 			j++;
 		}
+		break;
 		i++;
 	}
 	update_player(data);
@@ -154,7 +155,7 @@ int32_t main(int ac, char const **av)
 	// 	"10000101000011",
 	// 	"11111111111111"
 	// 	};
-	data.mlx = mlx_init(WIDTH, HEIGHT, "cub3D", false);
+	data.mlx = mlx_init(data.width * TILE_SIZE,data.height * TILE_SIZE, "cub3D", false);
 	render_map(&data);
 	// mlx_image_t *img = mlx_new_image(data.mlx, 1000, 1000);
 	// draw_line(

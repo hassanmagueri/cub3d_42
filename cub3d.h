@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/26 00:22:31 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/07/31 14:52:02 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,18 @@ typedef struct s_rect
 {
 	double x;
 	double y;
-	int side;
+	int side; // maybe this is the problem
 	int color;
 } t_rect;
+
+typedef struct s_wall
+{
+	double	x;
+	double	y;
+	double	width;
+	double	height;
+	int		color;
+} t_wall;
 
 typedef struct s_line
 {
@@ -108,9 +117,9 @@ typedef struct s_circle
 
 typedef struct s_ray
 {
-	double dx;
-	double dy;
-	double ray_angle;
+	double	dx;
+	double	dy;
+	double	angle;
 } t_ray;
 
 typedef struct s_player
@@ -142,6 +151,7 @@ typedef struct s_data
 	mlx_t *mlx;
 	t_player player;
 	mlx_image_t *player_img;
+	t_ray (*rays_ref)[NUM_RAYS];
 } t_data;
 // ===================== functions parsing =====================
 int ft_strcmp(char *str1, char *str2);
@@ -182,7 +192,7 @@ mlx_image_t *new_image_to_window(mlx_t *mlx, int width, int height);
 
 // ================== ray functions ==================
 int new_ray(t_data *data, double ray_angle);
-int cast_rays(char **map, t_player player);
+int cast_rays(char **map, t_player player , t_ray (*rays_ref)[NUM_RAYS]);
 bool is_wall(char **map, int x, int y);
 t_ray horizontal_ray(t_player player, char **map, double ray_angle);
 t_ray vertical_ray(t_player player, char **map, double ray_angle);
