@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:04:15 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/01 13:46:21 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/01 16:39:10 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void project_walls(t_data *data)
 	
 	rays = data->rays;
 	i = 0;
-
 	if (img)
 		mlx_delete_image(data->mlx, img);
 	img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
@@ -39,8 +38,10 @@ void project_walls(t_data *data)
 	mlx_image_to_window(data->mlx, img, data->map.width * TILE_SIZE,0);
 	while (i < NUM_RAYS)
 	{
+		double correct_ray;
 		ray_dist = ray_distance(rays[i].dx, rays[i].dy);
-		wall_expected_height = (TILE_SIZE / ray_dist) * dist_prj_plane;
+		correct_ray = ray_dist * cos(rays[i].angle - data->player.angle);
+		wall_expected_height = (TILE_SIZE  * 600 / correct_ray) ;
 		draw_wall(
 			(t_wall){i, (HEIGHT / 2) - (wall_expected_height / 2), 1, wall_expected_height, WHITE},
 			img

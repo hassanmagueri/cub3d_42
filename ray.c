@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:10:59 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/01 13:40:48 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/01 14:45:06 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ bool check_is_wall(t_map map, int x, int y, int direct)
 	j = x / TILE_SIZE;
 	if (i < 0 || j < 0 || i >= map.height || j >= map.width)
 		return false;
-	if (layout[i][j] == '1'
+	if (
+		layout[i][j] == '1'
 		// || (layout[i][j + 1 * direct] == '1' && layout[i + 1 * direct][j] == '1')
 		// || (layout[i + 1 * direct][j] == '1' && layout[i][j - 1 * direct] == '1')
 		)
@@ -70,8 +71,6 @@ int cast_rays(t_map map, t_player player , t_ray (*rays)[NUM_RAYS])
 		vr = vertical_ray(player, map, normalize_angle(angle));
 		hr = horizontal_ray(player, map, normalize_angle(angle));
 		(*rays)[i] = low_ray(vr, hr);
-		// (*rays)[i] = vr;
-		// (*rays)[i] = hr;
 		draw_line(
 			new_line(
 				(t_point){(*rays)[i].dx + player.x, (*rays)[i].dy + player.y},
