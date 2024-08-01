@@ -6,11 +6,12 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:46 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/25 18:34:08 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/01 11:46:21 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./cub3d.h"
+#include <math.h>
 
 int draw_line(t_line line, mlx_image_t *image)
 {
@@ -19,7 +20,7 @@ int draw_line(t_line line, mlx_image_t *image)
 	int i;
 	float dx = fabs(p1.x - p2.x) == 0 ? 1 : fabs(p1.x - p2.x);
 	float dy = fabs(p1.y - p2.y) == 0 ? 1: fabs(p1.y - p2.y);
-	int steps = dx > dy ? fabs(dx) : fabs(dy);
+	double steps = dx > dy ? fabs(dx) : fabs(dy);
 	float xinc = (p2.x - p1.x) / steps;
 	float yinc =  (p2.y - p1.y) / steps;
 
@@ -27,10 +28,10 @@ int draw_line(t_line line, mlx_image_t *image)
 	float X = p1.x;
 	float Y = p1.y;
 
-	for (int i = 0; i <= steps; i++)
+	for (int i = 0; i <= steps && i < 20000; i++)
 	{
-		if (X < image->width && X >= 0 && Y >= 0 && Y < image->width)
-			mlx_put_pixel(image, X, Y, line.color);
+		if (X <= image->width && X >= 0 && Y >= 0 && Y <= image->height)
+			mlx_put_pixel(image, round(X), round(Y), line.color);
 		X += xinc;
 		Y += yinc;
 	}

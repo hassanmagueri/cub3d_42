@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:51:11 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/31 17:43:05 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/01 11:49:40 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,11 @@ int low(int n1, int n2)
 int xtoj(int x)
 {
 	int j = x / TILE_SIZE;
-	printf("j: %d\n", j);
 	return (x / TILE_SIZE);
 }
 int ytoi(int y)
 {
 	int i = y / TILE_SIZE;
-	printf("i: %d\n", i);
 	return (y / TILE_SIZE);
 }
 
@@ -47,7 +45,6 @@ t_player new_player(t_data *data, int x, int y)
 	t_player player;
 
 	player.img = new_image_to_window(data->mlx, TILE_SIZE * data->map.width, TILE_SIZE * data->map.height);
-	printf("init width: %u\n", player.img->width * TILE_SIZE);
 	player.x = x;
 	player.y = y;
 	player.angle = degtorad(DEG);
@@ -55,7 +52,7 @@ t_player new_player(t_data *data, int x, int y)
 	player.rotation_speed = 3;
 	player.walk_direction = 0;
 	player.move_speed = 3;
-	player.radius = 150;
+	player.radius = P_RAD;
 	data->player = player;
 	return player;
 }
@@ -91,7 +88,7 @@ int draw_player(t_data *data)
 	player = data->player;
 	radius = 8;
 	img = data->player.img;
-	t_circle c = new_circle(player.x, player.y, 8, 0xFF0000FF);
+	t_circle c = new_circle(player.x, player.y, player.radius, 0xFF0000FF);
 	draw_circle(c, img);
 	create_vector_player(data);
 	// mlx_image_to_window(data->mlx, img, 0, 0);
@@ -103,7 +100,6 @@ mlx_image_t	*reset_img(t_data *data)
 {
 	// mlx_delete_image(data->mlx, data->player.img);
 	// return mlx_new_image(data->mlx, WIDTH, HEIGHT);
-	printf("width: %d, height: %d\n", data->player.img->width, data->player.img->height);
 	size_t i;
 	for (i = 0; i  < data->player.img->width; i++)
 	{
@@ -177,7 +173,8 @@ int	update_player(t_data *data)
 	if (!is_wall(data, new_x, new_y))
 		(1) && (player->x = new_x, player->y = new_y);
 	draw_player(data);
-	cast_rays(data->map, data->player ,&data->rays_ref);
+	cast_rays(data->map, data->player ,&data->rays);
+	project_walls(data);
 	player->walk_direction = 0;
 	player->rotation_angle = 0;
 	return (1);

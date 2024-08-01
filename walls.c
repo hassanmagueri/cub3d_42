@@ -6,11 +6,12 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:04:15 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/25 18:35:27 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/01 13:46:21 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./cub3d.h"
+#include "MLX42.h"
 
 double ray_distance(double dx, double dy)
 {
@@ -31,13 +32,13 @@ void project_walls(t_data *data)
 
 	if (img)
 		mlx_delete_image(data->mlx, img);
-	img = new_image_to_window(data->mlx, WIDTH, HEIGHT);
-	// mlx_image_t *img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
-	// mlx_image_to_window(data->mlx, img, 0, 0);
-	// mlx_delete_image(data->mlx, img);
+	img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	for(int i = 0; i < img->height; i++)
+		for(int j = 0; j < img->width; j++)
+			mlx_put_pixel( img, j, i, 0X10A27755);
+	mlx_image_to_window(data->mlx, img, data->map.width * TILE_SIZE,0);
 	while (i < NUM_RAYS)
 	{
-		printf("%d\n", i);
 		ray_dist = ray_distance(rays[i].dx, rays[i].dy);
 		wall_expected_height = (TILE_SIZE / ray_dist) * dist_prj_plane;
 		draw_wall(
@@ -46,7 +47,6 @@ void project_walls(t_data *data)
 		);
 		i++;
 	}
-	mlx_image_to_window(data->mlx, img, 0, 0);
 	// mlx_image_to_window(data->mlx, img);
 }
  

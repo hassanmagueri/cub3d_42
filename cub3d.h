@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/31 17:20:03 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/01 13:40:08 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,20 @@
 #include "MLX42.h"
 #include "utils/get_next_line/get_next_line.h"
 
-#define TILE_SIZE 32
+#define TILE_SIZE 8
 #define BACKGROUND 0xFD42EE55
 
-#define WIDTH TILE_SIZE * 14
-#define HEIGHT TILE_SIZE * 12
+#define WIDTH 3000
+#define HEIGHT 1200
 
-#define DEG 90
-#define P_RAD 8
-#define ROT_SPEED 3
-#define MOVE_SPEED 7
+#define DEG 0
+#define P_RAD TILE_SIZE / 7
+#define ROT_SPEED TILE_SIZE / 9
+#define MOVE_SPEED TILE_SIZE / 6
 
-#define NUM_RAYS 1000
+#define NUM_RAYS WIDTH
 #define FOV 60 * (M_PI / 180)
-#define RAY_RAD 1
+#define RAY_RAD 1000
 
 // ============= define colors ===========
 #define BLACK 0x000000FF
@@ -155,7 +155,7 @@ typedef struct s_data
 	mlx_t		*mlx;
 	t_player	player;
 	mlx_image_t	*player_img;
-	t_ray rays_ref[NUM_RAYS];
+	t_ray rays[NUM_RAYS];
 } t_data;
 // ===================== functions parsing =====================
 int ft_strcmp(char *str1, char *str2);
@@ -181,6 +181,7 @@ t_line new_line(t_point p1, t_point p2, int color);
 int draw_circle(t_circle circle, mlx_image_t *image);
 int draw_line(t_line line, mlx_image_t *image);
 int draw_react(t_rect rect, mlx_image_t *image);
+int	draw_wall(t_wall wall, mlx_image_t *image);
 
 // ================== player object ==================
 t_player new_player(t_data *data, int x, int y);
@@ -196,10 +197,14 @@ mlx_image_t *new_image_to_window(mlx_t *mlx, int width, int height);
 
 // ================== ray functions ==================
 int new_ray(t_data *data, double ray_angle);
-int cast_rays(t_map map, t_player player , t_ray (*rays_ref)[NUM_RAYS]);
+int cast_rays(t_map map, t_player player , t_ray (*rays)[NUM_RAYS]);
 // bool is_wall(t_map map, int x, int y);
 bool	is_wall(t_data *data, int x, int y);
 
 t_ray horizontal_ray(t_player player, t_map map, double ray_angle);
 t_ray vertical_ray(t_player player, t_map map, double ray_angle);
+
+// ================== walls functions ==================
+void project_walls(t_data *data);
+
 #endif

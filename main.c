@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/07/31 17:35:59 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/01 11:29:40 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,12 +120,7 @@ int32_t main(int ac, char const **av)
 	parse_map(&data);
 	init_clrs_dirs(&data);
 	// data.map = data.map_data;
-	printf("width %zu\n",data.map.width);
-	printf("height %zu\n",data.map.height);
 	int i=0;
-	while (data.map.layout[i]) {
-	printf("%s\n", data.map.layout[i++]);
-	}
 	// exit(0);
 
 	// char grid[][14] = {
@@ -150,20 +145,20 @@ int32_t main(int ac, char const **av)
 	// 	"11111111111111"
 	// 	};
 	// char grid[][14] = {
-	// 	"11111111111111",
-	// 	"10110001111111",
-	// 	"10000100101001",
-	// 	"10110010010001",
-	// 	"10110101001011",
-	// 	"100100P0000001",
-	// 	"10000101000011",
-	// 	"10000010000101",
-	// 	"10010001001011",
-	// 	"10100101000111",
-	// 	"10000101000011",
-	// 	"11111111111111"
+		// "11111111111111",
+		// "10110001111111",
+		// "10000100101001",
+		// "10110010010001",
+		// "10110101001011",
+		// "100100P0000001",
+		// "10000101000011",
+		// "10000010000101",
+		// "10010001001011",
+		// "10100101000111",
+		// "10000101000011",
+		// "11111111111111"
 	// 	};
-	data.mlx = mlx_init(data.map.width * TILE_SIZE,data.map.height * TILE_SIZE, "cub3D", false);
+	data.mlx = mlx_init(WIDTH + data.map.width * TILE_SIZE, HEIGHT, "cub3D", false);
 	render_map(&data);
 	// mlx_image_t *img = mlx_new_image(data.mlx, 1000, 1000);
 	// draw_line(

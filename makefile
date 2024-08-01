@@ -11,7 +11,7 @@ GET_NEXT_LINE=$(UTILS)/get_next_line
 NAME = cub3d
 MLX_NAME = libmlx42.a
 MLX_FLAGS = -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
-SRC = main.c draw_objects.c player.c mlx_help.c ray.c \
+SRC = main.c draw_objects.c player.c mlx_help.c ray.c walls.c\
 	$(GET_NEXT_LINE)/get_next_line.c \
 	$(GET_NEXT_LINE)/get_next_line_utils.c \
 	$(UTILS)/ft_strcmp.c $(UTILS)/ft_strlcat.c $(UTILS)/ft_putendl_fd.c $(UTILS)/ft_split.c \
