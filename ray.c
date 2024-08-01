@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:10:59 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/01 14:45:06 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/01 22:26:47 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,18 @@ double normalize_angle(double angle)
     return res;
 }
 
-t_ray low_ray(t_ray ray1, t_ray ray2)
+t_ray low_ray(t_ray ver, t_ray hor)
 {
-	double hyp1;
-	double hyp2;
+	double hyp_ver;
+	double hyp_hor;
 
-	hyp1 = pow(ray1.dx, 2) + pow(ray1.dy, 2);
-	hyp2 = pow(ray2.dx, 2) + pow(ray2.dy, 2);
-	if (hyp1 < hyp2)
-		return ray1;
-	return ray2;
+	hyp_ver = pow(ver.dx, 2) + pow(ver.dy, 2);
+	hyp_hor = pow(hor.dx, 2) + pow(hor.dy, 2);
+	// hor.is_vr = 0;
+	// ver.is_vr = 1;
+	if (hyp_ver < hyp_hor)
+		return ver;
+	return hor;
 }
 
 
@@ -119,7 +121,7 @@ t_ray vertical_ray(t_player player, t_map map, double ray_angle)
     }
 	// if (direct == 1)
 	// 	dx -= 1;
-	return ((t_ray){dx, dy, ray_angle});
+	return ((t_ray){dx, dy, ray_angle, 1, direct});
 }
 t_ray	horizontal_ray(t_player player, t_map map, double ray_angle)
 {
@@ -155,9 +157,10 @@ t_ray	horizontal_ray(t_player player, t_map map, double ray_angle)
 		dx = dy / tan(ray_angle);
 		i++;
 	}
+	
 	// if (direct == 1)
 	// 	dy -= 1;
-	return ((t_ray){dx, dy, ray_angle});
+	return ((t_ray){dx, dy, ray_angle, 0, direct});
 }
 // t_ray new_ray(t_data *data, double ray_angle)
 // {

@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/01 13:58:30 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/01 22:25:20 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@
 #define RAY_RAD 1000
 
 // ============= define colors ===========
-#define BLACK 0x000000FF
-#define WHITE 0xFFFFFFFF
-#define RED 0xFF0000FF
-#define LIME 0x00FF00FF
-#define BLUE 0x0000FFFF
-#define YELLOW 0xFFFF00FF
-#define CYAN 0x00FFFFFF
-#define MAGENTA 0xFF00FFFF
+#define BLACK	0x000000FF
+#define WHITE	0xFFFFFFFF
+#define RED		0xFF0000FF
+#define LIME	0x00FF00FF
+#define BLUE	0x0000FFFF
+#define YELLOW	0xFFFF00FF
+#define CYAN	0x00FFFFFF
+#define MAGENTA	0xFF00FFFF
 
 // Shades of grey with full opacity
 #define DARK_GREY 0x404040FF
@@ -66,6 +66,9 @@
 #define COLORS_H
 #define RED_E "\033[31m"
 #endif
+
+
+
 typedef struct t_colors
 {
 	int red;
@@ -115,6 +118,8 @@ typedef struct s_ray
 	double	dx;
 	double	dy;
 	double	angle;
+	bool	is_vr;
+	short	direct;
 } t_ray;
 
 typedef struct s_player

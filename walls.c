@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:04:15 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/01 16:39:10 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/01 22:33:42 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void project_walls(t_data *data)
 	int i;
 	t_ray *rays;
 	double  ray_dist;
-	double dist_prj_plane = (WIDTH / 2) / tan(FOV / 2);
+	// double dist_prj_plane = (WIDTH / 2) / tan(FOV / 2);
 	double wall_expected_height;
 	static mlx_image_t *img;
 	
@@ -39,15 +39,25 @@ void project_walls(t_data *data)
 	while (i < NUM_RAYS)
 	{
 		double correct_ray;
+		
 		ray_dist = ray_distance(rays[i].dx, rays[i].dy);
 		correct_ray = ray_dist * cos(rays[i].angle - data->player.angle);
 		wall_expected_height = (TILE_SIZE  * 600 / correct_ray) ;
+		int color = (rays[i].is_vr && rays[i].direct == 1) ? WHITE : BLUE;
+		if (rays[i].is_vr && rays[i].direct == 1)
+			color = WHITE;
+		else if (rays[i].is_vr && rays[i].direct == -1)
+			color = YELLOW;
+		else if (!rays[i].is_vr && rays[i].direct == 1)
+			color = BLUE;
+		else if (!rays[i].is_vr && rays[i].direct == -1)
+			color = GREY;
+		// color = (rays[i].is_vr && rays[i].direct == -1) ? YELLOW : GREY;
 		draw_wall(
-			(t_wall){i, (HEIGHT / 2) - (wall_expected_height / 2), 1, wall_expected_height, WHITE},
+			(t_wall){i, (HEIGHT / 2) - (wall_expected_height / 2), 1, wall_expected_height, color},
 			img
 		);
 		i++;
 	}
-	// mlx_image_to_window(data->mlx, img);
 }
  
