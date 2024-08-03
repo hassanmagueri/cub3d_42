@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/03 13:05:07 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/03 21:38:55 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ int32_t main(int ac, char const **av)
 		// "11111111111111"
 	// 	};
 	data.mlx = mlx_init(WIDTH , HEIGHT, "cub3D", false);
-	data.texture=mlx_load_png("./wall.png");
+	data.texture=mlx_load_png("./test.png");
 	render_map(&data);
 	mlx_loop_hook(data.mlx, ft_hook, &data);
 	mlx_loop(data.mlx);

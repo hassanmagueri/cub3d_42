@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/03 11:01:13 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/03 21:59:09 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
 #include "MLX42.h"
 #include "utils/get_next_line/get_next_line.h"
 
-#define TILE_SIZE 8
+#define TILE_SIZE 64
+#define SCALE TILE_SIZE * 0.2
 #define BACKGROUND 0xFD42EE55
 
 #define WIDTH 2000
@@ -33,7 +34,7 @@
 #define ROT_SPEED 5
 #define MOVE_SPEED 1
 
-#define NUM_RAYS WIDTH
+#define NUM_RAYS  WIDTH
 #define FOV 60 * (M_PI / 180)
 #define RAY_RAD 1000
 
