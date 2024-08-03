@@ -6,11 +6,13 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/01 11:29:40 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/03 13:05:07 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "MLX42.h"
 #include "cub3d.h"
+#include <stdint.h>
 #include <stdio.h>
 
 static size_t get_digits(int n)
@@ -138,7 +140,7 @@ int32_t main(int ac, char const **av)
 	// 	"10000010010111",
 	// 	"100000P0000001",
 	// 	"10000000000011",
-	// 	"10000000000101",
+	// 	"10000000000101"
 	// 	"10000000000001",
 	// 	"10000000000001",
 	// 	"10000000000001",
@@ -158,18 +160,9 @@ int32_t main(int ac, char const **av)
 		// "10000101000011",
 		// "11111111111111"
 	// 	};
-	data.mlx = mlx_init(WIDTH + data.map.width * TILE_SIZE, HEIGHT, "cub3D", false);
+	data.mlx = mlx_init(WIDTH , HEIGHT, "cub3D", false);
+	data.texture=mlx_load_png("./wall.png");
 	render_map(&data);
-	// mlx_image_t *img = mlx_new_image(data.mlx, 1000, 1000);
-	// draw_line(
-	// 	new_line(
-	// 			new_point(10 , 10),
-	// 			new_point(100 , 400),
-	// 			CYAN
-	// 		),
-	// 	img
-	// );
-	// mlx_image_to_window(data.mlx, img, 0, 0);
 	mlx_loop_hook(data.mlx, ft_hook, &data);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);

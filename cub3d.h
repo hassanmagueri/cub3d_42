@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/01 22:25:20 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/03 11:01:13 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@
 #define TILE_SIZE 8
 #define BACKGROUND 0xFD42EE55
 
-#define WIDTH 3000
+#define WIDTH 2000
 #define HEIGHT 1200
 
 #define DEG 0
 #define P_RAD TILE_SIZE / 7
 #define ROT_SPEED 5
-#define MOVE_SPEED 3
+#define MOVE_SPEED 1
 
 #define NUM_RAYS WIDTH
 #define FOV 60 * (M_PI / 180)
@@ -159,6 +159,7 @@ typedef struct s_data
 	t_clr ceiling;
 	mlx_t		*mlx;
 	t_player	player;
+	mlx_texture_t * texture;
 	mlx_image_t	*player_img;
 	t_ray rays[NUM_RAYS];
 } t_data;
