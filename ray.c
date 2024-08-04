@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:10:59 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/03 21:50:29 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/04 07:32:20 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ t_ray vertical_ray(t_player player, t_map map, double ray_angle)
 		direct = -1;
 		player_tile_x = floor(player.x / TILE_SIZE) * TILE_SIZE;
     }
-	printf("direct = %d\n", direct);
     player_x_distance = (player_tile_x - player.x) * direct;
     dx = player_x_distance * direct;
 	dy = dx * tan(ray_angle);

@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:04:15 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/03 21:56:55 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/04 07:30:57 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,43 +83,49 @@ void	ft_put_pixel(mlx_image_t *img, int x, int y, uint32_t color)
 // 	return (1);
 // }
 
-int wall_painting(t_data *data, t_ray ray, double ray_dist, double wall_height, mlx_image_t *img, int ray_index) {
+int wall_painting(t_data *data, t_ray ray, double wall_height, mlx_image_t *img, int x) {
 	t_map map = data->map;
 	uint32_t *p_clrs = (uint32_t *)data->texture->pixels;
-	static int n;
-	n++;
 	double wall_top_pixel = (HEIGHT / 2) - (wall_height / 2);
 	if (wall_top_pixel < 0) wall_top_pixel = 0;
 
-	double wall_hit_x = data->player.x + ray.dx * ray.direct;
-	double wall_hit_y = data->player.y + ray.dy * ray.direct;
-	// double wall_hit;
-
-	int x_col;
+	double wall_hit_x = data->player.x + ray.dx ;
+	double wall_hit_y = data->player.y + ray.dy ;
+	
+	int offX;
 	if (ray.is_vr)
-	{
-		x_col = (int)wall_hit_y % data->texture->width;
-		// wall_hit
-	}
+		offX = (int)wall_hit_y % data->texture->width;
 	else
-		x_col = (int)wall_hit_x % data->texture->width;
+		offX = (int)wall_hit_x % data->texture->width;
 
 	double wall_bottom_pixel = (HEIGHT / 2) + (wall_height / 2);
 	if (wall_bottom_pixel > HEIGHT) wall_bottom_pixel = HEIGHT;
 
-	int y = wall_top_pixel;
+	int y =0;
 	unsigned long index = 0;
+	while(y < wall_top_pixel)
+	{
+		mlx_put_pixel(img, x, y, CYAN);
+		y++;
+	}
+	y = wall_top_pixel;
 	while (wall_top_pixel <= wall_bottom_pixel && index < data->texture->width * data->texture->height)
 	{
 		int dist_top_text = y + (wall_height / 2) - (HEIGHT / 2);
+		// printf("dist_top_textures: %d\n", dist_top_text);
 		int offY = dist_top_text * data->texture->height / wall_height;
-		index = (data->texture->width * offY) + x_col;
+		index = (data->texture->width * offY) + offX;
 		if (index < data->texture->height * data->texture->width)
-			ft_put_pixel(img, ray_index , (int)wall_top_pixel, p_clrs[index]);
+			ft_put_pixel(img, x , (int)wall_top_pixel, p_clrs[index]);
 		wall_top_pixel++;
 		y++;
 	}
-	printf("y: %d\n", y);
+	while(y < HEIGHT)
+	{
+		mlx_put_pixel(img, x, y, BLACK);
+		y++;
+	}
+	// printf("y: %d\n", y);
 
 	return 1;
 }
@@ -145,8 +151,8 @@ void project_walls(t_data *data)
 		
 		ray_dist = ray_distance(rays[i].dx, rays[i].dy);
 		correct_ray = ray_dist * cos(rays[i].angle - data->player.angle);
-		wall_expected_height = (data->texture->height * 600 / correct_ray) ;
-		wall_painting(data,rays[i], ray_dist, wall_expected_height, img ,  i);
+		wall_expected_height = (data->texture->height * 900 / correct_ray) ;
+		wall_painting(data,rays[i], wall_expected_height, img ,  i);
 		i++;
 	}
 }
