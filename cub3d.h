@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/04 07:32:39 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/04 18:41:42 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@
 #define WIDTH 2000
 #define HEIGHT 1200
 
-#define DEG 0
+#define DEG 90
 #define P_RAD TILE_SIZE / 7
 #define ROT_SPEED 5
-#define MOVE_SPEED 3
+#define MOVE_SPEED 10
 
 #define NUM_RAYS  WIDTH
 #define FOV 60 * (M_PI / 180)

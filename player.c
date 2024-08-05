@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:51:11 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/03 21:52:23 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/05 09:36:06 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,6 @@ int draw_player(t_data *data)
 
 mlx_image_t	*reset_img(t_data *data)
 {
-	// mlx_delete_image(data->mlx, data->player.img);
-	// return mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	size_t i;
 	for (i = 0; i  < data->player.img->width; i++)
 	{

@@ -6,14 +6,11 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/03 21:38:55 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/05 09:30:23 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42.h"
 #include "cub3d.h"
-#include <stdint.h>
-#include <stdio.h>
 
 static size_t get_digits(int n)
 {
@@ -23,32 +20,6 @@ static size_t get_digits(int n)
 	while (n /= 10)
 		i++;
 	return (i);
-}
-
-char *ft_itoa(int n)
-{
-	char *str_num;
-	size_t digits;
-	long int num;
-
-	num = n;
-	digits = get_digits(n);
-	if (n < 0)
-	{
-		num *= -1;
-		digits++;
-	}
-	if (!(str_num = (char *)malloc(sizeof(char) * (digits + 1))))
-		return (NULL);
-	*(str_num + digits) = 0;
-	while (digits--)
-	{
-		*(str_num + digits) = num % 10 + '0';
-		num = num / 10;
-	}
-	if (n < 0)
-		*(str_num + 0) = '-';
-	return (str_num);
 }
 
 int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
@@ -123,45 +94,9 @@ int32_t main(int ac, char const **av)
 	init_clrs_dirs(&data);
 	// data.map = data.map_data;
 	int i=0;
-	// exit(0);
-
-	// char grid[][14] = {
-	// 	"111111",
-	// 	"1P1101",
-	// 	"100001",
-	// 	"101101",
-	// 	"111111"
-	// 	};
-	// char grid[][14] = {
-	// 	"11111111111111",
-	// 	"10000011111111",
-	// 	"10000000101001",
-	// 	"10000001000111",
-	// 	"10000010010111",
-	// 	"100000P0000001",
-	// 	"10000000000011",
-	// 	"10000000000101"
-	// 	"10000000000001",
-	// 	"10000000000001",
-	// 	"10000000000001",
-	// 	"11111111111111"
-	// 	};
-	// char grid[][14] = {
-		// "11111111111111",
-		// "10110001111111",
-		// "10000100101001",
-		// "10110010010001",
-		// "10110101001011",
-		// "100100P0000001",
-		// "10000101000011",
-		// "10000010000101",
-		// "10010001001011",
-		// "10100101000111",
-		// "10000101000011",
-		// "11111111111111"
-	// 	};
 	data.mlx = mlx_init(WIDTH , HEIGHT, "cub3D", false);
 	data.texture=mlx_load_png("./test.png");
+	// data.texture=mlx_load_png("./wall_1024.png");
 	render_map(&data);
 	mlx_loop_hook(data.mlx, ft_hook, &data);
 	mlx_loop(data.mlx);
