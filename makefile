@@ -1,15 +1,11 @@
-
 CC = cc -g -fsanitize=address #-Wall -Wextra -Werror0
-
-
 #==============folders==============#
 PARSING=parsing
 UTILS=utils
 GET_NEXT_LINE=$(UTILS)/get_next_line
 
-
 NAME = cub3D
-MLX_NAME = libmlx42.a
+MLX_NAME = MLX/libmlx42.a
 MLX_FLAGS = -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
 SRC = main.c draw_objects.c player.c mlx_help.c ray.c walls.c\
 	$(GET_NEXT_LINE)/get_next_line.c \

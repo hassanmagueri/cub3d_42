@@ -3,8 +3,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "MLX42.h"
-#define WIDTH 512
-#define HEIGHT 512
+#define WINDOW_WIDTH 512
+#define WINDOW_HEIGHT 512
 
 static void error(void)
 {
@@ -28,7 +28,7 @@ char *swap(char *str)
 int32_t	main(void)
 {
 	// Start mlx
-	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "Test", true);
+	mlx_t* mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "Test", true);
 	if (!mlx)
         error();
 

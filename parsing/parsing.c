@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 23:28:47 by belguabd          #+#    #+#             */
-/*   Updated: 2024/07/31 17:14:44 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/05 15:53:51 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,8 @@ void validate_top_map(t_data *data)
 	char **top_map = (char **)malloc(sizeof(char *) * 7);
 	if (!top_map)
 		ft_putendl_fd_color("Error\nmalloc failure", 2, RED_E);
-	fd = open("map.cub", O_RDONLY);
+	fd = open(FILE, O_RDONLY);
+	printf("image path %s\n", FILE);
 	if (fd < 0)
 		ft_putendl_fd_color("Error\nOpen failure", 2, RED_E);
 	int i = 0;
@@ -184,7 +185,7 @@ void set_map(t_data *data)
 		ft_putendl_fd_color("Error\n malloc failure", 2, RED_E);
 	if (!data->dirs)
 		ft_putendl_fd_color("Error\n malloc failure", 2, RED_E);
-	int fd = open("map.cub", O_RDONLY);
+	int fd = open(FILE, O_RDONLY);
 	if (fd < 0)
 		ft_putendl_fd_color("Error\nopen failure", 2, RED_E);
 	i = 0;
@@ -232,7 +233,7 @@ void load_map_data(t_data *data)
 	int fd;
 	char *line;
 
-	fd = open("map.cub", O_RDONLY, 0666);
+	fd = open(FILE, O_RDONLY, 0666);
 	if (fd < 0)
 		ft_putendl_fd_color("Error\nOpen failure", 2, RED_E);
 	line = get_next_line(fd);
@@ -243,7 +244,7 @@ void load_map_data(t_data *data)
 		line = get_next_line(fd);
 	}
 	close(fd);
-	fd = open("map.cub", O_RDONLY, 0666);
+	fd = open(FILE, O_RDONLY, 0666);
 	if (fd < 0)
 		ft_putendl_fd_color("Error\nOpen failure", 2, RED_E);
 	data->map_data = (char **)malloc(sizeof(char *) * (count + 1));
@@ -260,6 +261,7 @@ void load_map_data(t_data *data)
 	}
 	data->map_data[i] = NULL;
 }
+
 int get_len_dirs(char **args)
 {
 	int i;

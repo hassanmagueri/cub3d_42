@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:51:11 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/05 09:36:06 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/05 15:59:53 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,15 @@ int ytoi(int y)
 	return (y / TILE_SIZE);
 }
 
-t_player new_player(t_data *data, int x, int y)
+t_player new_player(t_data *data, int x, int y, int angle)
 {
 	t_player player;
 
 	player.img = new_image_to_window(data->mlx, TILE_SIZE * data->map.width, TILE_SIZE * data->map.height);
 	player.x = x;
 	player.y = y;
-	player.angle = degtorad(DEG);
+	player.angle = degtorad(angle);
+	printf("angle: %f\n", radtodeg(player.angle));
 	player.rotation_angle = 0;
 	player.rotation_speed = 3;
 	player.walk_direction = 0;
@@ -96,26 +97,6 @@ int draw_player(t_data *data)
 	return (1);
 }
 
-mlx_image_t	*reset_img(t_data *data)
-{
-	size_t i;
-	for (i = 0; i  < data->player.img->width; i++)
-	{
-		size_t j;
-		for (j = 0; j < data->player.img->height; j++)
-			mlx_put_pixel(data->player.img, i, j, 0);
-	}
-	return data->player.img;
-}
-
-// t_point translate_to_index(t_point p)
-// {
-// 	t_point res;
-
-	
-// }
-
-// bool is_wall(char **map, int x, int y)
 bool	is_wall(t_data *data, int x, int y)
 {
 	int	i;
@@ -157,7 +138,7 @@ int	update_player(t_data *data)
 	double		walk_inside;
 
 	player = &data->player;
-	player->img =  reset_img(data);
+	player->img =  reset_img(data->player.img);
 	player->angle += player->rotation_angle * ROT_SPEED;
 	walk_inside = 0;
 	if (abs(player->walk_direction) == 2)

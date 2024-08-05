@@ -6,12 +6,11 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:46 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/01 11:46:21 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/05 10:26:44 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./cub3d.h"
-#include <math.h>
 
 int draw_line(t_line line, mlx_image_t *image)
 {
@@ -56,30 +55,6 @@ void set_background(mlx_image_t *image, int color)
 	}
 }
 
-// int	draw_circle(t_data *data, int radius, int color, mlx_image_t *image)
-// {
-// 	mlx_image_t *circle;
-// 	t_point center;
-// 	int x;
-// 	int y;
-
-// 	center = new_point(image->width / 2, image->height / 2);
-// 	set_background(image, BACKGROUND);
-// 	x = center.x - radius;
-// 	while (x < center.x + radius)
-// 	{
-// 		y = center.y - radius;
-// 		while (y < center.y + radius)
-// 		{
-// 			if ((pow(x - center.x, 2) + pow(y - center.y, 2)) < pow(radius, 2))
-// 				mlx_put_pixel(image, x, y, color);
-// 			y++;
-// 		}
-// 		x++;
-// 	}
-// 	return 1;
-// }
-
 int	draw_circle(t_circle circle, mlx_image_t *image)
 {
 	int x;
@@ -101,7 +76,6 @@ int	draw_circle(t_circle circle, mlx_image_t *image)
 	}
 	return 1;
 }
-
 
 int	draw_react(t_rect rect, mlx_image_t *image)
 {
@@ -128,9 +102,7 @@ int	draw_wall(t_wall wall, mlx_image_t *image)
 {
 	double i;
 	double j;
-	// do border_with;
 
-	// border_with = 0;
 	i = wall.x;
 	while (i < (wall.x + wall.width))
 	{
@@ -145,23 +117,3 @@ int	draw_wall(t_wall wall, mlx_image_t *image)
 	}
 	return (1);
 }
-
-// int	draw_react(t_data *data, t_point p, int color, mlx_image_t *image)
-// {
-// 	int i;
-// 	int j;
-
-	
-// 	i = 1;
-// 	while (i < p.height - 1)
-// 	{
-// 		j = 1;
-// 		while (j < p.width - 1)
-// 		{
-// 			mlx_put_pixel(image, j, i, color);
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// 	return (1);
-// }

@@ -1,10 +1,10 @@
-NO ./path_to_the_north_texture
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+NO ./images/wall1.png
+SO ./images/wall2.png
+WE ./images/wall3.png
+EA ./images/wall4.png
 
-F 220,100,12
-C 225,30,0
+F 255,133,0
+C 0,10,0
 
 11111111111111111111111111
 10110001111111111111111111

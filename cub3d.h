@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/04 18:41:42 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/05 15:59:10 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,56 +19,56 @@
 #include <float.h>
 #include <math.h>
 #include <stdbool.h>
-#include "MLX42.h"
+#include "./MLX/MLX42.h"
 #include "utils/get_next_line/get_next_line.h"
 
 #define TILE_SIZE 64
 #define SCALE TILE_SIZE * 0.2
 #define BACKGROUND 0xFD42EE55
 
-#define WIDTH 2000
-#define HEIGHT 1200
+#define WINDOW_WIDTH 2000
+#define WINDOW_HEIGHT 1200
 
 #define DEG 90
 #define P_RAD TILE_SIZE / 7
-#define ROT_SPEED 5
-#define MOVE_SPEED 10
+#define ROT_SPEED 7
+#define MOVE_SPEED 15
 
-#define NUM_RAYS  WIDTH
+#define FILE "maps/map1.cub"
+
+#define NUM_RAYS  WINDOW_WIDTH
 #define FOV 60 * (M_PI / 180)
 #define RAY_RAD 1000
 
 // ============= define colors ===========
-#define BLACK	0x000000FF
-#define WHITE	0xFFFFFFFF
-#define RED		0xFF0000FF
-#define LIME	0x00FF00FF
-#define BLUE	0x0000FFFF
-#define YELLOW	0xFFFF00FF
-#define CYAN	0x00FFFFFF
-#define MAGENTA	0xFF00FFFF
+#define BLACK			0x000000FF
+#define WHITE			0xFFFFFFFF
+#define RED				0xFF0000FF
+#define LIME			0x00FF00FF
+#define BLUE			0x0000FFFF
+#define YELLOW			0xFFFF00FF
+#define CYAN			0x00FFFFFF
+#define MAGENTA			0xFF00FFFF
 
 // Shades of grey with full opacity
-#define DARK_GREY 0x404040FF
-#define GREY 0x808080FF
-#define LIGHT_GREY 0xC0C0C0FF
+#define GREY			0x808080FF
+#define DARK_GREY		0x404040FF
+#define LIGHT_GREY		0xC0C0C0FF
 
 // Semi-transparent colors (50% opacity)
-#define SEMI_BLACK 0x00000080
-#define SEMI_WHITE 0xFFFFFF80
-#define SEMI_RED 0xFF000080
-#define SEMI_LIME 0x00FF0080
-#define SEMI_BLUE 0x0000FF80
-#define SEMI_YELLOW 0xFFFF0080
-#define SEMI_CYAN 0x00FFFF80
-#define SEMI_MAGENTA 0xFF00FF80
+#define SEMI_RED		0xFF000080
+#define SEMI_LIME		0x00FF0080
+#define SEMI_BLUE		0x0000FF80
+#define SEMI_CYAN		0x00FFFF80
+#define SEMI_BLACK		0x00000080
+#define SEMI_WHITE		0xFFFFFF80
+#define SEMI_YELLOW		0xFFFF0080
+#define SEMI_MAGENTA	0xFF00FF80
 
 #ifndef COLORS_H
 #define COLORS_H
 #define RED_E "\033[31m"
 #endif
-
-
 
 typedef struct t_colors
 {
@@ -143,26 +143,33 @@ typedef struct s_map
 	char	**layout;
 } t_map;
 
+typedef struct s_textures
+{
+	mlx_texture_t *NO;	
+	mlx_texture_t *SO;	
+	mlx_texture_t *WE;	
+	mlx_texture_t *EA;	
+} t_textures;
+
 typedef struct s_data
 {
-	char *NO;
-	char *SO;
-	char *WE;
-	char *EA;
-	char **map_data;
-	char **dirs;
-	char **clrs;
-	// char **map;
-	// int width;
-	// int height;
-	t_map map;
-	t_clr floor;
-	t_clr ceiling;
-	mlx_t		*mlx;
-	t_player	player;
-	mlx_texture_t * texture;
-	mlx_image_t	*player_img;
-	t_ray rays[NUM_RAYS];
+	char			*NO;
+	char			*SO;
+	char			*WE;
+	char			*EA;
+	char			**map_data;
+	char			**dirs;
+	char			**clrs;
+	t_map			map;
+	t_clr			floor;
+	t_clr			ceiling;
+	mlx_t			*mlx;
+	t_ray			rays[NUM_RAYS];
+	t_player		player;
+	t_textures		textures;
+	mlx_image_t		*player_img;
+	mlx_image_t		*window_img;
+	mlx_texture_t	*texture;
 } t_data;
 // ===================== functions parsing =====================
 int ft_strcmp(char *str1, char *str2);
@@ -191,7 +198,7 @@ int draw_react(t_rect rect, mlx_image_t *image);
 int	draw_wall(t_wall wall, mlx_image_t *image);
 
 // ================== player object ==================
-t_player new_player(t_data *data, int x, int y);
+t_player new_player(t_data *data, int x, int y, int angle);
 int draw_player(t_data *data);
 int create_vector_player(t_data *data);
 int update_player(t_data *data);
@@ -201,6 +208,8 @@ mlx_image_t *clear_image(mlx_t *mlx, mlx_image_t *img);
 double degtorad(int deg);
 double radtodeg(double rad);
 mlx_image_t *new_image_to_window(mlx_t *mlx, int width, int height);
+mlx_image_t	*reset_img(mlx_image_t *img);
+int32_t ft_pixel(t_clr color);
 
 // ================== ray functions ==================
 int new_ray(t_data *data, double ray_angle);

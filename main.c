@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/05 09:30:23 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/05 15:58:35 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,6 @@ static size_t get_digits(int n)
 	while (n /= 10)
 		i++;
 	return (i);
-}
-
-int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
-{
-	return (r << 24 | g << 16 | b << 8 | a);
 }
 
 void ft_hook(void *param)
@@ -55,22 +50,33 @@ int render_map(t_data *data)
 {
 	mlx_image_t *map_img;
 	mlx_image_t *player_img = data->player.img;
+	t_map		map;
 	int i;
 	int j;
 
 	i = 0;
-	map_img = new_image_to_window(data->mlx, TILE_SIZE * data->map.width, TILE_SIZE * data->map.height);
-	while (i < data->map.height)
+	map = data->map;
+	map_img = new_image_to_window(data->mlx, TILE_SIZE * map.width, TILE_SIZE * map.height);
+	while (i < map.height)
 	{
 		j = 0;
-		while (j < data->map.width)
+		while (j < map.width)
 		{
-			if (data->map.layout[i][j] == '1')
+			if (map.layout[i][j] == '1')
 				draw_react((t_rect){i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, LIGHT_GREY}, map_img);
-			if (data->map.layout[i][j] == 'N')
+			if (map.layout[i][j] == 'N' || map.layout[i][j] == 'S' || map.layout[i][j] == 'W' || map.layout[i][j] == 'E')
 			{
+				int angle;
+				if (map.layout[i][j] == 'N')
+					angle = 270;
+				else if (map.layout[i][j] == 'W')
+					angle = 180;
+				else if (map.layout[i][j] == 'S')
+					angle = 90;
+				else if (map.layout[i][j] == 'E')
+					angle = 0;
 				data->player = new_player(data, j * TILE_SIZE + TILE_SIZE / 2,
-											i * TILE_SIZE + TILE_SIZE / 2);
+											i * TILE_SIZE + TILE_SIZE / 2, angle);
 			}
 			j++;
 		}
@@ -94,9 +100,16 @@ int32_t main(int ac, char const **av)
 	init_clrs_dirs(&data);
 	// data.map = data.map_data;
 	int i=0;
-	data.mlx = mlx_init(WIDTH , HEIGHT, "cub3D", false);
-	data.texture=mlx_load_png("./test.png");
-	// data.texture=mlx_load_png("./wall_1024.png");
+	data.mlx = mlx_init(WINDOW_WIDTH , WINDOW_HEIGHT, "cub3D", false);
+	data.texture=mlx_load_png("./images/test.png");
+	printf("images path: %s\n", data.SO);
+	data.textures.EA = mlx_load_png(data.EA);
+	data.textures.NO = mlx_load_png(data.NO);
+	data.textures.SO = mlx_load_png(data.SO);
+	data.textures.WE = mlx_load_png(data.WE);
+	printf("width: %d\n", data.textures.NO->width);
+	// data.texture=mlx_load_png("./images/wall_1024.png");
+	data.window_img = mlx_new_image(data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	render_map(&data);
 	mlx_loop_hook(data.mlx, ft_hook, &data);
 	mlx_loop(data.mlx);
