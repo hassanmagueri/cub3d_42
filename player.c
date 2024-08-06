@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:51:11 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/05 15:59:53 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:35:25 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ t_player new_player(t_data *data, int x, int y, int angle)
 {
 	t_player player;
 
-	player.img = new_image_to_window(data->mlx, TILE_SIZE * data->map.width, TILE_SIZE * data->map.height);
+	player.img = new_image_to_window(data->mlx, TILE_SIZE * SCALE * data->map.width, TILE_SIZE * SCALE * data->map.height);
 	player.x = x;
 	player.y = y;
 	player.angle = degtorad(angle);
-	printf("angle: %f\n", radtodeg(player.angle));
+	// printf("angle: %f\n", radtodeg(player.angle));
 	player.rotation_angle = 0;
 	player.rotation_speed = 3;
 	player.walk_direction = 0;
@@ -61,20 +61,15 @@ t_player new_player(t_data *data, int x, int y, int angle)
 int create_vector_player(t_data *data)
 {
 	t_player player = data->player;
-	t_point p2;
 	t_line line;
 
-	p2 = new_point(
-		data->player.x + (cos(player.angle) * player.radius),
-		data->player.y + (sin(player.angle) * player.radius)
-	);
 	line = new_line(
-			new_point(player.x, player.y),
+			new_point(player.x * SCALE, player.y * SCALE),
 			new_point(
-				data->player.x + (cos(player.angle) * player.radius),
-				data->player.y + (sin(player.angle) * player.radius)
+				((data->player.x + cos(player.angle) * player.radius) * SCALE),
+				((data->player.y + sin(player.angle) * player.radius) * SCALE)
 			)
-			, 0xFFFF00FF
+			, RED
 		);
 	draw_line(line, data->player.img);
 	return (1);
@@ -89,10 +84,9 @@ int draw_player(t_data *data)
 	player = data->player;
 	radius = 8;
 	img = data->player.img;
-	t_circle c = new_circle(player.x, player.y, player.radius, 0xFF0000FF);
+	t_circle c = new_circle(player.x * SCALE, player.y * SCALE, player.radius, 0xFF0000FF);
 	draw_circle(c, img);
 	create_vector_player(data);
-	// mlx_image_to_window(data->mlx, img, 0, 0);
 	data->player_img = img;
 	return (1);
 }
@@ -152,8 +146,8 @@ int	update_player(t_data *data)
 	if (!is_wall(data, new_x, new_y))
 		(1) && (player->x = new_x, player->y = new_y);
 	draw_player(data);
-	cast_rays(data->map, data->player ,&data->rays);
-	project_walls(data);
+	cast_rays(data, data->map, data->player ,&data->rays);
+	// project_walls(data);
 	player->walk_direction = 0;
 	player->rotation_angle = 0;
 	return (1);

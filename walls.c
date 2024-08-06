@@ -6,12 +6,11 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:04:15 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/05 13:27:50 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:36:40 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./cub3d.h"
-#include <stdint.h>
 
 double ray_distance(double dx, double dy)
 {
@@ -177,40 +176,66 @@ int wall_painting(t_data *data, t_ray ray, double wall_height, mlx_image_t *img,
 	return (1);
 }
 
-void project_walls(t_data *data)
+// void project_walls(t_data *data)
+// {
+	
+// 	int i;
+// 	t_ray *rays;
+// 	double  ray_dist;
+// 	double wall_expected_height;
+// 	t_textures textures;
+// 	static mlx_image_t *img;
+	
+// 	rays = data->rays;
+// 	i = 0;
+// 	// if (img)
+// 	// 	mlx_delete_image(data->mlx, img);
+// 	// reset_img(data->window_img);
+// 	img = data->window_img;
+// 	int distanceProjectionPlane = (WINDOW_WIDTH / 2) / tan(FOV / 2);
+// 	textures = data->textures;
+// 	while (i < NUM_RAYS)
+// 	{
+// 		double correct_ray;
+
+// 		ray_dist = ray_distance(rays[i].dx, rays[i].dy);
+// 		correct_ray = ray_dist * cos(rays[i].angle - data->player.angle);
+// 		wall_expected_height = (TILE_SIZE / correct_ray * distanceProjectionPlane);
+// 		if (rays[i].direct == -1 && rays[i].is_vr)
+// 			wall_painting(data,rays[i], wall_expected_height, img , i, textures.NO);
+// 		else if (rays[i].direct == -1 && !rays[i].is_vr)
+// 			wall_painting(data,rays[i], wall_expected_height, img , i, textures.SO);
+// 		else if (rays[i].direct == 1 && rays[i].is_vr)
+// 			wall_painting(data,rays[i], wall_expected_height, img , i, textures.WE);
+// 		else if (rays[i].direct == 1 && !rays[i].is_vr)
+// 			wall_painting(data,rays[i], wall_expected_height, img , i, textures.EA);
+// 		i++;
+// 	}
+// }
+
+// void project_walls(t_data *data)
+void project_walls(t_data *data, t_ray ray, int x)
 {
 	
-	int i;
-	t_ray *rays;
 	double  ray_dist;
 	double wall_expected_height;
 	t_textures textures;
 	static mlx_image_t *img;
-	
-	rays = data->rays;
-	i = 0;
-	// if (img)
-	// 	mlx_delete_image(data->mlx, img);
-	// reset_img()
+
 	img = data->window_img;
-	mlx_image_to_window(data->mlx, img, 0,0);
 	int distanceProjectionPlane = (WINDOW_WIDTH / 2) / tan(FOV / 2);
 	textures = data->textures;
-	while (i < NUM_RAYS)
-	{
-		double correct_ray;
+	double correct_ray;
 
-		ray_dist = ray_distance(rays[i].dx, rays[i].dy);
-		correct_ray = ray_dist * cos(rays[i].angle - data->player.angle);
-		wall_expected_height = (TILE_SIZE / correct_ray * distanceProjectionPlane);
-		if (rays[i].direct == -1 && rays[i].is_vr)
-			wall_painting(data,rays[i], wall_expected_height, img , i, textures.NO);
-		else if (rays[i].direct == -1 && !rays[i].is_vr)
-			wall_painting(data,rays[i], wall_expected_height, img , i, textures.SO);
-		else if (rays[i].direct == 1 && rays[i].is_vr)
-			wall_painting(data,rays[i], wall_expected_height, img , i, textures.WE);
-		else if (rays[i].direct == 1 && !rays[i].is_vr)
-			wall_painting(data,rays[i], wall_expected_height, img , i, textures.EA);
-		i++;
-	}
+	ray_dist = ray_distance(ray.dx, ray.dy);
+	correct_ray = ray_dist * cos(ray.angle - data->player.angle);
+	wall_expected_height = (TILE_SIZE / correct_ray * distanceProjectionPlane);
+	if (ray.direct == -1 && ray.is_vr)
+		wall_painting(data,ray, wall_expected_height, img , x, textures.NO);
+	else if (ray.direct == -1 && !ray.is_vr)
+		wall_painting(data,ray, wall_expected_height, img , x, textures.SO);
+	else if (ray.direct == 1 && ray.is_vr)
+		wall_painting(data,ray, wall_expected_height, img , x, textures.WE);
+	else if (ray.direct == 1 && !ray.is_vr)
+		wall_painting(data,ray, wall_expected_height, img , x, textures.EA);
 }

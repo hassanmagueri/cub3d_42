@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:46 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/05 10:26:44 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/05 22:34:05 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int draw_line(t_line line, mlx_image_t *image)
 	float X = p1.x;
 	float Y = p1.y;
 
-	for (int i = 0; i <= steps && i < 20000; i++)
+	for (int i = 0; i <= steps; i++)
 	{
-		if (X <= image->width && X >= 0 && Y >= 0 && Y <= image->height)
-			mlx_put_pixel(image, round(X), round(Y), line.color);
+		if (X < image->width && X >= 0 && Y >= 0 && Y < image->height)
+			mlx_put_pixel(image, X, Y, line.color);
 		X += xinc;
 		Y += yinc;
 	}
@@ -85,10 +85,10 @@ int	draw_react(t_rect rect, mlx_image_t *image)
 
 	// border_with = 0;
 	i = rect.x;
-	while (i < rect.x + rect.side )
+	while (i <= rect.x + rect.side )
 	{
 		j = rect.y;
-		while (j < rect.y + rect.side)
+		while (j <= rect.y + rect.side)
 		{
 			mlx_put_pixel(image, j, i, SEMI_BLACK);
 			j++;

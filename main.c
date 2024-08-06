@@ -6,10 +6,11 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/05 15:58:35 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:57:29 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "MLX/MLX42.h"
 #include "cub3d.h"
 
 static size_t get_digits(int n)
@@ -26,6 +27,7 @@ void ft_hook(void *param)
 {
 	t_data *data = param;
 	t_player *player;
+
 
 	player = &data->player;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
@@ -56,14 +58,14 @@ int render_map(t_data *data)
 
 	i = 0;
 	map = data->map;
-	map_img = new_image_to_window(data->mlx, TILE_SIZE * map.width, TILE_SIZE * map.height);
+	map_img = new_image_to_window(data->mlx, TILE_SIZE * SCALE * map.width, TILE_SIZE * SCALE * map.height);
 	while (i < map.height)
 	{
 		j = 0;
 		while (j < map.width)
 		{
 			if (map.layout[i][j] == '1')
-				draw_react((t_rect){i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, LIGHT_GREY}, map_img);
+				draw_react((t_rect){i * TILE_SIZE * SCALE, j * TILE_SIZE * SCALE, TILE_SIZE * SCALE, LIGHT_GREY}, map_img);
 			if (map.layout[i][j] == 'N' || map.layout[i][j] == 'S' || map.layout[i][j] == 'W' || map.layout[i][j] == 'E')
 			{
 				int angle;
@@ -101,15 +103,16 @@ int32_t main(int ac, char const **av)
 	// data.map = data.map_data;
 	int i=0;
 	data.mlx = mlx_init(WINDOW_WIDTH , WINDOW_HEIGHT, "cub3D", false);
-	data.texture=mlx_load_png("./images/test.png");
-	printf("images path: %s\n", data.SO);
+	data.texture = mlx_load_png("./images/test.png");
+	// printf("images path: %s\n", data.SO);
 	data.textures.EA = mlx_load_png(data.EA);
 	data.textures.NO = mlx_load_png(data.NO);
 	data.textures.SO = mlx_load_png(data.SO);
 	data.textures.WE = mlx_load_png(data.WE);
-	printf("width: %d\n", data.textures.NO->width);
-	// data.texture=mlx_load_png("./images/wall_1024.png");
+	// printf("width: %d\n", data.textures.NO->width);
 	data.window_img = mlx_new_image(data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	mlx_image_to_window(data.mlx, data.window_img, 0, 0);
+	// data.texture=mlx_load_png("./images/wall_1024.png");
 	render_map(&data);
 	mlx_loop_hook(data.mlx, ft_hook, &data);
 	mlx_loop(data.mlx);

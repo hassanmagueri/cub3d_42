@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/05 15:59:10 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:35:50 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,21 @@
 #include "./MLX/MLX42.h"
 #include "utils/get_next_line/get_next_line.h"
 
-#define TILE_SIZE 64
-#define SCALE TILE_SIZE * 0.2
+#define TILE_SIZE 1024
+#define SCALE 0.02
 #define BACKGROUND 0xFD42EE55
 
 #define WINDOW_WIDTH 2000
 #define WINDOW_HEIGHT 1200
 
 #define DEG 90
-#define P_RAD TILE_SIZE / 7
-#define ROT_SPEED 7
-#define MOVE_SPEED 15
+#define P_RAD 4
+#define ROT_SPEED 10
+#define MOVE_SPEED 120
 
 #define FILE "maps/map1.cub"
 
-#define NUM_RAYS  WINDOW_WIDTH
+#define NUM_RAYS WINDOW_WIDTH
 #define FOV 60 * (M_PI / 180)
 #define RAY_RAD 1000
 
@@ -213,7 +213,7 @@ int32_t ft_pixel(t_clr color);
 
 // ================== ray functions ==================
 int new_ray(t_data *data, double ray_angle);
-int cast_rays(t_map map, t_player player , t_ray (*rays)[NUM_RAYS]);
+int cast_rays(t_data *data, t_map map, t_player player , t_ray (*rays)[NUM_RAYS]);
 // bool is_wall(t_map map, int x, int y);
 bool	is_wall(t_data *data, int x, int y);
 
@@ -221,6 +221,6 @@ t_ray horizontal_ray(t_player player, t_map map, double ray_angle);
 t_ray vertical_ray(t_player player, t_map map, double ray_angle);
 
 // ================== walls functions ==================
-void project_walls(t_data *data);
+void project_walls(t_data *data, t_ray ray, int x);
 
 #endif
