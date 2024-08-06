@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/05 15:58:35 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:50:01 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int render_map(t_data *data)
 {
 	mlx_image_t *map_img;
 	mlx_image_t *player_img = data->player.img;
-	t_map		map;
+	t_map map;
 	int i;
 	int j;
 
@@ -76,15 +76,64 @@ int render_map(t_data *data)
 				else if (map.layout[i][j] == 'E')
 					angle = 0;
 				data->player = new_player(data, j * TILE_SIZE + TILE_SIZE / 2,
-											i * TILE_SIZE + TILE_SIZE / 2, angle);
+										  i * TILE_SIZE + TILE_SIZE / 2, angle);
 			}
 			j++;
 		}
-		
+
 		i++;
 	}
 	update_player(data);
 	return (1);
+}
+void animation_sprite(void *arg)
+{
+	t_data *data = (t_data *)arg;
+	mlx_image_to_window(data->mlx, data->img_spt[0], 400, 450);
+}
+
+// char *ft_str_join_three(char *path, int index, char *png)
+// {
+// }
+
+void ft_strcpy(char *dest, char *src)
+{
+	int i;
+	i = 0;
+	while (src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+}
+
+void ft_strcut(char *dest, char *src)
+{
+	while (*dest)
+		dest++;
+	while (*src)
+		*dest++ = *src++;
+	*dest = '\0';
+}
+void load_images(t_data *data)
+{
+
+	int i = 0;
+	
+	while (i < NUM_IMAGES)
+	{
+		char path[100] = "./sprite_gun/StechkinEx";
+		char index[10];
+		char png[10];
+		ft_strcpy(index, ft_itoa(i + 1));
+		ft_strcpy(png, ".png");
+		ft_strcut(path, index);
+		ft_strcut(path, png);
+		data->txr_spt[i] = mlx_load_png(path);
+		data->img_spt[i] = mlx_texture_to_image(data->mlx, data->txr_spt[i]);
+		i++;
+	}
 }
 
 int32_t main(int ac, char const **av)
@@ -111,6 +160,7 @@ int32_t main(int ac, char const **av)
 	// data.texture=mlx_load_png("./images/wall_1024.png");
 	data.window_img = mlx_new_image(data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	render_map(&data);
+	mlx_loop_hook(data.mlx, animation_sprite, &data);
 	mlx_loop_hook(data.mlx, ft_hook, &data);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);
