@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/06 16:35:50 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:49:57 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@
 #define SCALE 0.02
 #define BACKGROUND 0xFD42EE55
 
-#define WINDOW_WIDTH 2000
-#define WINDOW_HEIGHT 1200
+#define WINDOW_WIDTH 1500
+#define WINDOW_HEIGHT 1000
 
 #define DEG 90
 #define P_RAD 4
-#define ROT_SPEED 10
-#define MOVE_SPEED 120
+#define ROT_SPEED 20
+#define MOVE_SPEED 220
 
 #define FILE "maps/map1.cub"
 
