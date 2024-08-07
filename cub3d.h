@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/06 16:49:57 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/07 01:01:40 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 #include "./MLX/MLX42.h"
 #include "utils/get_next_line/get_next_line.h"
 
+
+#define NUM_IMAGES 68
 #define TILE_SIZE 1024
 #define SCALE 0.02
 #define BACKGROUND 0xFD42EE55
@@ -92,11 +94,11 @@ typedef struct s_rect
 
 typedef struct s_wall
 {
-	double	x;
-	double	y;
-	double	width;
-	double	height;
-	int		color;
+	double x;
+	double y;
+	double width;
+	double height;
+	int color;
 } t_wall;
 
 typedef struct s_line
@@ -116,11 +118,11 @@ typedef struct s_circle
 
 typedef struct s_ray
 {
-	double	dx;
-	double	dy;
-	double	angle;
-	bool	is_vr;
-	short	direct;
+	double dx;
+	double dy;
+	double angle;
+	bool is_vr;
+	short direct;
 } t_ray;
 
 typedef struct s_player
@@ -145,32 +147,40 @@ typedef struct s_map
 
 typedef struct s_textures
 {
-	mlx_texture_t *NO;	
-	mlx_texture_t *SO;	
-	mlx_texture_t *WE;	
-	mlx_texture_t *EA;	
+	mlx_texture_t *NO;
+	mlx_texture_t *SO;
+	mlx_texture_t *WE;
+	mlx_texture_t *EA;
 } t_textures;
 
 typedef struct s_data
 {
-	char			*NO;
-	char			*SO;
-	char			*WE;
-	char			*EA;
-	char			**map_data;
-	char			**dirs;
-	char			**clrs;
-	t_map			map;
-	t_clr			floor;
-	t_clr			ceiling;
-	mlx_t			*mlx;
-	t_ray			rays[NUM_RAYS];
-	t_player		player;
-	t_textures		textures;
-	mlx_image_t		*player_img;
-	mlx_image_t		*window_img;
-	mlx_texture_t	*texture;
+
+	mlx_texture_t	*txr_spt[NUM_IMAGES];
+	char *NO;
+	char *SO;
+	char *WE;
+	char *EA;
+	char **map_data;
+	char **dirs;
+	char **clrs;
+	t_map map;
+	t_clr floor;
+	t_clr ceiling;
+	mlx_t *mlx;
+	t_ray rays[NUM_RAYS];
+	t_player player;
+	t_textures textures;
+	mlx_image_t *player_img;
+	mlx_image_t *window_img;
+	mlx_texture_t *texture;
+	mlx_image_t *spr_img;
+	mlx_image_t *default_img;
+
 } t_data;
+//=======================Utils========================
+char	*ft_itoa(int n);
+//=======================Utils========================
 // ===================== functions parsing =====================
 int ft_strcmp(char *str1, char *str2);
 size_t ft_strlcat(char *dst, const char *src, size_t dstsize);
@@ -195,7 +205,7 @@ t_line new_line(t_point p1, t_point p2, int color);
 int draw_circle(t_circle circle, mlx_image_t *image);
 int draw_line(t_line line, mlx_image_t *image);
 int draw_react(t_rect rect, mlx_image_t *image);
-int	draw_wall(t_wall wall, mlx_image_t *image);
+int draw_wall(t_wall wall, mlx_image_t *image);
 
 // ================== player object ==================
 t_player new_player(t_data *data, int x, int y, int angle);
@@ -208,14 +218,14 @@ mlx_image_t *clear_image(mlx_t *mlx, mlx_image_t *img);
 double degtorad(int deg);
 double radtodeg(double rad);
 mlx_image_t *new_image_to_window(mlx_t *mlx, int width, int height);
-mlx_image_t	*reset_img(mlx_image_t *img);
+mlx_image_t *reset_img(mlx_image_t *img);
 int32_t ft_pixel(t_clr color);
 
 // ================== ray functions ==================
 int new_ray(t_data *data, double ray_angle);
 int cast_rays(t_data *data, t_map map, t_player player , t_ray (*rays)[NUM_RAYS]);
 // bool is_wall(t_map map, int x, int y);
-bool	is_wall(t_data *data, int x, int y);
+bool is_wall(t_data *data, int x, int y);
 
 t_ray horizontal_ray(t_player player, t_map map, double ray_angle);
 t_ray vertical_ray(t_player player, t_map map, double ray_angle);

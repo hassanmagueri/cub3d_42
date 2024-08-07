@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/06 15:57:29 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/07 09:46:58 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void ft_hook(void *param)
 {
 	t_data *data = param;
 	t_player *player;
-
 
 	player = &data->player;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
@@ -52,7 +51,7 @@ int render_map(t_data *data)
 {
 	mlx_image_t *map_img;
 	mlx_image_t *player_img = data->player.img;
-	t_map		map;
+	t_map map;
 	int i;
 	int j;
 
@@ -78,15 +77,35 @@ int render_map(t_data *data)
 				else if (map.layout[i][j] == 'E')
 					angle = 0;
 				data->player = new_player(data, j * TILE_SIZE + TILE_SIZE / 2,
-											i * TILE_SIZE + TILE_SIZE / 2, angle);
+										  i * TILE_SIZE + TILE_SIZE / 2, angle);
 			}
 			j++;
 		}
-		
+
 		i++;
 	}
 	update_player(data);
 	return (1);
+}
+void ft_strcpy(char *dest, char *src)
+{
+	int i;
+	i = 0;
+	while (src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+}
+
+void ft_strcut(char *dest, char *src)
+{
+	while (*dest)
+		dest++;
+	while (*src)
+		*dest++ = *src++;
+	*dest = '\0';
 }
 
 int32_t main(int ac, char const **av)
@@ -101,19 +120,21 @@ int32_t main(int ac, char const **av)
 	parse_map(&data);
 	init_clrs_dirs(&data);
 	// data.map = data.map_data;
-	int i=0;
-	data.mlx = mlx_init(WINDOW_WIDTH , WINDOW_HEIGHT, "cub3D", false);
+	int i = 0;
+	data.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D", false);
 	data.texture = mlx_load_png("./images/test.png");
 	// printf("images path: %s\n", data.SO);
 	data.textures.EA = mlx_load_png(data.EA);
 	data.textures.NO = mlx_load_png(data.NO);
 	data.textures.SO = mlx_load_png(data.SO);
 	data.textures.WE = mlx_load_png(data.WE);
+	// load_images(&data);
 	// printf("width: %d\n", data.textures.NO->width);
 	data.window_img = mlx_new_image(data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	mlx_image_to_window(data.mlx, data.window_img, 0, 0);
 	// data.texture=mlx_load_png("./images/wall_1024.png");
 	render_map(&data);
+	
 	mlx_loop_hook(data.mlx, ft_hook, &data);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);
