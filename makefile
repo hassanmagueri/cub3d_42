@@ -1,4 +1,4 @@
-CC = cc -g -fsanitize=address #-Wall -Wextra -Werror0
+CC = cc  -g -fsanitize=address #-Wall -Wextra -Werror0 -Ofast
 #==============folders==============#
 PARSING=parsing
 UTILS=utils

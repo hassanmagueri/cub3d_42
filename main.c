@@ -6,10 +6,11 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/06 17:50:01 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/07 09:46:58 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "MLX/MLX42.h"
 #include "cub3d.h"
 
 static size_t get_digits(int n)
@@ -56,14 +57,14 @@ int render_map(t_data *data)
 
 	i = 0;
 	map = data->map;
-	map_img = new_image_to_window(data->mlx, TILE_SIZE * map.width, TILE_SIZE * map.height);
+	map_img = new_image_to_window(data->mlx, TILE_SIZE * SCALE * map.width, TILE_SIZE * SCALE * map.height);
 	while (i < map.height)
 	{
 		j = 0;
 		while (j < map.width)
 		{
 			if (map.layout[i][j] == '1')
-				draw_react((t_rect){i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, LIGHT_GREY}, map_img);
+				draw_react((t_rect){i * TILE_SIZE * SCALE, j * TILE_SIZE * SCALE, TILE_SIZE * SCALE, LIGHT_GREY}, map_img);
 			if (map.layout[i][j] == 'N' || map.layout[i][j] == 'S' || map.layout[i][j] == 'W' || map.layout[i][j] == 'E')
 			{
 				int angle;
@@ -86,16 +87,6 @@ int render_map(t_data *data)
 	update_player(data);
 	return (1);
 }
-void animation_sprite(void *arg)
-{
-	t_data *data = (t_data *)arg;
-	mlx_image_to_window(data->mlx, data->img_spt[0], 400, 450);
-}
-
-// char *ft_str_join_three(char *path, int index, char *png)
-// {
-// }
-
 void ft_strcpy(char *dest, char *src)
 {
 	int i;
@@ -116,25 +107,6 @@ void ft_strcut(char *dest, char *src)
 		*dest++ = *src++;
 	*dest = '\0';
 }
-void load_images(t_data *data)
-{
-
-	int i = 0;
-	
-	while (i < NUM_IMAGES)
-	{
-		char path[100] = "./sprite_gun/StechkinEx";
-		char index[10];
-		char png[10];
-		ft_strcpy(index, ft_itoa(i + 1));
-		ft_strcpy(png, ".png");
-		ft_strcut(path, index);
-		ft_strcut(path, png);
-		data->txr_spt[i] = mlx_load_png(path);
-		data->img_spt[i] = mlx_texture_to_image(data->mlx, data->txr_spt[i]);
-		i++;
-	}
-}
 
 int32_t main(int ac, char const **av)
 {
@@ -148,19 +120,21 @@ int32_t main(int ac, char const **av)
 	parse_map(&data);
 	init_clrs_dirs(&data);
 	// data.map = data.map_data;
-	int i=0;
-	data.mlx = mlx_init(WINDOW_WIDTH , WINDOW_HEIGHT, "cub3D", false);
-	data.texture=mlx_load_png("./images/test.png");
-	printf("images path: %s\n", data.SO);
+	int i = 0;
+	data.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D", false);
+	data.texture = mlx_load_png("./images/test.png");
+	// printf("images path: %s\n", data.SO);
 	data.textures.EA = mlx_load_png(data.EA);
 	data.textures.NO = mlx_load_png(data.NO);
 	data.textures.SO = mlx_load_png(data.SO);
 	data.textures.WE = mlx_load_png(data.WE);
-	printf("width: %d\n", data.textures.NO->width);
-	// data.texture=mlx_load_png("./images/wall_1024.png");
+	// load_images(&data);
+	// printf("width: %d\n", data.textures.NO->width);
 	data.window_img = mlx_new_image(data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	mlx_image_to_window(data.mlx, data.window_img, 0, 0);
+	// data.texture=mlx_load_png("./images/wall_1024.png");
 	render_map(&data);
-	mlx_loop_hook(data.mlx, animation_sprite, &data);
+	
 	mlx_loop_hook(data.mlx, ft_hook, &data);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);
