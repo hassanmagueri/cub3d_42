@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:51:11 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/07 09:51:09 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/08 09:45:46 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,8 +148,8 @@ int	update_player(t_data *data)
 	new_y = player->y + (sin(player->angle + walk_inside) * move_step);
 	if (!is_wall(data, new_x, new_y))
 		(1) && (player->x = new_x, player->y = new_y);
-	draw_player(data);
-	// draw_minimap(data);
+	// draw_player(data);
+	draw_minimap(data);
 	cast_rays(data, data->map, data->player ,&data->rays);
 	player->walk_direction = 0;
 	player->rotation_angle = 0;

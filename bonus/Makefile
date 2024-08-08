@@ -6,11 +6,11 @@
 #    By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 20:04:47 by emagueri          #+#    #+#              #
-#    Updated: 2024/08/07 09:32:05 by emagueri         ###   ########.fr        #
+#    Updated: 2024/08/08 18:03:57 by emagueri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = cc  -Ofast #-Wall -Wextra -Werror
+CC = cc  -g -fsanitize=address #-Wall -Wextra -Werror
 PARSING=parsing
 UTILS=utils
 GET_NEXT_LINE=$(UTILS)/get_next_line

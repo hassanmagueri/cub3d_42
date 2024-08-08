@@ -6,10 +6,11 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/06 18:56:22 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/08 12:20:23 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "MLX/MLX42.h"
 #include "cub3d.h"
 
 static size_t get_digits(int n)
@@ -63,8 +64,8 @@ int render_map(t_data *data)
 		j = 0;
 		while (j < map.width)
 		{
-			if (map.layout[i][j] == '1')
-				draw_react((t_rect){i * TILE_SIZE * SCALE, j * TILE_SIZE * SCALE, TILE_SIZE * SCALE, BLACK}, map_img);
+			// if (map.layout[i][j] == '1')
+			// 	draw_react((t_rect){i * TILE_SIZE * SCALE, j * TILE_SIZE * SCALE, TILE_SIZE * SCALE, BLACK}, map_img);
 			if (map.layout[i][j] == 'N' || map.layout[i][j] == 'S' || map.layout[i][j] == 'W' || map.layout[i][j] == 'E')
 			{
 				int angle;
@@ -86,6 +87,11 @@ int render_map(t_data *data)
 	}
 	update_player(data);
 	return (1);
+}
+
+void	mousefunc(double xpos, double ypos, void *param)
+{
+	printf("xpos: {%f}, ypos: {%f}\n", xpos, ypos);
 }
 
 int32_t main(int ac, char const **av)
@@ -111,6 +117,7 @@ int32_t main(int ac, char const **av)
 	// printf("width: %d\n", data.textures.NO->width);
 	data.window_img = mlx_new_image(data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data.background_img= mlx_new_image(data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	data.minimap_img = mlx_new_image(data.mlx, MINIMAP_HEIGHT * SCALE_SIZE, MINIMAP_WIDTH * SCALE_SIZE);
 	for(int i = 0; i < data.background_img->height / 2; i++)
 	{
 		for(int j = 0; j < data.background_img->width; j++)
@@ -121,9 +128,12 @@ int32_t main(int ac, char const **av)
 	}
 	mlx_image_to_window(data.mlx, data.background_img, 0, 0);
 	mlx_image_to_window(data.mlx, data.window_img, 0, 0);
+	mlx_image_to_window(data.mlx, data.minimap_img, 0, 0);
 	// data.texture=mlx_load_png("./images/wall_1024.png");
 	render_map(&data);
 	mlx_loop_hook(data.mlx, ft_hook, &data);
+	// mlx_cursor_hook(data.mlx, mousefunc, &data);
+	// mlx_set_cursor_mode(data.mlx, MLX_MOUSE_DISABLED);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);
 }

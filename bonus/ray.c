@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:10:59 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/06 19:15:07 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/08 09:47:32 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,12 @@ int cast_rays(t_data *data, t_map map, t_player player , t_ray (*rays)[NUM_RAYS]
 		vr = vertical_ray(player, map, normalize_angle(angle));
 		hr = horizontal_ray(player, map, normalize_angle(angle));
 		(*rays)[i] = low_ray(vr, hr);
-		draw_line(
-			new_line(
-				(t_point){((*rays)[i].dx + player.x) * SCALE, ((*rays)[i].dy + player.y) * SCALE},
-				(t_point){player.x * SCALE,player.y * SCALE}, SEMI_YELLOW),
-				player.img
-		);
+		// draw_line(
+		// 	new_line(
+		// 		(t_point){((*rays)[i].dx + player.x) * SCALE, ((*rays)[i].dy + player.y) * SCALE},
+		// 		(t_point){player.x * SCALE,player.y * SCALE}, SEMI_YELLOW),
+		// 		player.img
+		// );
 		project_walls(data, (*rays)[i],i);
 		angle += FOV / NUM_RAYS;
 		i++;

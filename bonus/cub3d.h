@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/07 09:31:48 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/08 18:03:36 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,19 @@
 
 #define TILE_SIZE 1024
 #define SCALE 0.02
+#define SCALE_SIZE TILE_SIZE * SCALE
 #define BACKGROUND 0xFD42EE55
 
-#define WINDOW_WIDTH 2200
-#define WINDOW_HEIGHT 1700
+#define WINDOW_WIDTH 1200
+#define WINDOW_HEIGHT 800
 
 #define DEG 90
 #define P_RAD 4
 #define ROT_SPEED 10
-#define MOVE_SPEED 220
+#define MOVE_SPEED 100
 
-#define MINIMAP_WIDTH 10
-#define MINIMAP_HEIGHT 10
+#define MINIMAP_WIDTH 11
+#define MINIMAP_HEIGHT 11
 
 #define FILE "maps/map.cub"
 
@@ -59,12 +60,13 @@
 #define LIGHT_GREY		0xC0C0C0FF
 
 // Semi-transparent colors (50% opacity)
+#define SEMI_GREY		0x80808080
 #define SEMI_RED		0xFF000080
 #define SEMI_LIME		0x00FF0080
 #define SEMI_BLUE		0x0000FF80
 #define SEMI_CYAN		0x00FFFF80
 #define SEMI_BLACK		0x00000080
-#define SEMI_WHITE		0xFFFFFF80
+#define SEMI_WHITE		0xFFFFFF40
 #define SEMI_YELLOW		0xFFFF0080
 #define SEMI_MAGENTA	0xFF00FF80
 
@@ -173,6 +175,7 @@ typedef struct s_data
 	mlx_image_t		*player_img;
 	mlx_image_t		*window_img;
 	mlx_image_t		*background_img;
+	mlx_image_t		*minimap_img;
 	mlx_texture_t	*texture;
 } t_data;
 // ===================== functions parsing =====================
