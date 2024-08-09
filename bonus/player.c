@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:51:11 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/09 13:08:39 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/09 19:19:12 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,47 +107,21 @@ bool	is_wall(t_data *data, int x, int y)
 	map = data->map.layout;
 	t_player player = data->player;
 	int player_radian = P_RAD;
-	i = y / TILE_SIZE;
-	j = x / TILE_SIZE;
-	int player_x = player.x * SCALE;
-	int player_y = player.y * SCALE;
-	if (i < 0 || j < 0 || i >= data->map.height || j >= data->map.width)
-		return false;
-	// if (pow(x - player.x, 2) + pow(y - player.y, 2) < pow(P_RAD, 2))
-
-	// if (map[i][j] == '1')
-	// 	return (true);
-	// return (false);
-	i = player_y - player_radian;
-	printf("player_x: %i\n", player_y);
-	printf("i: %i\n", i);
-	while(i < player_y + player_radian)
+	x = x * SCALE;
+	y = y * SCALE;
+	i = y - player_radian;
+	while(i <= y + player_radian)
 	{
-		j = player_x - player_radian; 
-		while(j < player_x + player_radian)
+		j = x - player_radian; 
+		while(j <= x + player_radian)
 		{
-			if (pow(i - player_x, 2) + pow(j - player_y, 2) > pow(P_RAD, 2))
-				if (map[(int)(i / SCALE_SIZE)][(int)(j / SCALE_SIZE)] == '1')
-					return true;
+			if (map[(int)(i / SCALE_SIZE)][(int)(j / SCALE_SIZE)] == '1')
+				return true;
 			j++;
 		}
 		i++;
 	}
 	return false;
-	i = (y + P_RAD) / TILE_SIZE;
-	j = (x + P_RAD) / TILE_SIZE;
-	if (map[i][j] == '1')
-		return (true);
-	i = (y - P_RAD) / TILE_SIZE;
-	if (map[i][j] == '1')
-		return (true);
-	j = (x - P_RAD) / TILE_SIZE;
-	if (map[i][j] == '1')
-		return (true);
-	i = (y + P_RAD) / TILE_SIZE;
-	if (map[i][j] == '1')
-		return (true);
-	return (false);
 }
 
 // int	update_player(t_data *data, t_player player_ins)
@@ -156,7 +130,6 @@ int	update_player(t_data *data)
 	t_player	*player;
 	double		new_x,new_y;
 	double		walk_inside;
-
 	player = &data->player;
 	player->img =  reset_img(data->player.img);
 	player->angle += player->rotation_angle * ROT_SPEED;
@@ -169,6 +142,13 @@ int	update_player(t_data *data)
 	int move_step = player->walk_direction * MOVE_SPEED;
 	new_x = player->x + (cos(player->angle + walk_inside) * move_step);
 	new_y = player->y + (sin(player->angle + walk_inside) * move_step);
+	static int k;
+	if (is_wall(data, new_x, new_y))
+		printf("is hit wall: %d\n", k++);
+	else
+		printf("free: %d\n", k++);
+	printf("oldx: %f, oldy: %f\n", player->x, player->y);
+	printf("newx: %f, newy: %f\n",new_x,new_y);
 	if (!is_wall(data, new_x, new_y))
 		(1) && (player->x = new_x, player->y = new_y);
 	// draw_player(data);
