@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 18:56:00 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/08 18:03:20 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/09 12:18:52 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,19 @@ int	draw_react_minimap(t_rect rect, mlx_image_t *image, int width, int height)
 	return (1);
 }
 
-int border_minimap(mlx_image_t *img)
+int border_minimap(mlx_image_t *img, t_circle c)
 {
-	int i = 0;
-	while(i < img->width)
-	{
-		mlx_put_pixel(img, 0, i, RED);
-		mlx_put_pixel(img, i, 0, RED);
-		mlx_put_pixel(img, img->width - 1, i, RED);
-		mlx_put_pixel(img, i, img->height - 1, RED);
-		i++;
-	}
+		for(int i = 0; i < img->width; i++)
+		for(int j = 0; j < img->width; j++)
+		{
+			if (
+				pow(j - c.x,2) + pow(i - c.y,2) >= pow(img->width / 2 - 16, 2) &&
+				pow(j - c.x,2) + pow(i - c.y,2) < pow(img->width / 2 - 8, 2)
+				)
+				mlx_put_pixel(img, j, i, BLACK);
+			if ( pow(j - c.x,2) + pow(i - c.y,2) > pow(img->width / 2 - 8, 2))
+				mlx_put_pixel(img, j, i, 0);
+		}
 	return 1;
 }
 
@@ -68,25 +70,27 @@ int	set_walls(t_player player, mlx_image_t *img, t_map map)
 		xn = 1;
 	if (player_y <= 5 * SCALE_SIZE)
 		yn = 1;
-	while (i <= MINIMAP_HEIGHT) 
+	
+	while (i < MINIMAP_HEIGHT * SCALE_SIZE) 
 	{
 		j = 0;
-		while (j <= MINIMAP_WIDTH) 
+		while (j < MINIMAP_WIDTH * SCALE_SIZE) 
 		{
-			int player_offx_tile = player_x - ((int)(player.x / TILE_SIZE ) * TILE_SIZE + TILE_SIZE / 2) * SCALE;
-			int player_offy_tile = player_y - ((int)(player.y / TILE_SIZE) * TILE_SIZE + TILE_SIZE / 2) * SCALE;
-			// printf("x: {%f}\n", j * SCALE_SIZE - player_offx_tile);
-			if (y + i >= map.height || x + j - xn > map.width || x + j - xn < 0 || y + i - yn < 0)
-				draw_react_minimap(
-							new_rect(j * SCALE_SIZE - player_offx_tile, i * SCALE_SIZE - player_offy_tile, 0,SEMI_WHITE),
-							img, SCALE_SIZE, SCALE_SIZE);
-			else if (map.layout[y + i - yn][x + j - xn] == '1')
-					draw_react_minimap(
-								new_rect(j * SCALE_SIZE - player_offx_tile, i * SCALE_SIZE - player_offy_tile, 0,SEMI_GREY),
-								img, SCALE_SIZE, SCALE_SIZE);
+			if (pow(j - MINIMAP_WIDTH * SCALE_SIZE / 2, 2)  + pow((i - MINIMAP_HEIGHT * SCALE_SIZE / 2) , 2) < pow((MINIMAP_WIDTH / 2) * SCALE_SIZE, 2))
+			{
+				int player_offx_tile = player_x - ((int)(player.x / TILE_SIZE) * TILE_SIZE + TILE_SIZE / 2) * SCALE;
+				int player_offy_tile = player_y - ((int)(player.y / TILE_SIZE) * TILE_SIZE + TILE_SIZE / 2) * SCALE;
+				int i_scale = (int)((i + y * SCALE_SIZE + player_offy_tile) / SCALE_SIZE);
+				int j_scale = (int)((j + x * SCALE_SIZE + player_offx_tile) / SCALE_SIZE);
+				if (i_scale - yn < 0 || j_scale - xn < 0 || i_scale >= map.height || j_scale >= map.width)
+					mlx_put_pixel(img, j, i , SEMI_BLACK);
+				else
+				 if (map.layout[i_scale - yn][j_scale - xn] == '1')
+					mlx_put_pixel(img, j, i , GREY);
+				
+			}
 			j++;
 		}
-		// printf("--------------\n");
 		i++;
 	}
 	return 1;
@@ -104,9 +108,9 @@ int set_rays(t_player player, mlx_image_t *img, t_map map, t_ray rays[NUM_RAYS])
 			new_line(
 				(t_point){x,y},
 				(t_point){rays[i].dx * SCALE + x, (rays[i].dy * SCALE + y)},
-				SEMI_LIME),
+				YELLOW),
 				img
-		);
+		);	
 		i++;
 	}
 	return 1;
@@ -123,15 +127,25 @@ int draw_minimap(t_data *data)
 	// img = mlx_new_image(data->mlx, TILE_SIZE * SCALE * MINIMAP_WIDTH, TILE_SIZE * SCALE * MINIMAP_HEIGHT);
 	// mlx_image_to_window(data->mlx, img, 0,200);
 	// img = new_image_to_window(data->mlx, TILE_SIZE * SCALE * 10, TILE_SIZE * SCALE * 10);
+	t_circle c = new_circle(img->width/2, img->height/2, player.radius, SEMI_LIME);
 	for(int i = 0; i < img->width; i++)
 		for(int j = 0; j < img->width; j++)
-			mlx_put_pixel(img, j, i, SEMI_WHITE);
-	t_circle c = new_circle(img->width/2, img->height/2, player.radius, SEMI_LIME);
+			if (pow(j - c.x,2) + pow(i - c.y,2) < pow(img->width / 2, 2))
+				mlx_put_pixel(img, j, i, SEMI_WHITE);
 	draw_circle(c, img);
-	
-	border_minimap(img);
 	set_walls(player, img, data->map);
-	set_rays(player, img, data->map, (data->rays));
+	t_line line = new_line(
+			new_point(img->width / 2, img->height/ 2),
+			new_point(
+				(img->width / 2 + (cos(player.angle) * 100 * SCALE_SIZE) * SCALE),
+				(img->height / 2 + (sin(player.angle) * 100 * SCALE_SIZE) * SCALE)
+			)
+			, RED
+		);
+	draw_line(line, img);
+	// set_rays(player, img, data->map, (data->rays));
+	
+	border_minimap(img, c);
 	return 1;
 }
 

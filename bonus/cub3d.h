@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/08 18:03:36 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/09 12:08:13 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 
 #define TILE_SIZE 1024
 #define SCALE 0.02
-#define SCALE_SIZE TILE_SIZE * SCALE
 #define BACKGROUND 0xFD42EE55
+#define SCALE_SIZE (1024 * SCALE)
 
 #define WINDOW_WIDTH 1200
 #define WINDOW_HEIGHT 800
@@ -42,7 +42,6 @@
 
 #define NUM_RAYS WINDOW_WIDTH
 #define FOV 60 * (M_PI / 180)
-#define RAY_RAD 1000
 
 // ============= define colors ===========
 #define BLACK			0x000000FF
@@ -60,14 +59,14 @@
 #define LIGHT_GREY		0xC0C0C0FF
 
 // Semi-transparent colors (50% opacity)
-#define SEMI_GREY		0x80808080
+#define SEMI_GREY		0x808080AA
 #define SEMI_RED		0xFF000080
 #define SEMI_LIME		0x00FF0080
 #define SEMI_BLUE		0x0000FF80
 #define SEMI_CYAN		0x00FFFF80
 #define SEMI_BLACK		0x00000080
 #define SEMI_WHITE		0xFFFFFF40
-#define SEMI_YELLOW		0xFFFF0080
+#define SEMI_YELLOW		0xFFFF0060
 #define SEMI_MAGENTA	0xFF00FF80
 
 #ifndef COLORS_H

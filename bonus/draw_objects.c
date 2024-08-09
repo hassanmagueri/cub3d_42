@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:46 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/08 12:00:14 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/09 11:15:33 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ int draw_line(t_line line, mlx_image_t *image)
 	float Y = p1.y;
 
 
-	printf("xinc: %f, yinc: %f\n", xinc, yinc);
-	printf("-----\n");
 	if (xinc == 0 && yinc == 0)
 		return 1;
 	for (int i = 0; i <= steps && X < image->width && Y < image->height; i++)
@@ -38,7 +36,8 @@ int draw_line(t_line line, mlx_image_t *image)
 			mlx_put_pixel(image, X, Y, line.color);
 		X += xinc;
 		Y += yinc;
-		// line.color -= 2;
+		line.color--;
+		line.color--;
 	}
 	return (1);
 }

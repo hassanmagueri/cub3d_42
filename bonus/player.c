@@ -6,11 +6,14 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:51:11 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/08 09:45:46 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/09 13:08:39 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <math.h>
+#include <stdbool.h>
+#include <sys/fcntl.h>
 
 double degtorad(int deg)
 {
@@ -102,26 +105,46 @@ bool	is_wall(t_data *data, int x, int y)
 	char	**map;
 
 	map = data->map.layout;
+	t_player player = data->player;
+	int player_radian = P_RAD;
 	i = y / TILE_SIZE;
 	j = x / TILE_SIZE;
+	int player_x = player.x * SCALE;
+	int player_y = player.y * SCALE;
 	if (i < 0 || j < 0 || i >= data->map.height || j >= data->map.width)
 		return false;
+	// if (pow(x - player.x, 2) + pow(y - player.y, 2) < pow(P_RAD, 2))
+
 	// if (map[i][j] == '1')
 	// 	return (true);
 	// return (false);
-	j = x / TILE_SIZE;
+	i = player_y - player_radian;
+	printf("player_x: %i\n", player_y);
+	printf("i: %i\n", i);
+	while(i < player_y + player_radian)
+	{
+		j = player_x - player_radian; 
+		while(j < player_x + player_radian)
+		{
+			if (pow(i - player_x, 2) + pow(j - player_y, 2) > pow(P_RAD, 2))
+				if (map[(int)(i / SCALE_SIZE)][(int)(j / SCALE_SIZE)] == '1')
+					return true;
+			j++;
+		}
+		i++;
+	}
+	return false;
 	i = (y + P_RAD) / TILE_SIZE;
-	j = x / TILE_SIZE;
+	j = (x + P_RAD) / TILE_SIZE;
 	if (map[i][j] == '1')
 		return (true);
 	i = (y - P_RAD) / TILE_SIZE;
 	if (map[i][j] == '1')
 		return (true);
-	i = y / TILE_SIZE;
-	j = (x + P_RAD) / TILE_SIZE;
+	j = (x - P_RAD) / TILE_SIZE;
 	if (map[i][j] == '1')
 		return (true);
-	j = (x - P_RAD) / TILE_SIZE;
+	i = (y + P_RAD) / TILE_SIZE;
 	if (map[i][j] == '1')
 		return (true);
 	return (false);
