@@ -6,11 +6,11 @@
 #    By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 20:04:47 by emagueri          #+#    #+#              #
-#    Updated: 2024/08/08 14:29:42 by belguabd         ###   ########.fr        #
+#    Updated: 2024/08/10 15:13:56 by belguabd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = cc  -fsanitize=address -g  #0-Ofast   -g#-Wall -Wextra -Werror -Ofast 
+CC = cc  -Ofast   -g#-Wall -Wextra -Werror -Ofast  -fsanitize=address -g 
 PARSING=parsing
 UTILS=utils
 GET_NEXT_LINE=$(UTILS)/get_next_line

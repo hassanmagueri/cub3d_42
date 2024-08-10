@@ -6,12 +6,13 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/10 12:53:37 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/10 15:11:06 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "MLX/MLX42.h"
 #include "cub3d.h"
-
+#define NUM_IMAGES 68
 static size_t get_digits(int n)
 {
 	size_t i;
@@ -97,8 +98,8 @@ int render_map(t_data *data)
 		j = 0;
 		while (j < map.width)
 		{
-			if (map.layout[i][j] == '1')
-				draw_react((t_rect){i * TILE_SIZE * SCALE, j * TILE_SIZE * SCALE, TILE_SIZE * SCALE, BLACK}, map_img);
+			// if (map.layout[i][j] == '1')
+			// 	draw_react((t_rect){i * TILE_SIZE * SCALE, j * TILE_SIZE * SCALE, TILE_SIZE * SCALE, BLACK}, map_img);
 			if (map.layout[i][j] == 'N' || map.layout[i][j] == 'S' || map.layout[i][j] == 'W' || map.layout[i][j] == 'E')
 			{
 				int angle;
@@ -145,43 +146,40 @@ void animation_sprite(void *arg)
 	static int i;
 	static bool is_pressed;
 	static mlx_image_t *remove_img = NULL;
-
 	if (mlx_is_key_down(data->mlx, MLX_KEY_SPACE))
 	{
+
 		mlx_delete_image(data->mlx, data->default_img);
-		data->default_img = mlx_texture_to_image(data->mlx, data->tex_plr);
 		is_pressed = true;
+		data->tex_plr = mlx_load_png("./sprite/Stechkin01.png");
 	}
 	if (is_pressed)
 	{
 		if (remove_img)
 			mlx_delete_image(data->mlx, remove_img);
-		if (i < NUM_IMAGES)
-		{
-			char path[100] = "./sprite_gun/StechkinEx";
-			char index[10];
-			char png[10];
-			ft_strcpy(index, ft_itoa(i + 1));
-			ft_strcpy(png, ".png");
-			ft_strcut(path, index);
-			ft_strcut(path, png);
-			mlx_texture_t *txr = mlx_load_png(path);
-			data->spr_img = mlx_texture_to_image(data->mlx, txr);
-			remove_img = data->spr_img;
-			ft_put_image(data, data->spr_img);
-			mlx_delete_texture(txr);
-
-			i++;
-		}
-		if (i == NUM_IMAGES)
-		{
-			i = 0;
-			mlx_delete_image(data->mlx, data->spr_img);
-			mlx_image_to_window(data->mlx, data->default_img, 300, 300);
-			is_pressed = false;
-		}
+		char path[100] = "./sprite/StechkinEx";
+		char index[10];
+		char png[10] = ".png";
+		ft_strcpy(index, ft_itoa(i + 1));
+		ft_strcut(path, index);
+		ft_strcut(path, png);
+		mlx_texture_t *tex = mlx_load_png(path);
+		mlx_image_t *img = mlx_texture_to_image(data->mlx, tex);
+		remove_img = img;
+		ft_put_image(data, img);
+		i++;
+	}
+	if (i == NUM_IMAGES)
+	{
+		i = 0;
+		is_pressed = false;
 	}
 }
+// void	mousefunc(double xpos, double ypos, void *param)
+// {
+// 	printf("xpos: {%f}, ypos: {%f}\n", xpos, ypos);
+// }
+
 int32_t main(int ac, char const **av)
 {
 
@@ -208,6 +206,7 @@ int32_t main(int ac, char const **av)
 	// printf("width: %d\n", data.textures.NO->width);
 	data.window_img = mlx_new_image(data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data.background_img = mlx_new_image(data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	data.minimap_img = mlx_new_image(data.mlx, MINIMAP_HEIGHT * SCALE_SIZE, MINIMAP_WIDTH * SCALE_SIZE);
 	for (int i = 0; i < data.background_img->height / 2; i++)
 	{
 		for (int j = 0; j < data.background_img->width; j++)
@@ -218,8 +217,9 @@ int32_t main(int ac, char const **av)
 	}
 	mlx_image_to_window(data.mlx, data.background_img, 0, 0);
 	mlx_image_to_window(data.mlx, data.window_img, 0, 0);
+	mlx_image_to_window(data.mlx, data.minimap_img, 0, 0);
 	// data.texture=mlx_load_png("./images/wall_1024.png");
-	data.tex_plr = mlx_load_png("./sprite_gun/Stechkin01.png");
+	data.tex_plr = mlx_load_png("./sprite/Stechkin01.png");
 	data.tex_door = mlx_load_png("./images/door_close.png");
 
 	data.default_img = mlx_texture_to_image(data.mlx, data.tex_plr);
@@ -227,6 +227,8 @@ int32_t main(int ac, char const **av)
 	mlx_loop_hook(data.mlx, animation_sprite, &data);
 	render_map(&data);
 	mlx_loop_hook(data.mlx, ft_hook, &data);
+	// mlx_cursor_hook(data.mlx, mousefunc, &data);
+	// mlx_set_cursor_mode(data.mlx, MLX_MOUSE_DISABLED);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);
 }

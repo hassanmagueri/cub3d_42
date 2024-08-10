@@ -6,11 +6,14 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:51:11 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/10 10:35:00 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/10 13:23:35 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <math.h>
+#include <stdbool.h>
+#include <sys/fcntl.h>
 
 double degtorad(int deg)
 {
@@ -144,15 +147,31 @@ bool is_wall(t_data *data, int x, int y)
 	}
 
 	return (false);
+	t_player player = data->player;
+	int player_radian = P_RAD;
+	x = x * SCALE;
+	y = y * SCALE;
+	i = y - player_radian;
+	while(i <= y + player_radian)
+	{
+		j = x - player_radian; 
+		while(j <= x + player_radian)
+		{
+			if (map[(int)(i / SCALE_SIZE)][(int)(j / SCALE_SIZE)] == '1')
+				return true;
+			j++;
+		}
+		i++;
+	}
+	return false;
 }
 
 // int	update_player(t_data *data, t_player player_ins)
 int update_player(t_data *data)
 {
-	t_player *player;
-	double new_x, new_y;
-	double walk_inside;
-
+	t_player	*player;
+	double		new_x,new_y;
+	double		walk_inside;
 	player = &data->player;
 	player->img = reset_img(data->player.img);
 	player->angle += player->rotation_angle * ROT_SPEED;
@@ -165,11 +184,18 @@ int update_player(t_data *data)
 	int move_step = player->walk_direction * MOVE_SPEED;
 	new_x = player->x + (cos(player->angle + walk_inside) * move_step);
 	new_y = player->y + (sin(player->angle + walk_inside) * move_step);
+	static int k;
+	if (is_wall(data, new_x, new_y))
+		printf("is hit wall: %d\n", k++);
+	else
+		printf("free: %d\n", k++);
+	printf("oldx: %f, oldy: %f\n", player->x, player->y);
+	printf("newx: %f, newy: %f\n",new_x,new_y);
 	if (!is_wall(data, new_x, new_y))
 		(1) && (player->x = new_x, player->y = new_y);
-	draw_player(data);
-	// draw_minimap(data);
-	cast_rays(data, data->map, data->player, &data->rays);
+	// draw_player(data);
+	draw_minimap(data);
+	cast_rays(data, data->map, data->player ,&data->rays);
 	player->walk_direction = 0;
 	player->rotation_angle = 0;
 	return (1);
