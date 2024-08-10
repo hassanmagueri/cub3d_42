@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+         #
+#    By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 20:04:47 by emagueri          #+#    #+#              #
-#    Updated: 2024/08/07 09:32:05 by emagueri         ###   ########.fr        #
+#    Updated: 2024/08/08 14:29:42 by belguabd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = cc  -Ofast #-Wall -Wextra -Werror
+CC = cc  -fsanitize=address -g  #0-Ofast   -g#-Wall -Wextra -Werror -Ofast 
 PARSING=parsing
 UTILS=utils
 GET_NEXT_LINE=$(UTILS)/get_next_line
@@ -23,7 +23,8 @@ SRC = main.c draw_objects.c player.c mlx_help.c ray.c walls.c minimap.c\
 	$(GET_NEXT_LINE)/get_next_line_utils.c \
 	$(UTILS)/ft_strcmp.c $(UTILS)/ft_strlcat.c $(UTILS)/ft_putendl_fd.c $(UTILS)/ft_split.c \
 	$(UTILS)/ft_substr.c $(UTILS)/ft_strtrim.c $(UTILS)/ft_isdigit.c $(UTILS)/ft_atoi.c \
-	$(PARSING)/parsing.c
+	$(UTILS)/ft_itoa.c \
+	$(PARSING)/parsing.c 
 
 OBJ = $(SRC:.c=.o)
 

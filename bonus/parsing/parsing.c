@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 23:28:47 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/05 15:53:51 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/09 10:35:37 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -517,7 +517,7 @@ void parse_map(t_data *data)
 		x = 0;
 		while (data->map.layout[y][x])
 		{
-			if (data->map.layout[y][x] != '$' && data->map.layout[y][x] != '0' && data->map.layout[y][x] != '1' && data->map.layout[y][x] != 'N' && data->map.layout[y][x] != 'S' && data->map.layout[y][x] != 'E' && data->map.layout[y][x] != 'W')
+			if (data->map.layout[y][x] != '$' && data->map.layout[y][x] != '0' && data->map.layout[y][x] != '1' && data->map.layout[y][x] != 'C' && data->map.layout[y][x] != 'O' && data->map.layout[y][x] != 'N' && data->map.layout[y][x] != 'S' && data->map.layout[y][x] != 'E' && data->map.layout[y][x] != 'W')
 				ft_putendl_fd_color("Error\nInvalid character in map", 2, RED_E);
 			if (data->map.layout[y][x] == 'N' || data->map.layout[y][x] == 'S' || data->map.layout[y][x] == 'W' || data->map.layout[y][x] == 'E')
 				count++;

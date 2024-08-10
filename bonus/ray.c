@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:10:59 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/06 19:15:07 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/09 17:26:49 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,7 @@ bool check_is_wall(t_map map, int x, int y, int direct)
 	j = x / TILE_SIZE;
 	if (i < 0 || j < 0 || i >= map.height || j >= map.width)
 		return false;
-	if (
-		layout[i][j] == '1'
-		)
+	if (layout[i][j] == '1' || layout[i][j] == 'C' )
 		return (true);
 	return (false);
 }

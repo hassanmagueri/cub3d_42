@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:51:11 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/07 09:51:09 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/10 10:35:00 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,20 @@ int create_vector_player(t_data *data)
 	t_line line;
 
 	line = new_line(
-			new_point(player.x * SCALE, player.y * SCALE),
-			new_point(
-				((data->player.x + cos(player.angle) * player.radius) * SCALE),
-				((data->player.y + sin(player.angle) * player.radius) * SCALE)
-			)
-			, RED
-		);
+		new_point(player.x * SCALE, player.y * SCALE),
+		new_point(
+			((data->player.x + cos(player.angle) * player.radius) * SCALE),
+			((data->player.y + sin(player.angle) * player.radius) * SCALE)),
+		RED);
 	draw_line(line, data->player.img);
 	return (1);
 }
 
 int draw_player(t_data *data)
 {
-	int			radius;
-	t_player	player;
-	mlx_image_t	*img;
+	int radius;
+	t_player player;
+	mlx_image_t *img;
 
 	player = data->player;
 	radius = 8;
@@ -94,12 +92,12 @@ int draw_player(t_data *data)
 	return (1);
 }
 
-bool	is_wall(t_data *data, int x, int y)
+bool is_wall(t_data *data, int x, int y)
 {
-	int	i;
-	int	j;
+	int i;
+	int j;
 
-	char	**map;
+	char **map;
 
 	map = data->map.layout;
 	i = y / TILE_SIZE;
@@ -112,30 +110,51 @@ bool	is_wall(t_data *data, int x, int y)
 	j = x / TILE_SIZE;
 	i = (y + P_RAD) / TILE_SIZE;
 	j = x / TILE_SIZE;
-	if (map[i][j] == '1')
-		return (true);
-	i = (y - P_RAD) / TILE_SIZE;
-	if (map[i][j] == '1')
-		return (true);
-	i = y / TILE_SIZE;
-	j = (x + P_RAD) / TILE_SIZE;
-	if (map[i][j] == '1')
-		return (true);
-	j = (x - P_RAD) / TILE_SIZE;
-	if (map[i][j] == '1')
-		return (true);
+	if (data->is_c)
+	{
+		if (map[i][j] == '1')
+			return (true);
+		i = (y - P_RAD) / TILE_SIZE;
+		if (map[i][j] == '1')
+			return (true);
+		i = y / TILE_SIZE;
+		j = (x + P_RAD) / TILE_SIZE;
+		if (map[i][j] == '1')
+			return (true);
+		j = (x - P_RAD) / TILE_SIZE;
+		if (map[i][j] == '1')
+			return (true);
+
+	}
+	else
+	{
+		if (map[i][j] == '1' || map[i][j] == 'C')
+			return (true);
+		i = (y - P_RAD) / TILE_SIZE;
+		if (map[i][j] == '1' || map[i][j] == 'C')
+			return (true);
+		i = y / TILE_SIZE;
+		j = (x + P_RAD) / TILE_SIZE;
+		if (map[i][j] == '1' || map[i][j] == 'C')
+			return (true);
+		j = (x - P_RAD) / TILE_SIZE;
+		if (map[i][j] == '1' || map[i][j] == 'C')
+			return (true);
+
+	}
+
 	return (false);
 }
 
 // int	update_player(t_data *data, t_player player_ins)
-int	update_player(t_data *data)
+int update_player(t_data *data)
 {
-	t_player	*player;
-	double		new_x,new_y;
-	double		walk_inside;
+	t_player *player;
+	double new_x, new_y;
+	double walk_inside;
 
 	player = &data->player;
-	player->img =  reset_img(data->player.img);
+	player->img = reset_img(data->player.img);
 	player->angle += player->rotation_angle * ROT_SPEED;
 	walk_inside = 0;
 	if (abs(player->walk_direction) == 2)
@@ -150,9 +169,8 @@ int	update_player(t_data *data)
 		(1) && (player->x = new_x, player->y = new_y);
 	draw_player(data);
 	// draw_minimap(data);
-	cast_rays(data, data->map, data->player ,&data->rays);
+	cast_rays(data, data->map, data->player, &data->rays);
 	player->walk_direction = 0;
 	player->rotation_angle = 0;
 	return (1);
 }
-
