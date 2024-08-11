@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/10 15:11:06 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/11 22:28:43 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,10 +175,14 @@ void animation_sprite(void *arg)
 		is_pressed = false;
 	}
 }
-// void	mousefunc(double xpos, double ypos, void *param)
-// {
-// 	printf("xpos: {%f}, ypos: {%f}\n", xpos, ypos);
-// }
+void move_mouse(double x_pos, double y_pos, void *arg)
+{
+    t_data *data = (t_data *)arg;
+    double delta_x = x_pos - (WINDOW_WIDTH / 2); 
+    data->player.rotation_angle += delta_x * 0.0001;
+    mlx_set_mouse_pos(data->mlx, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+}
+
 
 int32_t main(int ac, char const **av)
 {
@@ -226,9 +230,9 @@ int32_t main(int ac, char const **av)
 	mlx_image_to_window(data.mlx, data.default_img, 300, 300);
 	mlx_loop_hook(data.mlx, animation_sprite, &data);
 	render_map(&data);
+	mlx_cursor_hook(data.mlx, move_mouse, &data);
 	mlx_loop_hook(data.mlx, ft_hook, &data);
-	// mlx_cursor_hook(data.mlx, mousefunc, &data);
-	// mlx_set_cursor_mode(data.mlx, MLX_MOUSE_DISABLED);
+	mlx_set_cursor_mode(data.mlx, MLX_MOUSE_DISABLED);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);
 }

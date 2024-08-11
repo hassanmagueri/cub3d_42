@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/10 15:17:11 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/11 22:02:26 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,7 @@ typedef struct s_data
 	int place_x;
 	int place_y;
 	bool is_c;
+	double angle_mouse;
 	
 	
 } t_data;
