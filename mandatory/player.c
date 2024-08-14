@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:51:11 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/06 18:07:31 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/13 10:59:31 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,19 +93,15 @@ int draw_player(t_data *data)
 
 bool	is_wall(t_data *data, int x, int y)
 {
-	int	i;
-	int	j;
-
 	char	**map;
+	int		i;
+	int		j;
 
 	map = data->map.layout;
 	i = y / TILE_SIZE;
 	j = x / TILE_SIZE;
 	if (i < 0 || j < 0 || i >= data->map.height || j >= data->map.width)
 		return false;
-	// if (map[i][j] == '1')
-	// 	return (true);
-	// return (false);
 	j = x / TILE_SIZE;
 	i = (y + P_RAD) / TILE_SIZE;
 	j = x / TILE_SIZE;
@@ -124,12 +120,12 @@ bool	is_wall(t_data *data, int x, int y)
 	return (false);
 }
 
-// int	update_player(t_data *data, t_player player_ins)
 int	update_player(t_data *data)
 {
 	t_player	*player;
 	double		new_x,new_y;
 	double		walk_inside;
+	int move_step;
 
 	player = &data->player;
 	player->img =  reset_img(data->player.img);
@@ -140,7 +136,7 @@ int	update_player(t_data *data)
 		player->walk_direction /= 2;
 		walk_inside = degtorad(90);
 	}
-	int move_step = player->walk_direction * MOVE_SPEED;
+	move_step = player->walk_direction * MOVE_SPEED;
 	new_x = player->x + (cos(player->angle + walk_inside) * move_step);
 	new_y = player->y + (sin(player->angle + walk_inside) * move_step);
 	if (!is_wall(data, new_x, new_y))

@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 00:21:05 by belguabd          #+#    #+#             */
-/*   Updated: 2024/07/25 22:44:05 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/13 12:40:14 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	*word_dup(const char *str, int start, int end)
 	char	*word;
 	int		i;
 
-	word = (char *)malloc(((end - start) + 1) * sizeof(char));
+	word = (char *)ft_malloc(((end - start) + 1) * sizeof(char), ALLOC);
 	if (!word)
 		return (NULL);
 	i = 0;
@@ -84,7 +84,7 @@ char	**ft_split(char const *s, char c)
 
 	if (!s)
 		return (NULL);
-	spl.res = (char **)malloc((count_words(s, c) + 1) * sizeof(char *));
+	spl.res = (char **)ft_malloc((count_words(s, c) + 1) * sizeof(char *), ALLOC);
 	if (!spl.res)
 		return (NULL);
 	spl.i = -1;

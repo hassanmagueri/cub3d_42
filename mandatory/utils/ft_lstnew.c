@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 23:17:56 by belguabd          #+#    #+#             */
-/*   Updated: 2024/07/25 22:44:05 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/13 12:39:30 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_data	*ft_lstnew(void *content)
 {
 	t_data	*newstr;
 
-	newstr = (t_data *)malloc(sizeof(t_data));
+	newstr = (t_data *)ft_malloc(sizeof(t_data) , ALLOC);
 	if (!newstr)
 		return (NULL);
 	newstr->content = content;

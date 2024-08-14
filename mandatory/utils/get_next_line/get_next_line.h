@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 02:37:25 by belguabd          #+#    #+#             */
-/*   Updated: 2024/07/13 21:09:32 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/13 12:43:30 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <limits.h>
 # include <stdlib.h>
 # include <stdbool.h>
-
+#include "../../cub3d.h"
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 44
 # endif

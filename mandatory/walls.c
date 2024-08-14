@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   walls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:04:15 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/06 17:11:19 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/13 11:01:03 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,95 +36,6 @@ void	ft_put_pixel(mlx_image_t *img, int x, int y, uint32_t color)
 	if (x >= 0 && x < img->width && y >= 0 && y < img->height)
 				mlx_put_pixel(img, x, y, color);
 }
-
-
-// int	wall_painting(t_data *data, t_ray ray , double ray_dist , double wall_height, mlx_image_t *img , int x)
-// {
-// 	t_map map=data->map;
-// 	uint32_t *p_clrs = (uint32_t *)data->texture->pixels;
-// 	int i;
-	
-// 	i = 0;
-// 	double wall_top_pixel=((WINDOW_HEIGHT) / 2) - (wall_height / 2);
-// 	if (wall_top_pixel < 0)
-// 		wall_top_pixel = 0;
-// 	int x_col = ray.is_vr ? 0: (int)(data->player.x + ray.dx * ray.direct) % data->texture->width;
-
-// 	// p_clrs[x_col + img->width];
-// 	double wall_bottom_pixel=((WINDOW_HEIGHT) /2) + (wall_height/ 2);
-	
-// 	if(wall_bottom_pixel > (WINDOW_HEIGHT))
-// 		wall_bottom_pixel = WINDOW_HEIGHT ;
-// 	int y = 0;
-// 	while (wall_top_pixel <= wall_bottom_pixel && (y < data->texture->height))
-// 	{
-// 		int size_bytes = (wall_height / data->texture->height);
-		
-// 		i = 0;
-			
-// 		while (i < size_bytes)
-// 		{
-// 			ft_put_pixel(img, x, wall_top_pixel , p_clrs[x_col + (data->texture->width * y)]);
-// 			i++;
-// 		}
-// 		if (i == 0)
-// 		{
-// 			ft_put_pixel(img, x, wall_top_pixel , p_clrs[x_col + (data->texture->width * y - )]);
-// 			size_bytes++;
-// 		}
-// 		y++;
-// 		wall_top_pixel += size_bytes;
-// 	}
-	
-// 	return (1);
-// }
-
-// int wall_painting(t_data *data, t_ray ray, double wall_height, mlx_image_t *img, int x) {
-// 	t_map map = data->map;
-// 	uint32_t *p_clrs = (uint32_t *)data->texture->pixels;
-// 	double wall_top_pixel = (WINDOW_HEIGHT / 2) - (wall_height / 2);
-// 	if (wall_top_pixel < 0) wall_top_pixel = 0;
-
-// 	double wall_hit_x = data->player.x + ray.dx ;
-// 	double wall_hit_y = data->player.y + ray.dy ;
-	
-// 	int offX;
-// 	if (ray.is_vr)
-// 		offX = (int)wall_hit_y % data->texture->width;
-// 	else
-// 		offX = (int)wall_hit_x % data->texture->width;
-
-// 	double wall_bottom_pixel = (WINDOW_HEIGHT / 2) + (wall_height / 2);
-// 	if (wall_bottom_pixel > WINDOW_HEIGHT) wall_bottom_pixel = WINDOW_HEIGHT;
-
-// 	int y =0;
-// 	unsigned long index = 0;
-// 	while(y < wall_top_pixel)
-// 	{
-// 		mlx_put_pixel(img, x, y, CYAN);
-// 		y++;
-// 	}
-// 	// if (wall_height > WINDOW_HEIGHT)
-// 	// 	y = wall_height / 2 - WINDOW_HEIGHT / 2;
-// 	// printf("y: %f\n", wall_top_pixel);
-// 		// printf("is begger\n");
-// 	y = wall_top_pixel;
-// 	while (wall_top_pixel < wall_bottom_pixel && index < data->texture->width * data->texture->height)
-// 	{
-// 		int current_y_pixel_wall = y + wall_height / 2 - WINDOW_HEIGHT / 2;
-// 		int offY_txt = current_y_pixel_wall * data->texture->height / wall_height;
-// 		index = (data->texture->width * offY_txt) + offX;
-// 		if (index < data->texture->height * data->texture->width)
-// 			ft_put_pixel(img, x, (int)y, p_clrs[index]);
-// 		y++;
-// 	}
-// 	while(y < WINDOW_HEIGHT)
-// 	{
-// 		mlx_put_pixel(img, x, y, BLACK);
-// 		y++;
-// 	}
-// 	return (1);
-// }
 
 int painting_part_col(mlx_image_t *img, int start, int end, int x, t_clr color)
 {

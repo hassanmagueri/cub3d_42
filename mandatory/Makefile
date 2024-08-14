@@ -2,6 +2,7 @@ CC = cc -g -fsanitize=address #-Wall -Wextra -Werror0
 #==============folders==============#
 PARSING=parsing
 UTILS=utils
+MEM_MGR=mem_mgr
 GET_NEXT_LINE=$(UTILS)/get_next_line
 
 NAME = cub3D
@@ -12,7 +13,11 @@ SRC = main.c draw_objects.c player.c mlx_help.c ray.c walls.c\
 	$(GET_NEXT_LINE)/get_next_line_utils.c \
 	$(UTILS)/ft_strcmp.c $(UTILS)/ft_strlcat.c $(UTILS)/ft_putendl_fd.c $(UTILS)/ft_split.c \
 	$(UTILS)/ft_substr.c $(UTILS)/ft_strtrim.c $(UTILS)/ft_isdigit.c $(UTILS)/ft_atoi.c \
-	$(PARSING)/parsing.c
+	$(PARSING)/load_map_data.c $(PARSING)/load_map_data_utils.c \
+	$(PARSING)/init_clrs_dirs.c $(PARSING)/parse_map.c $(PARSING)/utils.c $(PARSING)/validate_dirs_clrs.c \
+	$(PARSING)/validate_dirs_clrs_utils.c $(PARSING)/validate_top_map.c \
+	$(MEM_MGR)/mem_mgr.c
+
 
 OBJ = $(SRC:.c=.o)
 

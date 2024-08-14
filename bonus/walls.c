@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:04:15 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/10 12:02:30 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/14 08:55:01 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,7 @@ int wall_painting(t_data *data, t_ray ray, double wall_height, mlx_image_t *img,
 	int p_x = (int)(data->player.x / TILE_SIZE);
 	int p_y = (int)(data->player.y / TILE_SIZE);
 	
+
 	// Check downward
 	if (p_y + 1 < map.height && p_x < map.width && p_y + 1 >= 0 && p_x >= 0)
 	{

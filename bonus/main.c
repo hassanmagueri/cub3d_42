@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/11 22:28:43 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/14 09:08:39 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,43 +25,91 @@ static size_t get_digits(int n)
 
 void ft_hook(void *param)
 {
+
 	t_data *data = param;
+	t_map map = data->map;
 	t_player *player;
+
+	int p_x = (int)(data->player.x / TILE_SIZE);
+	int p_y = (int)(data->player.y / TILE_SIZE);
 
 	player = &data->player;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_O))
 	{
-		if (data->x_door != -1 && data->y_door != -1)
+		// Check downward
+		if (p_y + 1 < map.height && p_x < map.width && p_y + 1 >= 0 && p_x >= 0)
 		{
-			int player_tile_x = (int)(data->player.x / TILE_SIZE) + data->place_x;
-			int player_tile_y = (int)(data->player.y / TILE_SIZE) + data->place_y;
-			char current_tile = data->map.layout[player_tile_y][player_tile_x];
-			if (current_tile == 'C' || current_tile == 'O')
-			{
-				data->map.layout[data->y_door][data->x_door] = 'O';
-				data->y_door = -1;
-				data->x_door = -1;
-				update_player(data);
-			}
+			char tile_down = map.layout[p_y + 1][p_x];
+
+			if (tile_down == 'C')
+				map.layout[p_y + 1][p_x] = 'O';
 		}
+
+		// Check rightward
+		if (p_x + 1 < map.width && p_y < map.height && p_x + 1 >= 0 && p_y >= 0)
+		{
+			char tile_right = map.layout[p_y][p_x + 1];
+
+			if (tile_right == 'C')
+				map.layout[p_y][p_x + 1] = 'O';
+		}
+
+		// Check upward
+		if (p_y - 1 >= 0 && p_x < map.width && p_x >= 0 && p_y - 1 < map.height)
+		{
+			char tile_up = map.layout[p_y - 1][p_x];
+
+			if (tile_up == 'C')
+				map.layout[p_y - 1][p_x] = 'O';
+		}
+		// Check leftward
+		if (p_x - 1 >= 0 && p_y < map.height && p_y >= 0 && p_x - 1 < map.width)
+		{
+			char tile_left = map.layout[p_y][p_x - 1];
+
+			if (tile_left == 'C')
+				map.layout[p_y][p_x - 1] = 'O';
+		}
+		update_player(data);
 	}
 	if (mlx_is_key_down(data->mlx, MLX_KEY_C))
 	{
-		if (data->x_door != -1 && data->y_door != -1)
+		// if (data->x_door != -1 && data->y_door != -1)
+		// {
+		if (p_y + 1 < map.height && p_x < map.width && p_y + 1 >= 0 && p_x >= 0)
 		{
-			int player_tile_x = (int)(data->player.x / TILE_SIZE) + data->place_x;
-			int player_tile_y = (int)(data->player.y / TILE_SIZE) + data->place_y;
+			char tile_down = map.layout[p_y + 1][p_x];
 
-			char current_tile = data->map.layout[player_tile_y][player_tile_x];
-
-			if (current_tile == 'C' || current_tile == 'O')
-			{
-				data->map.layout[data->y_door][data->x_door] = 'C';
-				data->x_door = -1;
-				data->y_door = -1;
-				update_player(data);
-			}
+			if (tile_down == 'O')
+				map.layout[p_y + 1][p_x] = 'C';
 		}
+
+		// Check rightward
+		if (p_x + 1 < map.width && p_y < map.height && p_x + 1 >= 0 && p_y >= 0)
+		{
+			char tile_right = map.layout[p_y][p_x + 1];
+
+			if (tile_right == 'O')
+				map.layout[p_y][p_x + 1] = 'C';
+		}
+
+		// Check upward
+		if (p_y - 1 >= 0 && p_x < map.width && p_x >= 0 && p_y - 1 < map.height)
+		{
+			char tile_up = map.layout[p_y - 1][p_x];
+
+			if (tile_up == 'O')
+				map.layout[p_y - 1][p_x] = 'C';
+		}
+		// Check leftward
+		if (p_x - 1 >= 0 && p_y < map.height && p_y >= 0 && p_x - 1 < map.width)
+		{
+			char tile_left = map.layout[p_y][p_x - 1];
+
+			if (tile_left == 'O')
+				map.layout[p_y][p_x - 1] = 'C';
+		}
+		// }
 	}
 
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
@@ -177,12 +225,11 @@ void animation_sprite(void *arg)
 }
 void move_mouse(double x_pos, double y_pos, void *arg)
 {
-    t_data *data = (t_data *)arg;
-    double delta_x = x_pos - (WINDOW_WIDTH / 2); 
-    data->player.rotation_angle += delta_x * 0.0001;
-    mlx_set_mouse_pos(data->mlx, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+	t_data *data = (t_data *)arg;
+	double delta_x = x_pos - (WINDOW_WIDTH / 2);
+	data->player.rotation_angle += delta_x * 0.0001;
+	mlx_set_mouse_pos(data->mlx, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 }
-
 
 int32_t main(int ac, char const **av)
 {

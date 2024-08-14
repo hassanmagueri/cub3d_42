@@ -3,41 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   draw_objects.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:46 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/06 17:58:50 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/13 09:53:28 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./cub3d.h"
 
+float calc_fabs(double p_x, double p_y)
+{
+	if (p_x - p_y == 0)
+		return (1);
+	return (fabs(p_x - p_y));
+}
+double get_step(double dx, double dy)
+{
+	if (dx > dy)
+		return (fabs(dx));
+	return (fabs(dy));
+}
 int draw_line(t_line line, mlx_image_t *image)
 {
-	t_point p1 = line.p1;
-	t_point p2 = line.p2;
+
+	float dx;
+	float x_inc;
+	float dy;
+	float y_inc;
 	int i;
-	float dx = fabs(p1.x - p2.x) == 0 ? 1 : fabs(p1.x - p2.x);
-	float dy = fabs(p1.y - p2.y) == 0 ? 1: fabs(p1.y - p2.y);
-	double steps = dx > dy ? fabs(dx) : fabs(dy);
-	float xinc = (p2.x - p1.x) / steps;
-	float yinc =  (p2.y - p1.y) / steps;
 
+	dx = calc_fabs(line.p1.x, line.p2.x);
+	dy = calc_fabs(line.p1.y, line.p2.y);
+	x_inc = (line.p2.x - line.p1.x) / get_step(dx, dy);
+	y_inc = (line.p2.y - line.p1.y) / get_step(dx, dy);
 	i = 0;
-	float X = p1.x;
-	float Y = p1.y;
-
-	for (int i = 0; i <= steps; i++)
+	while (i <= get_step(dx, dy))
 	{
-		if (X < image->width && X >= 0 && Y >= 0 && Y < image->height)
-			mlx_put_pixel(image, X, Y, line.color);
-		X += xinc;
-		Y += yinc;
+		if (line.p1.x < image->width && line.p1.x >= 0 
+			&& line.p1.y >= 0 && line.p1.y < image->height)
+			mlx_put_pixel(image, line.p1.x, line.p1.y, line.color);
+		line.p1.x += x_inc;
+		line.p1.y += y_inc;
+		i++;
 	}
 	return (1);
 }
 
-t_point	new_point(double x, double y)
+t_point new_point(double x, double y)
 {
 	t_point p;
 
@@ -55,13 +68,11 @@ void set_background(mlx_image_t *image, int color)
 	}
 }
 
-int	draw_circle(t_circle circle, mlx_image_t *image)
+int draw_circle(t_circle circle, mlx_image_t *image)
 {
 	int x;
 	int y;
-
-	// set_background(image, BACKGROUND);
-	// x = center.x - radius;
+	
 	x = circle.x - circle.radius;
 	while (x < circle.x + circle.radius)
 	{
@@ -77,15 +88,13 @@ int	draw_circle(t_circle circle, mlx_image_t *image)
 	return 1;
 }
 
-int	draw_react(t_rect rect, mlx_image_t *image)
+int draw_react(t_rect rect, mlx_image_t *image)
 {
 	double i;
 	double j;
-	// do border_with;
 
-	// border_with = 0;
 	i = rect.x;
-	while (i <= rect.x + rect.side )
+	while (i <= rect.x + rect.side)
 	{
 		j = rect.y;
 		while (j <= rect.y + rect.side)
@@ -98,7 +107,7 @@ int	draw_react(t_rect rect, mlx_image_t *image)
 	return (1);
 }
 
-int	draw_wall(t_wall wall, mlx_image_t *image)
+int draw_wall(t_wall wall, mlx_image_t *image)
 {
 	double i;
 	double j;
