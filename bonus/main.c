@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/14 09:08:39 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/15 15:07:43 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,9 @@ void ft_hook(void *param)
 				map.layout[p_y][p_x - 1] = 'O';
 		}
 		update_player(data);
+		
 	}
+		
 	if (mlx_is_key_down(data->mlx, MLX_KEY_C))
 	{
 		// if (data->x_door != -1 && data->y_door != -1)
@@ -110,6 +112,7 @@ void ft_hook(void *param)
 				map.layout[p_y][p_x - 1] = 'C';
 		}
 		// }
+		update_player(data);
 	}
 
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
