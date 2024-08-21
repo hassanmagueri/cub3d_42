@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   walls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:04:15 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/14 08:55:01 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/21 13:42:13 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./cub3d.h"
+#include <stdio.h>
 
 double ray_distance(double dx, double dy)
 {
@@ -256,9 +257,10 @@ int wall_painting(t_data *data, t_ray ray, double wall_height, mlx_image_t *img,
 
 	int offX;
 	if (ray.is_vr)
-		offX = (int)wall_hit_y % texture->width;
+		offX = (int)wall_hit_y % texture->height;
+	
 	else
-		offX = (int)wall_hit_x % texture->width; // ??
+		offX = (int)wall_hit_x % texture->height; // ??
 
 	double wall_bottom_pixel = (WINDOW_HEIGHT / 2) + (wall_height / 2);
 	if (wall_bottom_pixel > WINDOW_HEIGHT)
@@ -276,9 +278,11 @@ int wall_painting(t_data *data, t_ray ray, double wall_height, mlx_image_t *img,
 		index = (texture->width * offY) + offX;
 		if (index < texture->height * texture->width)
 		{
-			ft_put_pixel(img, x, y, p_clrs[index], index, texture->width, offX);
+			
+				ft_put_pixel(img, x, y, p_clrs[index], index, texture->width, offX);
+			
 		}
-
+		// if ((int)wall_hit_x % TILE_SIZE < 3)
 		y++;
 	}
 	painting_part_col(img, wall_bottom_pixel, WINDOW_HEIGHT, x);
@@ -338,7 +342,7 @@ void project_walls(t_data *data, t_ray ray, int x)
 	int distanceProjectionPlane = (WINDOW_WIDTH / 2) / tan(FOV / 2);
 	textures = data->textures;
 	double correct_ray;
-
+	
 	ray_dist = ray_distance(ray.dx, ray.dy);
 	correct_ray = ray_dist * cos(ray.angle - data->player.angle);
 	wall_expected_height = (TILE_SIZE / correct_ray * distanceProjectionPlane);

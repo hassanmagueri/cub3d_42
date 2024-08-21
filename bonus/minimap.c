@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 18:56:00 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/10 13:12:11 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/21 21:04:32 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ int	draw_react_minimap(t_rect rect, mlx_image_t *image, int width, int height)
 {
 	double i;
 	double j;
-	// do border_with;
 
-	// border_with = 0;
 	i = rect.y;
 	while (i <= rect.y + height)
 	{
@@ -57,20 +55,17 @@ int	set_walls(t_player player, mlx_image_t *img, t_map map)
 {
 	int x = player.x / TILE_SIZE - MINIMAP_WIDTH / 2;
 	int y = player.y / TILE_SIZE - MINIMAP_HEIGHT / 2;
-	// int y = (player.y - img->height / 2) / TILE_SIZE;
-
 	int j = 0;
 	int i = 0;
-
 	double player_x = player.x * SCALE;
 	double player_y = player.y * SCALE;
 	int xn = 0;
 	int yn = 0;
+
 	if (player_x <= 5 * SCALE_SIZE)
 		xn = 1;
 	if (player_y <= 5 * SCALE_SIZE)
 		yn = 1;
-	
 	while (i < MINIMAP_HEIGHT * SCALE_SIZE) 
 	{
 		j = 0;
@@ -82,12 +77,12 @@ int	set_walls(t_player player, mlx_image_t *img, t_map map)
 				int player_offy_tile = player_y - ((int)(player.y / TILE_SIZE) * TILE_SIZE + TILE_SIZE / 2) * SCALE;
 				int i_scale = (int)((i + y * SCALE_SIZE + player_offy_tile) / SCALE_SIZE);
 				int j_scale = (int)((j + x * SCALE_SIZE + player_offx_tile) / SCALE_SIZE);
-				if (i_scale - yn < 0 || j_scale - xn < 0 || i_scale >= map.height || j_scale >= map.width)
-					mlx_put_pixel(img, j, i , SEMI_BLACK);
-				else
-				 if (map.layout[i_scale - yn][j_scale - xn] == '1')
+				if (!(i_scale - yn < 0 || j_scale - xn < 0 || i_scale >= map.height || j_scale >= map.width) && map.layout[i_scale][j_scale] == 'C')
+					mlx_put_pixel(img, j, i , RED);
+				else if (i_scale - yn < 0 || j_scale - xn < 0 || i_scale >= map.height || j_scale >= map.width)
+					mlx_put_pixel(img, j, i , RED);
+				else if (map.layout[i_scale - yn][j_scale - xn] == '1')
 					mlx_put_pixel(img, j, i , GREY);
-				
 			}
 			j++;
 		}
@@ -123,10 +118,6 @@ int draw_minimap(t_data *data)
 
 	player = data->player;
 	img = data->minimap_img;
-	
-	// img = mlx_new_image(data->mlx, TILE_SIZE * SCALE * MINIMAP_WIDTH, TILE_SIZE * SCALE * MINIMAP_HEIGHT);
-	// mlx_image_to_window(data->mlx, img, 0,200);
-	// img = new_image_to_window(data->mlx, TILE_SIZE * SCALE * 10, TILE_SIZE * SCALE * 10);
 	t_circle c = new_circle(img->width/2, img->height/2, player.radius, SEMI_LIME);
 	for(int i = 0; i < img->width; i++)
 		for(int j = 0; j < img->width; j++)
@@ -143,8 +134,6 @@ int draw_minimap(t_data *data)
 			, RED
 		);
 	draw_line(line, img);
-	// set_rays(player, img, data->map, (data->rays));
-	
 	border_minimap(img, c);
 	return 1;
 }

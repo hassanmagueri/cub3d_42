@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:51:11 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/11 22:01:42 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/21 20:48:56 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,67 +95,25 @@ int draw_player(t_data *data)
 	return (1);
 }
 
-bool is_wall(t_data *data, int x, int y)
+bool	is_wall(t_data *data, int x, int y)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
-	char **map;
+	char	**map;
 
 	map = data->map.layout;
-	i = y / TILE_SIZE;
-	j = x / TILE_SIZE;
-	if (i < 0 || j < 0 || i >= data->map.height || j >= data->map.width)
-		return false;
-	// if (map[i][j] == '1')
-	// 	return (true);
-	// return (false);
-	j = x / TILE_SIZE;
-	i = (y + P_RAD) / TILE_SIZE;
-	j = x / TILE_SIZE;
-	if (data->is_c)
-	{
-		if (map[i][j] == '1')
-			return (true);
-		i = (y - P_RAD) / TILE_SIZE;
-		if (map[i][j] == '1')
-			return (true);
-		i = y / TILE_SIZE;
-		j = (x + P_RAD) / TILE_SIZE;
-		if (map[i][j] == '1')
-			return (true);
-		j = (x - P_RAD) / TILE_SIZE;
-		if (map[i][j] == '1')
-			return (true);
-	}
-	else
-	{
-		if (map[i][j] == '1' || map[i][j] == 'C')
-			return (true);
-		i = (y - P_RAD) / TILE_SIZE;
-		if (map[i][j] == '1' || map[i][j] == 'C')
-			return (true);
-		i = y / TILE_SIZE;
-		j = (x + P_RAD) / TILE_SIZE;
-		if (map[i][j] == '1' || map[i][j] == 'C')
-			return (true);
-		j = (x - P_RAD) / TILE_SIZE;
-		if (map[i][j] == '1' || map[i][j] == 'C')
-			return (true);
-	}
-
-	return (false);
 	t_player player = data->player;
 	int player_radian = P_RAD;
 	x = x * SCALE;
 	y = y * SCALE;
 	i = y - player_radian;
-	while (i <= y + player_radian)
+	while(i <= y + player_radian)
 	{
-		j = x - player_radian;
-		while (j <= x + player_radian)
+		j = x - player_radian; 
+		while(j <= x + player_radian)
 		{
-			if (map[(int)(i / SCALE_SIZE)][(int)(j / SCALE_SIZE)] == '1')
+			if (map[(int)(i / SCALE_SIZE)][(int)(j / SCALE_SIZE)] == '1' || map[(int)(i / SCALE_SIZE)][(int)(j / SCALE_SIZE)] == 'C')
 				return true;
 			j++;
 		}
@@ -185,15 +143,8 @@ int update_player(t_data *data)
 	new_x = player->x + (cos(player->angle + walk_inside) * move_step);
 	new_y = player->y + (sin(player->angle + walk_inside) * move_step);
 	static int k;
-	// if (is_wall(data, new_x, new_y))
-	// 	printf("is hit wall: %d\n", k++);
-	// else
-	// 	printf("free: %d\n", k++);
-	// printf("oldx: %f, oldy: %f\n", player->x, player->y);
-	// printf("newx: %f, newy: %f\n", new_x, new_y);
 	if (!is_wall(data, new_x, new_y))
 		(1) && (player->x = new_x, player->y = new_y);
-	// draw_player(data);
 	draw_minimap(data);
 	cast_rays(data, data->map, data->player, &data->rays);
 	player->walk_direction = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/15 15:07:43 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/20 23:25:32 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,8 +149,6 @@ int render_map(t_data *data)
 		j = 0;
 		while (j < map.width)
 		{
-			// if (map.layout[i][j] == '1')
-			// 	draw_react((t_rect){i * TILE_SIZE * SCALE, j * TILE_SIZE * SCALE, TILE_SIZE * SCALE, BLACK}, map_img);
 			if (map.layout[i][j] == 'N' || map.layout[i][j] == 'S' || map.layout[i][j] == 'W' || map.layout[i][j] == 'E')
 			{
 				int angle;
@@ -262,20 +260,16 @@ int32_t main(int ac, char const **av)
 	data.background_img = mlx_new_image(data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data.minimap_img = mlx_new_image(data.mlx, MINIMAP_HEIGHT * SCALE_SIZE, MINIMAP_WIDTH * SCALE_SIZE);
 	for (int i = 0; i < data.background_img->height / 2; i++)
-	{
 		for (int j = 0; j < data.background_img->width; j++)
 		{
 			mlx_put_pixel(data.background_img, j, i, ft_pixel(data.ceiling));
 			mlx_put_pixel(data.background_img, j, i + data.background_img->height / 2, ft_pixel(data.floor));
 		}
-	}
 	mlx_image_to_window(data.mlx, data.background_img, 0, 0);
 	mlx_image_to_window(data.mlx, data.window_img, 0, 0);
 	mlx_image_to_window(data.mlx, data.minimap_img, 0, 0);
-	// data.texture=mlx_load_png("./images/wall_1024.png");
 	data.tex_plr = mlx_load_png("./sprite/Stechkin01.png");
 	data.tex_door = mlx_load_png("./images/door_close.png");
-
 	data.default_img = mlx_texture_to_image(data.mlx, data.tex_plr);
 	mlx_image_to_window(data.mlx, data.default_img, 300, 300);
 	mlx_loop_hook(data.mlx, animation_sprite, &data);

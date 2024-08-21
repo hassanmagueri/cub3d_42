@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/11 22:02:26 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/20 23:39:34 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@
 #define TILE_SIZE 1024
 #define SCALE 0.02
 #define BACKGROUND 0xFD42EE55
-#define SCALE_SIZE (1024 * SCALE)
+#define SCALE_SIZE (TILE_SIZE * SCALE)
 
 #define WINDOW_WIDTH 1800
 #define WINDOW_HEIGHT 1000
 
 #define DEG 90
 #define P_RAD 4
-#define ROT_SPEED 2
+#define ROT_SPEED 10
 #define MOVE_SPEED 70
 
 #define MINIMAP_WIDTH 11

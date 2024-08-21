@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+         #
+#    By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 20:04:47 by emagueri          #+#    #+#              #
-#    Updated: 2024/08/10 15:13:56 by belguabd         ###   ########.fr        #
+#    Updated: 2024/08/20 15:22:46 by emagueri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = cc  -Ofast   -g#-Wall -Wextra -Werror -Ofast  -fsanitize=address -g 
+CC = cc  -Ofast   -g -Ofast  -fsanitize=address -g 
 PARSING=parsing
 UTILS=utils
 GET_NEXT_LINE=$(UTILS)/get_next_line
