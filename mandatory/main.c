@@ -13,16 +13,6 @@
 #include "MLX/MLX42.h"
 #include "cub3d.h"
 
-static size_t get_digits(int n)
-{
-	size_t i;
-
-	i = 1;
-	while (n /= 10)
-		i++;
-	return (i);
-}
-
 void ft_hook(void *param)
 {
 	t_data *data;
@@ -49,8 +39,8 @@ void ft_hook(void *param)
 }
 void draw_map(t_data *data, char *map, int i, mlx_image_t *map_img)
 {
-	int j;
-	int angle;
+	size_t j;
+	size_t angle;
 
 	j = 0;
 	while (j < data->map.width)
@@ -81,8 +71,7 @@ int render_map(t_data *data)
 	mlx_image_t *map_img;
 	mlx_image_t *player_img;
 	t_map map;
-	int i;
-	int j;
+	size_t i;
 
 	player_img = data->player.img;
 	i = 0;
@@ -107,15 +96,23 @@ void init_texture(t_data *data)
 {
 
 	data->textures.EA = mlx_load_png(data->EA);
+	if (!data->textures.EA)
+		ft_putendl_fd_color("Error\nInvalid texture path", 2, RED_E);
 	data->textures.NO = mlx_load_png(data->NO);
+	if (!data->textures.NO)
+		ft_putendl_fd_color("Error\nInvalid texture path", 2, RED_E);
 	data->textures.SO = mlx_load_png(data->SO);
+	if (!data->textures.SO)
+		ft_putendl_fd_color("Error\nInvalid texture path", 2, RED_E);
 	data->textures.WE = mlx_load_png(data->WE);
+	if (!data->textures.WE)
+		ft_putendl_fd_color("Error\nInvalid texture path", 2, RED_E);
 }
 void draw_floor_ceiling(t_data *data)
 {
 
-	int i;
-	int j;
+	size_t i;
+	size_t j;
 
 	i = 0;
 	while (i < data->background_img->height / 2)
@@ -125,15 +122,40 @@ void draw_floor_ceiling(t_data *data)
 		{
 			mlx_put_pixel(data->background_img, j, i, ft_pixel(data->ceiling));
 			mlx_put_pixel(data->background_img, j,
-					i + data->background_img->height / 2, ft_pixel(data->floor));
+						  i + data->background_img->height / 2, ft_pixel(data->floor));
 			j++;
 		}
 		i++;
 	}
 }
+int ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	unsigned char *str1;
+	unsigned char *str2;
+	size_t i;
+
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
+	if (n == 0)
+		return (0);
+	i = 0;
+	while (str1[i] && (str1[i] == str2[i]) && i < n - 1)
+		i++;
+	return (str1[i] - str2[i]);
+}
+void check_extension(char const *file)
+{
+	if (ft_strncmp(file + ft_strlen(file) - 4, ".cub", 4))
+		ft_putendl_fd_color("Error\nInvalid file extension", 2, RED_E);
+}
 int32_t main(int ac, char const **av)
 {
+
 	t_data data;
+	if (ac != 2)
+		ft_putendl_fd_color("Error\nInvalid number of arguments", 2, RED_E);
+	check_extension(av[1]);
+	data.map_path = ft_strdup(av[1]);
 	load_map_data(&data);
 	validate_top_map(&data);
 	set_map(&data);

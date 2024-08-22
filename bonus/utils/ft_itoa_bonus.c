@@ -1,38 +1,58 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/07 02:00:07 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/13 12:40:45 by belguabd         ###   ########.fr       */
+/*   Created: 2024/08/07 10:29:19 by belguabd          #+#    #+#             */
+/*   Updated: 2024/08/07 10:29:41 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3d_bonus.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+static size_t	get_len(int n)
 {
-	char	*res;
-	size_t	i;
-	size_t	j;
-	size_t	len_str;
+	size_t	len;
 
-	if (!s)
-		return (NULL);
-	len_str = ft_strlen(s);
-	if (start >= len_str)
-		return (ft_strdup(""));
-	if (len_str < len + start)
-		len = len_str - start;
+	len = 0;
+	if (n == 0)
+		return (1);
+	if (n < 0)
+		len++;
+	while (n)
+	{
+		n /= 10;
+		len++;
+	}
+	return (len);
+}
+
+char	*ft_itoa(int n)
+{
+	size_t	len;
+	size_t	i;
+	long	num;
+	char	*res;
+
+	i = 0;
+	len = get_len(n);
 	res = (char *)malloc(len + 1);
 	if (!res)
 		return (NULL);
-	i = start;
-	j = 0;
-	while (i < len_str && j < len)
-		res[j++] = s[i++];
-	res[j] = '\0';
+	res[len] = '\0';
+	num = n;
+	if (num < 0)
+	{
+		res[0] = '-';
+		num *= -1;
+		i = 1;
+	}
+	while (len-- > i)
+	{
+		res[len] = (num % 10) + '0';
+		num /= 10;
+	}
 	return (res);
 }

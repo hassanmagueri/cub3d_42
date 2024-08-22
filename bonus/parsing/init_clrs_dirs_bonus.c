@@ -10,15 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3d_bonus.h"
 
-int	count_lines(t_data *data)
+int	count_lines(void)
 {
 	char	*line;
 	int		fd;
 	int		i;
 
-	fd = open(data->map_path, O_RDONLY, 0666);
+	fd = open(FILE, O_RDONLY, 0666);
 	if (fd < 0)
 		ft_putendl_fd_color("Error\nOpen failure", 2, RED_E);
 	line = get_next_line(fd);

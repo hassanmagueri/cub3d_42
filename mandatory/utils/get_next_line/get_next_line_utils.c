@@ -29,7 +29,7 @@ char	*ft_strdup(const char *s1)
 	char	*string;
 
 	len = ft_strlen(s1);
-	string = (char *)ft_malloc((len + 1) * sizeof(char),1);
+	string = (char *)malloc((len + 1) * sizeof(char));
 	if (!string)
 		return (NULL);
 	i = 0;
@@ -50,7 +50,7 @@ char	*ft_strjoin(char *line, char *buffer)
 
 	if (!line && !buffer)
 		return (free(line), NULL);
-	string = ft_malloc((ft_strlen(line) + ft_strlen(buffer)) + 1 , ALLOC);
+	string = malloc((ft_strlen(line) + ft_strlen(buffer)) + 1 );
 	if (!string)
 		return (free(line), line = NULL, NULL);
 	i = 0;

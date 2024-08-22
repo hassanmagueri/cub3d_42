@@ -3,23 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:10:59 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/13 11:18:49 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/21 17:21:10 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./cub3d.h"
+#include "../cub3d_bonus.h"
+#include <math.h>
 
 double normalize_angle(double angle)
 {
-	double res;
+	double	res;
 
 	res = fmod(angle, 2 * M_PI);
 	if (res < 0)
 		res += 2 * M_PI;
-	return res;
+    return res;
 }
 
 t_ray low_ray(t_ray ver, t_ray hor)
@@ -34,95 +35,83 @@ t_ray low_ray(t_ray ver, t_ray hor)
 	return hor;
 }
 
-bool check_is_wall(t_map map, int x, int y, size_t direct)
-{
-	(void)direct;
-	char **layout;
-	size_t i;
-	size_t j;
 
+// bool check_is_wall(t_map map, int x, int y, int direct)
+bool check_is_wall(t_map map, t_player player, double x, double y)
+{
+	char	**layout;
+	int		i;
+	int		j;
+
+	x += player.x;
+	y += player.y;
 	layout = map.layout;
-	i = y / TILE_SIZE;
-	j = x / TILE_SIZE;
+	i = (int)y / TILE_SIZE;
+	j = (int)x / TILE_SIZE;
 	if (i < 0 || j < 0 || i >= map.height || j >= map.width)
 		return false;
-	if (
-		layout[i][j] == '1')
+	if (layout[i][j] == '1' || layout[i][j] == 'C' )
 		return (true);
 	return (false);
 }
-int cast_rays(t_data *data, t_map map, t_player player, t_ray (*rays)[NUM_RAYS])
+int cast_rays(t_data *data, t_map map, t_player player , t_ray (*rays)[NUM_RAYS])
 {
-	double angle;
-	int i;
-	t_ray vr;
-	t_ray hr;
-
+	double	angle;
+	int		i;
+	t_ray	vr;
+	t_ray	hr;
+	
 	i = 0;
 	angle = player.angle - FOV / 2;
-	reset_img(data->window_img);
 	while (i < NUM_RAYS)
 	{
 		vr = vertical_ray(player, map, normalize_angle(angle));
 		hr = horizontal_ray(player, map, normalize_angle(angle));
 		(*rays)[i] = low_ray(vr, hr);
-		draw_line(
-			new_line(
-				(t_point){((*rays)[i].dx + player.x) * SCALE, ((*rays)[i].dy + player.y) * SCALE},
-				(t_point){player.x * SCALE, player.y * SCALE}, SEMI_YELLOW),
-			player.img);
-		project_walls(data, (*rays)[i], i);
+		project_walls(data, (*rays)[i],i);
 		angle += FOV / NUM_RAYS;
 		i++;
 	}
 	return 0;
 }
 
+
+
 t_ray vertical_ray(t_player player, t_map map, double ray_angle)
 {
-	double player_tile_x;
-	double player_x_distance;
-	int direct;
-	double dx;
-	double dy;
-	int plus;
-	int new_dx;
-	int new_dy;
-	size_t i;
+    double		player_tile_x;
+	double		player_x_distance;
+	int		direct;	
+	double	dx;
+	double	dy;
 
 	direct = 1;
 	player_tile_x = (floor(player.x / TILE_SIZE) + 1) * TILE_SIZE;
-	if (ray_angle > M_PI / 2 && ray_angle < M_PI * 1.5)
+    if (ray_angle > M_PI / 2 && ray_angle < M_PI * 1.5)
 	{
 		direct = -1;
 		player_tile_x = floor(player.x / TILE_SIZE) * TILE_SIZE;
-	}
-	player_x_distance = (player_tile_x - player.x) * direct;
-	dx = player_x_distance * direct;
-	dy = dx * tan(ray_angle);
-	i = 1;
-	while (i < map.width)
-	{
-		plus = 0;
-		if (direct == -1)
-			plus = -1;
-		new_dx = player.x + dx + plus;
-		new_dy = player.y + dx * tan(ray_angle);
-		if (check_is_wall(map, new_dx, new_dy, 0))
-			break;
-		dx += (double)TILE_SIZE * direct;
-		dy = dx * tan(ray_angle);
-		i++;
-	}
-	return ((t_ray){dx, dy, ray_angle, 1, direct});
+    }
+    player_x_distance = (player_tile_x - player.x) * direct;
+    dx = player_x_distance * direct;
+    int i = 1;
+    while (i < map.width) {
+		int plus = (direct == -1) ? -1: 0;
+    	if (check_is_wall(map, player, dx + plus, dx * tan(ray_angle)))
+		    break;
+        dx += (double)TILE_SIZE * direct;
+        i++;
+    }
+	return ((t_ray){dx, dx * tan(ray_angle), ray_angle, 1, direct});
 }
-t_ray horizontal_ray(t_player player, t_map map, double ray_angle)
+
+t_ray	horizontal_ray(t_player player, t_map map, double ray_angle)
 {
-	double player_tile_y;
-	double player_y_distance;
-	int direct;
-	double dy;
-	double dx;
+	double 		player_tile_y;
+	double 		player_y_distance;
+	int			direct;
+	double		dy;
+	double		dx;
 
 	direct = -1;
 	player_tile_y = floor((player.y) / TILE_SIZE) * TILE_SIZE;
@@ -133,20 +122,14 @@ t_ray horizontal_ray(t_player player, t_map map, double ray_angle)
 	}
 	player_y_distance = (player_tile_y - player.y) * direct;
 	dy = player_y_distance * direct;
-	dx = dy / tan(ray_angle);
-	size_t i = 0;
-	double new_dy;
-	double new_dx;
+	int i = 0;
 	while (i < map.height)
 	{
-		int plus = (direct == -1) ? -1 : 0;
-		new_dy = player.y + plus + dy;
-		new_dx = player.x + dy / tan(ray_angle);
-		if (check_is_wall(map, new_dx, new_dy, 0))
+		int plus = (direct == -1) ? -1: 0;
+		if (check_is_wall(map, player, dy / tan(ray_angle), dy + plus))
 			break;
 		dy += (double)TILE_SIZE * direct;
-		dx = dy / tan(ray_angle);
 		i++;
 	}
-	return ((t_ray){dx, dy, ray_angle, 0, direct});
+	return ((t_ray){dy / tan(ray_angle), dy, ray_angle, 0, direct});
 }

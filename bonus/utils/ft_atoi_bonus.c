@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3d_bonus.h"
 
 int	ft_atoi(const char *str)
 {
@@ -29,8 +29,12 @@ int	ft_atoi(const char *str)
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		res = (str[i] - 48) + (res * 10);
-		if(res > 255)
-			ft_putendl_fd_color("Error\nInvalid color", 2, RED_E);
+		if (res > LONG_MAX)
+		{
+			if (sign == 1)
+				return (-1);
+			return (0);
+		}
 		i++;
 	}
 	return (res * sign);

@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/11 23:17:56 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/13 12:39:30 by belguabd         ###   ########.fr       */
+/*   Created: 2023/11/12 05:44:37 by belguabd          #+#    #+#             */
+/*   Updated: 2024/07/25 22:43:38 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3d_bonus.h"
 
-t_data	*ft_lstnew(void *content)
+void	ft_lstadd_back(t_data **lst, t_data *new)
 {
-	t_data	*newstr;
+	t_data	*temp;
 
-	newstr = (t_data *)malloc(sizeof(t_data) );
-	if (!newstr)
-		return (NULL);
-	newstr->content = content;
-	newstr->next = NULL;
-	return (newstr);
+	if (!*lst)
+	{
+		*lst = new;
+		return ;
+	}
+	temp = ft_lstlast(*lst);
+	temp->next = new;
 }

@@ -6,11 +6,11 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 01:55:07 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/13 12:40:28 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/07/25 22:44:05 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3d_bonus.h"
 
 static int	compare(char c, char const *set)
 {
@@ -62,7 +62,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	end = find_end(s1, set);
 	if (start > end)
 		return (ft_strdup(""));
-	res = (char *)malloc(end - start + 1 );
+	res = (char *)malloc(end - start + 1);
 	if (!res)
 		return (NULL);
 	x = 0;

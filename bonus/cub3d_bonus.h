@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/13 12:34:11 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/20 23:39:34 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,28 +20,28 @@
 #include <math.h>
 #include <stdbool.h>
 #include "./MLX/MLX42.h"
-#include "utils/get_next_line/get_next_line.h"
+#include "utils/get_next_line/get_next_line_bonus.h"
 
 #define TILE_SIZE 1024
 #define SCALE 0.02
 #define BACKGROUND 0xFD42EE55
+#define SCALE_SIZE (TILE_SIZE * SCALE)
 
-#define WINDOW_WIDTH 1500
-#define WINDOW_HEIGHT 1200
-
-#define FREE 0
-#define ALLOC 1
+#define WINDOW_WIDTH 1800
+#define WINDOW_HEIGHT 1000
 
 #define DEG 90
 #define P_RAD 4
 #define ROT_SPEED 10
-#define MOVE_SPEED 220
+#define MOVE_SPEED 70
 
+#define MINIMAP_WIDTH 11
+#define MINIMAP_HEIGHT 11
 
+#define FILE "maps/map.cub"
 
 #define NUM_RAYS WINDOW_WIDTH
 #define FOV 60 * (M_PI / 180)
-#define RAY_RAD 1000
 
 // ============= define colors ===========
 #define BLACK 0x000000FF
@@ -59,14 +59,15 @@
 #define LIGHT_GREY 0xC0C0C0FF
 
 // Semi-transparent colors (50% opacity)
-#define SEMI_RED 0xFF000080
-#define SEMI_LIME 0x00FF0080
-#define SEMI_BLUE 0x0000FF80
-#define SEMI_CYAN 0x00FFFF80
-#define SEMI_BLACK 0x00000080
-#define SEMI_WHITE 0xFFFFFF80
-#define SEMI_YELLOW 0xFFFF0080
-#define SEMI_MAGENTA 0xFF00FF80
+#define SEMI_GREY		0x808080AA
+#define SEMI_RED		0xFF000080
+#define SEMI_LIME		0x00FF0080
+#define SEMI_BLUE		0x0000FF80
+#define SEMI_CYAN		0x00FFFF80
+#define SEMI_BLACK		0x00000080
+#define SEMI_WHITE		0xFFFFFF40
+#define SEMI_YELLOW		0xFFFF0060
+#define SEMI_MAGENTA	0xFF00FF80
 
 #ifndef COLORS_H
 #define COLORS_H
@@ -156,6 +157,8 @@ typedef struct s_textures
 
 typedef struct s_data
 {
+	int d_x;
+	int d_y;
 	char *NO;
 	char *SO;
 	char *WE;
@@ -172,12 +175,28 @@ typedef struct s_data
 	t_textures textures;
 	mlx_image_t *player_img;
 	mlx_image_t *window_img;
-	char **top_map;
 	mlx_image_t *background_img;
 	mlx_texture_t *texture;
-	double wall_height;
-	char *map_path;
+	mlx_image_t *spr_img;
+	mlx_image_t *default_img;
+	mlx_image_t *minimap_img;
+	mlx_texture_t *tex_plr;
+	mlx_texture_t *tex_door;
+	int x_ray;
+	int dist_door;
+	bool  check_door;
+	char wall_door;
+	int x_door;
+	int y_door;
+	int place_x;
+	int place_y;
+	bool is_c;
+	double angle_mouse;
+	
+	
 } t_data;
+// ===================== functions utils =====================
+char *ft_itoa(int n);
 // ===================== functions parsing =====================
 int ft_strcmp(char *str1, char *str2);
 size_t ft_strlcat(char *dst, const char *src, size_t dstsize);
@@ -192,7 +211,6 @@ void validate_top_map(t_data *data);
 void set_map(t_data *data);
 void validate_all_dirs(t_data *data);
 void validate_colors(t_data *data);
-void validate_color(char *clr);
 void parse_map(t_data *data);
 void init_clrs_dirs(t_data *data);
 // ===================== draw objects =====================
@@ -230,26 +248,8 @@ t_ray vertical_ray(t_player player, t_map map, double ray_angle);
 
 // ================== walls functions ==================
 void project_walls(t_data *data, t_ray ray, int x);
+int update_player(t_data *data);
+// ================== minimap functions ==================
+int draw_minimap(t_data *data);
 
-// ================== parsing functions ==================
-void ft_putendl_fd_color(char *s, int fd, char *color);
-int count_lines(t_data *data);
-char *remove_new_line(char *line);
-bool is_direction(const char *str);
-bool is_color(const char *str);
-bool check_dirs(char *line, char *to_find);
-bool check_character(char c);
-void print_error(char *message);
-int find_longest_line_index(t_data *data);
-void validate_map(t_data *data);
-int check_comma(char *clr);
-char *get_two_char(char *line);
-int get_len_map(t_data *data);
-int find_colors(char **data);
-int find_dirs(char **data);
-char *get_first_char(char *line);
-void set_top_map(t_data *data);
-int count_empty_lines(char **map_data, int max_count);
-int get_count_map(t_data *data, int i);
-// void *malloc(size_t size, int status);
 #endif

@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/11 23:17:56 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/13 12:39:30 by belguabd         ###   ########.fr       */
+/*   Created: 2023/11/06 17:35:07 by belguabd          #+#    #+#             */
+/*   Updated: 2024/07/25 22:44:05 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3d_bonus.h"
 
-t_data	*ft_lstnew(void *content)
+void	ft_putendl_fd(char *s, int fd)
 {
-	t_data	*newstr;
-
-	newstr = (t_data *)malloc(sizeof(t_data) );
-	if (!newstr)
-		return (NULL);
-	newstr->content = content;
-	newstr->next = NULL;
-	return (newstr);
+	if (fd < 0)
+		return ;
+	if (s)
+	{
+		while (*s)
+		{
+			write(fd, s, 1);
+			s++;
+		}
+		write(fd, "\n", 1);
+	}
+	exit(1);
 }

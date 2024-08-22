@@ -6,11 +6,11 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 02:00:07 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/13 12:40:45 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/07/25 22:44:05 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3d_bonus.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {

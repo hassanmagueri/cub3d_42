@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3d_bonus.h"
 
 char	*get_util_comma(char *line)
 {
@@ -51,22 +51,18 @@ void	load_map_data(t_data *data)
 	char	*line;
 	int		fd;
 	int		i;
-	char	*last_line;
 
-	fd = open(data->map_path, O_RDONLY, 0666);
+	fd = open(FILE, O_RDONLY, 0666);
 	if (fd < 0)
 		ft_putendl_fd_color("Error\nOpen failure", 2, RED_E);
-	data->map_data = (char **)malloc(sizeof(char *) * (count_lines(data) + 1));
+	data->map_data = (char **)ft_malloc(sizeof(char *) * (count_lines() + 1), ALLOC);
 	i = 0;
 	line = get_next_line(fd);
 	while (line)
 	{
-		last_line = line;
 		data->map_data[i++] = remove_new_line(line);
 		line = get_next_line(fd);
 	}
-	if (last_line[ft_strlen(last_line) - 1] == '\n')
-		ft_putendl_fd_color("Error\nInvalid map", 2, RED_E);
 	data->map_data[i] = NULL;
 	close(fd);
 }

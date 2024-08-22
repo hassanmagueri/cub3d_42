@@ -31,12 +31,10 @@ int low(int n1, int n2)
 
 int xtoj(int x)
 {
-	int j = x / TILE_SIZE;
 	return (x / TILE_SIZE);
 }
 int ytoi(int y)
 {
-	int i = y / TILE_SIZE;
 	return (y / TILE_SIZE);
 }
 
@@ -94,8 +92,8 @@ int draw_player(t_data *data)
 bool	is_wall(t_data *data, int x, int y)
 {
 	char	**map;
-	int		i;
-	int		j;
+	size_t		i;
+	size_t		j;
 
 	map = data->map.layout;
 	i = y / TILE_SIZE;
@@ -119,6 +117,7 @@ bool	is_wall(t_data *data, int x, int y)
 		return (true);
 	return (false);
 }
+
 
 int	update_player(t_data *data)
 {

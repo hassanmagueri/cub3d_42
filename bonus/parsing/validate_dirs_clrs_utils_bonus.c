@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3d_bonus.h"
 
 bool	check_dirs(char *line, char *to_find)
 {
@@ -64,8 +64,6 @@ void	validate_map(t_data *data)
 	i = 0;
 	while (data->map.layout[i])
 	{
-		while (data->map.layout[i][0] == ' ')
-			data->map.layout[i]++;
 		if (data->map.layout[i][0])
 			line = ft_strtrim(data->map.layout[i], " ");
 		if (validate_char(line[0]) || validate_char(line[ft_strlen(line) - 1]))

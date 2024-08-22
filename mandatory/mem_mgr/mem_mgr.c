@@ -21,7 +21,7 @@ typedef struct s_mem_mgr
 t_free *add_new_node(void *address)
 {
     t_free *new;
-    new = (t_free *)ft_malloc(sizeof(t_free), ALLOC);
+    new = (t_free *)malloc(sizeof(t_free));
     if (!new)
         return (NULL);
     new->address = address;
@@ -41,7 +41,7 @@ void add_back(t_free **list, t_free *new)
     *list = new;
 }
 
-void *ft_malloc(size_t size, int status)
+void *malloc(size_t size, int status)
 {
     static t_free *head;
     t_free *new;

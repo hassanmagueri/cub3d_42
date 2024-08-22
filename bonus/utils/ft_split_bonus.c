@@ -6,11 +6,11 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 00:21:05 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/13 12:40:14 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/07/25 22:44:05 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3d_bonus.h"
 
 typedef struct s_splt
 {
