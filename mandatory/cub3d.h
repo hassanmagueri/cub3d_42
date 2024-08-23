@@ -177,6 +177,10 @@ typedef struct s_data
 	mlx_texture_t *texture;
 	double wall_height;
 	char *map_path;
+	mlx_image_t *img;
+	int x_ray;
+	uint32_t *p_clrs;
+	int offsetx;
 } t_data;
 // ===================== functions parsing =====================
 int ft_strcmp(char *str1, char *str2);

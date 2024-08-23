@@ -12,7 +12,7 @@
 
 #include "./cub3d.h"
 
-double ray_distance(double dx, double dy)
+double	ray_distance(double dx, double dy)
 {
 	return (sqrt(pow(dx, 2) + pow(dy, 2)));
 }
@@ -27,7 +27,7 @@ char *swap_bytes(char *str)
 	tmp = str[2];
 	str[2] = str[1];
 	str[1] = tmp;
-	return str;
+	return (str);
 }
 
 void ft_put_pixel(mlx_image_t *img, size_t x, size_t y, uint32_t color)
@@ -47,63 +47,89 @@ int painting_part_col(mlx_image_t *img, int start, int end, int x, t_clr color)
 	}
 	return 0;
 }
-
-int wall_painting(t_data *data, t_ray ray,
-				  mlx_image_t *img, int x, mlx_texture_t *texture){
-	uint32_t *p_clrs = (uint32_t *)texture->pixels;
-	(void)img;
-	double wall_top_pixel = (WINDOW_HEIGHT / 2) - (data->wall_height / 2);
+int ret_offset_x(double wall_hit_x, double wall_hit_y,
+				 bool is_vr, mlx_texture_t *texture)
+{
+	int offset_x;
+	if (is_vr)
+		offset_x = (int)wall_hit_y % texture->width;
+	else
+		offset_x = (int)wall_hit_x % texture->width;
+	return (offset_x);
+}
+double wall_top_pixle(double wall_height)
+{
+	double wall_top_pixel;
+	wall_top_pixel = (WINDOW_HEIGHT / 2) - (wall_height / 2);
 	if (wall_top_pixel < 0)
 		wall_top_pixel = 0;
-	double wall_hit_x = data->player.x + ray.dx;
-	double wall_hit_y = data->player.y + ray.dy;
+	return (wall_top_pixel);
+}
+void render_texture(t_data *data, double wall_height,
+					double wall_bottom_pixel, mlx_texture_t *texture)
+{
+	int y_ver;
+	int offsety;
+	uint32_t *p_clrs;
+	int dist_top_text;
+	unsigned long index;
 
-	int offX;
-	if (ray.is_vr)
-		offX = (int)wall_hit_y % texture->width;
-	else
-		offX = (int)wall_hit_x % texture->width; 
+	index = 0;
+	p_clrs = (uint32_t *)texture->pixels;
+	y_ver = wall_top_pixle(wall_height);
+	while (y_ver <= wall_bottom_pixel &&
+		   index < texture->width * texture->height)
+	{
+		dist_top_text = y_ver - (WINDOW_HEIGHT / 2) + (wall_height / 2);
+		offsety = dist_top_text * texture->height / wall_height;
+		index = (texture->width * offsety) + data->offsetx;
+		if (index < texture->height * texture->width)
+			ft_put_pixel(data->window_img, data->x_ray, y_ver, p_clrs[index]);
+		y_ver++;
+	}
+}
+int wall_painting(t_data *data, t_ray ray, int x, mlx_texture_t *texture)
+{
+	uint32_t *p_clrs;
+	int offsetx;
+	double wall_hit_x;
+	double wall_hit_y;
+	double wall_bottom_pixel;
 
-	double wall_bottom_pixel = (WINDOW_HEIGHT / 2) + (data->wall_height / 2);
+	p_clrs = (uint32_t *)texture->pixels;
+	wall_hit_x = data->player.x + ray.dx;
+	wall_hit_y = data->player.y + ray.dy;
+	offsetx = ret_offset_x(wall_hit_x, wall_hit_y, ray.is_vr, texture);
+	wall_bottom_pixel = (WINDOW_HEIGHT / 2) + (data->wall_height / 2);
 	if (wall_bottom_pixel > WINDOW_HEIGHT)
 		wall_bottom_pixel = WINDOW_HEIGHT;
-
-	int y = 0;
-	unsigned long index = 0;
-	y = wall_top_pixel;
-	while (y <= wall_bottom_pixel && index < texture->width * texture->height)
-	{
-		int dist_top_text = y - WINDOW_HEIGHT / 2 + data->wall_height / 2;
-		int offY = dist_top_text * texture->height / data->wall_height;
-		index = (texture->width * offY) + offX;
-		if (index < texture->height * texture->width)
-			ft_put_pixel(img, x, y, p_clrs[index]);
-		y++;
-	}
+	data->offsetx = offsetx;
+	data->x_ray = x;
+	render_texture(data, data->wall_height, wall_bottom_pixel, texture);
 	return (1);
 }
 
 void project_walls(t_data *data, t_ray ray, int x)
 {
 
-	double ray_dist;
-	t_textures textures;
 	static mlx_image_t *img;
+	t_textures textures;
+	double ray_dist;
+	double correct_ray;
+	int distanceProjectionPlane;
 
 	img = data->window_img;
-	int distanceProjectionPlane = (WINDOW_WIDTH / 2) / tan(FOV / 2);
+	distanceProjectionPlane = (WINDOW_WIDTH / 2) / tan(FOV / 2);
 	textures = data->textures;
-	double correct_ray;
-
 	ray_dist = ray_distance(ray.dx, ray.dy);
 	correct_ray = ray_dist * cos(ray.angle - data->player.angle);
 	data->wall_height = (TILE_SIZE / correct_ray * distanceProjectionPlane);
 	if (ray.direct == -1 && ray.is_vr)
-		wall_painting(data, ray ,img, x, textures.NO);
+		wall_painting(data, ray, x, textures.NO);
 	else if (ray.direct == -1 && !ray.is_vr)
-		wall_painting(data, ray, img, x, textures.SO);
+		wall_painting(data, ray, x, textures.SO);
 	else if (ray.direct == 1 && ray.is_vr)
-		wall_painting(data, ray, img, x, textures.WE);
+		wall_painting(data, ray, x, textures.WE);
 	else if (ray.direct == 1 && !ray.is_vr)
-		wall_painting(data, ray, img, x, textures.EA);
+		wall_painting(data, ray, x, textures.EA);
 }
