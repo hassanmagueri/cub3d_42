@@ -58,6 +58,8 @@ void	validate_map(t_data *data)
 	char	*line;
 	int		i;
 
+	if(data->map.layout[0] == NULL)
+		print_error("Error\nInvalid map");
 	if (validate_line(data->map.layout[0])
 		|| validate_line(data->map.layout[get_len_map(data) - 1]))
 		print_error("Error\nInvalid character");

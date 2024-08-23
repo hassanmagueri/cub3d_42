@@ -50,12 +50,11 @@ int painting_part_col(mlx_image_t *img, int start, int end, int x, t_clr color)
 
 int wall_painting(t_data *data, t_ray ray,
 				  mlx_image_t *img, int x, mlx_texture_t *texture){
-uint32_t *p_clrs = (uint32_t *)texture->pixels;
-(void)img;
+	uint32_t *p_clrs = (uint32_t *)texture->pixels;
+	(void)img;
 	double wall_top_pixel = (WINDOW_HEIGHT / 2) - (data->wall_height / 2);
 	if (wall_top_pixel < 0)
 		wall_top_pixel = 0;
-
 	double wall_hit_x = data->player.x + ray.dx;
 	double wall_hit_y = data->player.y + ray.dy;
 
@@ -63,7 +62,7 @@ uint32_t *p_clrs = (uint32_t *)texture->pixels;
 	if (ray.is_vr)
 		offX = (int)wall_hit_y % texture->width;
 	else
-		offX = (int)wall_hit_x % texture->width;
+		offX = (int)wall_hit_x % texture->width; 
 
 	double wall_bottom_pixel = (WINDOW_HEIGHT / 2) + (data->wall_height / 2);
 	if (wall_bottom_pixel > WINDOW_HEIGHT)
