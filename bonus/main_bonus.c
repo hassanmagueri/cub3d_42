@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/20 23:25:32 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/24 13:35:08 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MLX/MLX42.h"
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 #define NUM_IMAGES 68
 static size_t get_digits(int n)
 {
@@ -30,90 +30,8 @@ void ft_hook(void *param)
 	t_map map = data->map;
 	t_player *player;
 
-	int p_x = (int)(data->player.x / TILE_SIZE);
-	int p_y = (int)(data->player.y / TILE_SIZE);
-
 	player = &data->player;
-	if (mlx_is_key_down(data->mlx, MLX_KEY_O))
-	{
-		// Check downward
-		if (p_y + 1 < map.height && p_x < map.width && p_y + 1 >= 0 && p_x >= 0)
-		{
-			char tile_down = map.layout[p_y + 1][p_x];
-
-			if (tile_down == 'C')
-				map.layout[p_y + 1][p_x] = 'O';
-		}
-
-		// Check rightward
-		if (p_x + 1 < map.width && p_y < map.height && p_x + 1 >= 0 && p_y >= 0)
-		{
-			char tile_right = map.layout[p_y][p_x + 1];
-
-			if (tile_right == 'C')
-				map.layout[p_y][p_x + 1] = 'O';
-		}
-
-		// Check upward
-		if (p_y - 1 >= 0 && p_x < map.width && p_x >= 0 && p_y - 1 < map.height)
-		{
-			char tile_up = map.layout[p_y - 1][p_x];
-
-			if (tile_up == 'C')
-				map.layout[p_y - 1][p_x] = 'O';
-		}
-		// Check leftward
-		if (p_x - 1 >= 0 && p_y < map.height && p_y >= 0 && p_x - 1 < map.width)
-		{
-			char tile_left = map.layout[p_y][p_x - 1];
-
-			if (tile_left == 'C')
-				map.layout[p_y][p_x - 1] = 'O';
-		}
-		update_player(data);
-	}
-
-	if (mlx_is_key_down(data->mlx, MLX_KEY_C))
-	{
-		// if (data->x_door != -1 && data->y_door != -1)
-		// {
-		if (p_y + 1 < map.height && p_x < map.width && p_y + 1 >= 0 && p_x >= 0)
-		{
-			char tile_down = map.layout[p_y + 1][p_x];
-
-			if (tile_down == 'O')
-				map.layout[p_y + 1][p_x] = 'C';
-		}
-
-		// Check rightward
-		if (p_x + 1 < map.width && p_y < map.height && p_x + 1 >= 0 && p_y >= 0)
-		{
-			char tile_right = map.layout[p_y][p_x + 1];
-
-			if (tile_right == 'O')
-				map.layout[p_y][p_x + 1] = 'C';
-		}
-
-		// Check upward
-		if (p_y - 1 >= 0 && p_x < map.width && p_x >= 0 && p_y - 1 < map.height)
-		{
-			char tile_up = map.layout[p_y - 1][p_x];
-
-			if (tile_up == 'O')
-				map.layout[p_y - 1][p_x] = 'C';
-		}
-		// Check leftward
-		if (p_x - 1 >= 0 && p_y < map.height && p_y >= 0 && p_x - 1 < map.width)
-		{
-			char tile_left = map.layout[p_y][p_x - 1];
-
-			if (tile_left == 'O')
-				map.layout[p_y][p_x - 1] = 'C';
-		}
-		// }
-		update_player(data);
-	}
-
+	doors(data , map);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(data->mlx);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_W) || mlx_is_key_down(data->mlx, MLX_KEY_UP))
@@ -230,55 +148,95 @@ void move_mouse(double x_pos, double y_pos, void *arg)
 	data->player.rotation_angle += delta_x * 0.0001;
 	mlx_set_mouse_pos(data->mlx, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 }
+void validate_door_positions(t_data *data, int y)
+{
+	int x;
+	bool x_door;
+	bool y_door;
+
+	x = 0;
+	while (x < data->map.width)
+	{
+		x_door = false;
+		y_door = false;
+		if (data->map.layout[y][x] == 'C')
+		{
+			if ((data->map.layout[y][x + 1] == '1' && data->map.layout[y][x - 1] == '1'))
+				x_door = true;
+			else if (data->map.layout[y + 1][x] == '1' && data->map.layout[y - 1][x] == '1')
+				y_door = true;
+			if (!x_door && !y_door)
+				print_error("Error\nInvalid door");
+		}
+		x++;
+	}
+}
 void parsing_doors(t_data *data)
 {
 
 	int x;
 	int y;
-	int x_door;
-	int y_door;
+
 	y = 0;
 	while (y < data->map.height)
 	{
-		x = 0;
-		while (x < data->map.width)
-		{
-			if (data->map.layout[y][x] == 'C')
-			{
-				x_door = x;
-				y_door = y;
-			}
-			x++;
-		}
+		validate_door_positions(data, y);
 		y++;
 	}
-	// if()
+}
+void parsing_part(t_data *data)
+{
+	load_map_data(data);
+	validate_top_map(data);
+	set_map(data);
+	validate_all_dirs(data);
+	validate_colors(data);
+	parse_map(data);
+	init_clrs_dirs(data);
+	parsing_doors(data);
+}
+int ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	unsigned char *str1;
+	unsigned char *str2;
+	size_t i;
+
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
+	if (n == 0)
+		return (0);
+	i = 0;
+	while (str1[i] && (str1[i] == str2[i]) && i < n - 1)
+		i++;
+	return (str1[i] - str2[i]);
+}
+void check_extension(char const *file)
+{
+	if (ft_strncmp(file + ft_strlen(file) - 4, ".cub", 4))
+		ft_putendl_fd_color("Error\nInvalid file extension", 2, RED_E);
 }
 int32_t main(int ac, char const **av)
 {
 
 	t_data data;
-	load_map_data(&data);
-	validate_top_map(&data);
-	set_map(&data);
-	validate_all_dirs(&data);
-	validate_colors(&data);
-	parse_map(&data);
-	init_clrs_dirs(&data);
-	parsing_doors(&data);
-	// data.map = data.map_data;
+	if (ac != 2)
+		ft_putendl_fd_color("Error\nInvalid number of arguments", 2, RED_E);
+	check_extension(av[1]);
+	data.map_path = ft_strdup(av[1]);
+	parsing_part(&data);
+	int x = 0;
+	while (data.map.layout[x])
+	{
+		printf("%s\n", data.map.layout[x]);
+		x++;
+	}
 	int i = 0;
-	data.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D", false);
-	data.texture = mlx_load_png("./images/test.png");
-	// printf("images path: %s\n", data.SO);
+	data.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D_bonus", false);
 	data.textures.EA = mlx_load_png(data.EA);
 	data.textures.NO = mlx_load_png(data.NO);
 	data.textures.SO = mlx_load_png(data.SO);
 	data.textures.WE = mlx_load_png(data.WE);
 	data.wall_door = 'C';
-	data.x_door = -1;
-	data.y_door = -1;
-	// printf("width: %d\n", data.textures.NO->width);
 	data.window_img = mlx_new_image(data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data.background_img = mlx_new_image(data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data.minimap_img = mlx_new_image(data.mlx, MINIMAP_HEIGHT * SCALE_SIZE, MINIMAP_WIDTH * SCALE_SIZE);

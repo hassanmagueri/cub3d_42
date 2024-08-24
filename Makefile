@@ -1,4 +1,4 @@
-CC = cc    -g -fsanitize=address#-Wall -Wextra -Werror
+CC = cc    -g -fsanitize=address#-Wall -Wextra -Werror 
 #==============folders==============#
 PARSING=parsing
 UTILS=utils
@@ -9,11 +9,11 @@ BONUS=bonus
 
 
 NAME = cub3D
-NAME_BONUS=bonus
+NAME_BONUS=cub3D_bonus
 MLX_NAME = MLX/libmlx42.a
 MLX_FLAGS = -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
-SRC = $(MANDATORY)/main.c $(MANDATORY)/draw_objects.c $(MANDATORY)/player.c \
-	$(MANDATORY)/mlx_help.c $(MANDATORY)/ray.c $(MANDATORY)/walls.c \
+SRC = $(MANDATORY)/main.c $(MANDATORY)/draw_objects.c $(MANDATORY)/player.c  \
+	$(MANDATORY)/mlx_help.c $(MANDATORY)/ray.c $(MANDATORY)/walls.c $(MANDATORY)/wall_utils.c\
 	$(MANDATORY)/$(GET_NEXT_LINE)/get_next_line.c \
 	$(MANDATORY)/$(GET_NEXT_LINE)/get_next_line_utils.c \
 	$(MANDATORY)/$(UTILS)/ft_strcmp.c $(MANDATORY)/$(UTILS)/ft_strlcat.c \
@@ -24,19 +24,26 @@ SRC = $(MANDATORY)/main.c $(MANDATORY)/draw_objects.c $(MANDATORY)/player.c \
 	$(MANDATORY)/$(PARSING)/init_clrs_dirs.c $(MANDATORY)/$(PARSING)/parse_map.c \
 	$(MANDATORY)/$(PARSING)/utils.c $(MANDATORY)/$(PARSING)/validate_dirs_clrs.c \
 	$(MANDATORY)/$(PARSING)/validate_dirs_clrs_utils.c $(MANDATORY)/$(PARSING)/validate_top_map.c \
-#$(MANDATORY)/$(MEM_MGR)/mem_mgr.c
-
-SRC_BONUS=$(BONUS)/main_bonus.c $(BONUS)/draw_objects_bonus.c $(BONUS)/player_bonus.c \
-	$(BONUS)/mlx_help_bonus.c $(BONUS)/ray_bonus.c $(BONUS)/walls_bonus.c $(BONUS)/minimap_bonus.c \
-	$(BONUS)/$(PARSING)/load_map_data.c $(BONUS)/$(PARSING)/load_map_data_utils.c \
-	$(BONUS)/$(PARSING)/init_clrs_dirs.c $(BONUS)/$(PARSING)/parse_map.c \
-	$(BONUS)/$(PARSING)/utils.c $(BONUS)/$(PARSING)/validate_dirs_clrs.c \
-	$(BONUS)/$(PARSING)/validate_dirs_clrs_utils.c $(BONUS)/$(PARSING)/validate_top_map.c \
-
-
 
 OBJ = $(SRC:.c=.o)
 
+SRC_BONUS=$(BONUS)/main_bonus.c $(BONUS)/draw_objects_bonus.c $(BONUS)/player_bonus.c \
+	$(BONUS)/$(GET_NEXT_LINE)/get_next_line_bonus.c \
+	$(BONUS)/$(GET_NEXT_LINE)/get_next_line_utils_bonus.c \
+	$(BONUS)/$(UTILS)/ft_strcmp_bonus.c $(BONUS)/$(UTILS)/ft_strlcat_bonus.c \
+	$(BONUS)/$(UTILS)/ft_putendl_fd_bonus.c $(BONUS)/$(UTILS)/ft_split_bonus.c \
+	$(BONUS)/$(UTILS)/ft_substr_bonus.c $(BONUS)/$(UTILS)/ft_strtrim_bonus.c \
+	$(BONUS)/$(UTILS)/ft_isdigit_bonus.c $(BONUS)/$(UTILS)/ft_atoi_bonus.c $(BONUS)/$(UTILS)/ft_itoa_bonus.c \
+	$(BONUS)/mlx_help_bonus.c $(BONUS)/ray_bonus.c $(BONUS)/walls_bonus.c $(BONUS)/minimap_bonus.c \
+	$(BONUS)/$(PARSING)/load_map_data_bonus.c $(BONUS)/$(PARSING)/load_map_data_utils_bonus.c \
+	$(BONUS)/$(PARSING)/init_clrs_dirs_bonus.c $(BONUS)/$(PARSING)/parse_map_bonus.c \
+	$(BONUS)/$(PARSING)/utils_bonus.c $(BONUS)/$(PARSING)/validate_dirs_clrs_bonus.c \
+	$(BONUS)/doors_bonus.c \
+	$(BONUS)/$(PARSING)/validate_dirs_clrs_utils_bonus.c $(BONUS)/$(PARSING)/validate_top_map_bonus.c \
+
+
+
+OBJ_BONUS = $(SRC_BONUS:.c=.o)
 
 all: $(NAME) 
 
@@ -46,10 +53,18 @@ $(NAME): $(OBJ)
 $(MANDATORY)/%.o:$(MANDATORY)/%.c $(MANDATORY)/cub3d.h
 	$(CC) -c $< -o $@  
 
+bonus: $(NAME_BONUS)
+
+$(NAME_BONUS): $(OBJ_BONUS)
+	$(CC) $(MLX_FLAGS) $(BONUS)/$(MLX_NAME) $(OBJ_BONUS) -o $(NAME_BONUS)
+
+$(BONUS)/%.o:$(BONUS)/%.c $(BONUS)/cub3d_bonus.h
+	$(CC) -c $< -o $@
+
 clean:
-	rm -f $(OBJ)
+	rm -f $(OBJ) $(OBJ_BONUS)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) $(NAME_BONUS)
 
-re: fclean all
+re: fclean all 

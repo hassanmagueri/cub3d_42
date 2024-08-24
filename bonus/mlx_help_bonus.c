@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_help.c                                         :+:      :+:    :+:   */
+/*   mlx_help_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:30:52 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/05 12:14:24 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/24 12:50:25 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 #include <stdint.h>
 
 mlx_image_t		*clear_image(mlx_t *mlx, mlx_image_t *img)
@@ -43,6 +43,8 @@ mlx_image_t		*new_image_to_window(mlx_t *mlx, int width, int height)
 
 	img = mlx_new_image(mlx, width, height);
 	mlx_image_to_window(mlx, img, 0, 0);
+	
+
 	return (img);
 }
 

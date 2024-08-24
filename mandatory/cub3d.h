@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/13 12:34:11 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/23 18:23:40 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,5 +255,9 @@ char *get_first_char(char *line);
 void set_top_map(t_data *data);
 int count_empty_lines(char **map_data, int max_count);
 int get_count_map(t_data *data, int i);
+double	ray_distance(double dx, double dy);
+char	*swap_bytes(char *str);
+int	ret_offset_x(double wall_hit_x, double wall_hit_y,
+		bool is_vr, mlx_texture_t *texture);
 // void *malloc(size_t size, int status);
 #endif

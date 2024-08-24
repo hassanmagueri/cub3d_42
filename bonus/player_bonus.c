@@ -1,19 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player.c                                           :+:      :+:    :+:   */
+/*   player_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:51:11 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/21 20:48:56 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/23 18:32:51 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
-#include <math.h>
-#include <stdbool.h>
-#include <sys/fcntl.h>
+#include "cub3d_bonus.h"
+
 
 double degtorad(int deg)
 {

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate_top_map.c                                 :+:      :+:    :+:   */
+/*   validate_top_map_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 21:40:55 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/13 12:39:06 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/23 20:41:47 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	validate_top_map(t_data *data)
 	int		i;
 	int		j;
 
-	data->top_map = (char **)ft_malloc(sizeof(char *) * 7, ALLOC );
-	fd = open(FILE, O_RDONLY);
+	data->top_map = (char **)malloc(sizeof(char *) * 7 );
+	fd = open(data->map_path, O_RDONLY);
 	if (fd < 0)
 		ft_putendl_fd_color("Error\nOpen failure", 2, RED_E);
 	i = 0;
@@ -86,6 +86,18 @@ int	find_colors(char **data)
 	return (0);
 }
 
+void	check_newline(char **map)
+{
+
+	int y = 0;
+	while (map[y])
+	{
+		if (!map[y][0])
+			ft_putendl_fd_color("Error\nInvalid map", 2, RED_E);
+		y++;
+	}
+}
+
 void	set_map(t_data *data)
 {
 	char	*line;
@@ -94,8 +106,8 @@ void	set_map(t_data *data)
 
 	set_top_map(data);
 	i = count_empty_lines(data->map_data, 6);
-	data->map.layout = (char **)ft_malloc(sizeof(char *)
-			* (get_count_map(data, i) + 1),ALLOC);
+	data->map.layout = (char **)malloc(sizeof(char *)
+			* (get_count_map(data, i) + 1));
 	j = 0;
 	while (data->map_data[i])
 	{
@@ -103,4 +115,5 @@ void	set_map(t_data *data)
 		i++;
 	}
 	data->map.layout[j] = NULL;
+	check_newline(data->map.layout);
 }

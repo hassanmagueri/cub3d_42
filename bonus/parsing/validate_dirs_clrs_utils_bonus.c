@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate_dirs_clrs_utils.c                         :+:      :+:    :+:   */
+/*   validate_dirs_clrs_utils_bonus.c                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:02:08 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/12 22:30:31 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/24 13:23:00 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	validate_char(char chr)
 		|| chr == 'N'
 		|| chr == 'S'
 		|| chr == 'W'
+		|| chr == 'C'
 		|| chr == 'E')
 		return (-1);
 	return (0);
@@ -46,27 +47,40 @@ int	validate_line(char *line)
 			|| line[i] == 'N'
 			|| line[i] == 'S'
 			|| line[i] == 'W'
+			|| line[i] == 'C'
 			|| line[i] == 'E')
 			return (-1);
 		i++;
 	}
 	return (0);
 }
+void check_isspace(char *line)
+{
+	int i;
 
+	i = 0;
+	while (line[i] && line[i] == ' ')
+		i++;
+	if (!line[i])
+		print_error("Error\nInvalid map");
+}
 void	validate_map(t_data *data)
 {
 	char	*line;
 	int		i;
 
+	if(!data->map.layout[0])
+		print_error("Error\nInvalid map");
 	if (validate_line(data->map.layout[0])
 		|| validate_line(data->map.layout[get_len_map(data) - 1]))
 		print_error("Error\nInvalid character");
 	i = 0;
 	while (data->map.layout[i])
 	{
-		if (data->map.layout[i][0])
-			line = ft_strtrim(data->map.layout[i], " ");
-		if (validate_char(line[0]) || validate_char(line[ft_strlen(line) - 1]))
+		check_isspace(data->map.layout[i]);
+		line = ft_strtrim(data->map.layout[i], " ");
+		if(!line || validate_char(line[0]) 
+			|| validate_char(line[ft_strlen(line) - 1]))
 			print_error("Error\nInvalid character");
 		i++;
 	}

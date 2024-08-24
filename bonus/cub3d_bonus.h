@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/20 23:39:34 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/24 13:35:28 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 #include <float.h>
 #include <math.h>
 #include <stdbool.h>
+#include <math.h>
+#include <stdbool.h>
+#include <sys/fcntl.h>
 #include "./MLX/MLX42.h"
 #include "utils/get_next_line/get_next_line_bonus.h"
 
@@ -37,8 +40,6 @@
 
 #define MINIMAP_WIDTH 11
 #define MINIMAP_HEIGHT 11
-
-#define FILE "maps/map.cub"
 
 #define NUM_RAYS WINDOW_WIDTH
 #define FOV 60 * (M_PI / 180)
@@ -192,6 +193,8 @@ typedef struct s_data
 	int place_y;
 	bool is_c;
 	double angle_mouse;
+	char **top_map;
+	char *map_path;
 	
 	
 } t_data;
@@ -251,5 +254,26 @@ void project_walls(t_data *data, t_ray ray, int x);
 int update_player(t_data *data);
 // ================== minimap functions ==================
 int draw_minimap(t_data *data);
-
+void	ft_putendl_fd_color(char *s, int fd, char *color);
+int	count_lines(t_data *data);
+char	*remove_new_line(char *line);
+bool	is_direction(const char *str);
+bool	is_color(const char *str);
+bool	check_dirs(char *line, char *to_find);
+bool	check_character(char c);
+void	print_error(char *message);
+int	find_longest_line_index(t_data *data);
+void	validate_map(t_data *data);
+int	check_comma(char *clr);
+char	*get_two_char(char *line);
+int	get_len_map(t_data *data);
+int	find_colors(char **data);
+int	find_dirs(char **data);
+void	validate_colors(t_data *data);
+void	validate_color(char *clr);
+char	*get_first_char(char *line);
+void	set_top_map(t_data *data);
+int	count_empty_lines(char **map_data, int max_count);
+int	get_count_map(t_data *data, int i);
+void doors(t_data *data , t_map map);
 #endif

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_objects.c                                     :+:      :+:    :+:   */
+/*   draw_objects_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:46 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/09 11:15:33 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/23 18:32:29 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d_bonus.h"
+#include "cub3d_bonus.h"
 
 int draw_line(t_line line, mlx_image_t *image)
 {

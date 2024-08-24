@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_clrs_dirs.c                                   :+:      :+:    :+:   */
+/*   init_clrs_dirs_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:23:02 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/12 22:29:14 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/23 19:57:05 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_bonus.h"
 
-int	count_lines(void)
+int	count_lines(t_data *data)
 {
 	char	*line;
 	int		fd;
 	int		i;
 
-	fd = open(FILE, O_RDONLY, 0666);
+	fd = open(data->map_path, O_RDONLY, 0666);
 	if (fd < 0)
 		ft_putendl_fd_color("Error\nOpen failure", 2, RED_E);
 	line = get_next_line(fd);
