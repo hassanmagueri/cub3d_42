@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:04:15 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/23 19:43:18 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/24 15:14:32 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,13 @@ char *swap_bytes(char *str)
 	return str;
 }
 
-void ft_put_pixel(mlx_image_t *img, int x, int y, uint32_t color, int index, uint32_t width, int offX)
+void ft_put_pixel( t_data *data, int y, uint32_t color, int index, uint32_t width)
 {
-
 	swap_bytes((char *)(&color));
-	if (x >= 0 && x < img->width && y >= 0 && y < img->height)
-		mlx_put_pixel(img, x, y, color);
+	if (data->x_ray>= 0 && data->x_ray< data->window_img->width 
+		&& y >= 0 && y < data->window_img->height)
+		mlx_put_pixel(data->window_img, data->x_ray, y, color);
 }
-
 
 int painting_part_col(mlx_image_t *img, int start, int end, int x)
 {
@@ -55,148 +54,99 @@ int get_distance_door(t_data *data, double x, double y)
 	int d_y = (int)y;
 	return abs(d_x - p_x) + abs(d_y - p_y);
 }
-int wall_painting(t_data *data, t_ray ray, double wall_height, mlx_image_t *img, int x, mlx_texture_t *texture)
+
+double wall_top_pixle(double wall_height)
 {
+	double wall_top_pixel;
 
-	t_map map = data->map;
-	uint32_t *p_clrs = (uint32_t *)texture->pixels;
-	t_player player = data->player;
-
-	double wall_top_pixel = (WINDOW_HEIGHT / 2) - (wall_height / 2);
+	wall_top_pixel = (WINDOW_HEIGHT / 2) - (wall_height / 2);
 	if (wall_top_pixel < 0)
 		wall_top_pixel = 0;
+	return (wall_top_pixel);
+}
+int ret_offset_x(double wall_hit_x, double wall_hit_y,
+				 bool is_vr, mlx_texture_t *texture)
+{
+	int offset_x;
 
-	double wall_hit_x = data->player.x + ray.dx;
-	double wall_hit_y = data->player.y + ray.dy;
-	int map_x = (int)((wall_hit_x) / TILE_SIZE);
-	int map_y = (int)((wall_hit_y) / TILE_SIZE);
-	int p_x = (int)(data->player.x / TILE_SIZE);
-	int p_y = (int)(data->player.y / TILE_SIZE);
-	
-
-	// Check downward
-	if (p_y + 1 < map.height && p_x < map.width && p_y + 1 >= 0 && p_x >= 0)
-	{
-		char tile_down = map.layout[p_y + 1][p_x];
-
-		if (tile_down == 'C' || tile_down == 'O')
-		{
-			data->x_door = p_x;
-			data->y_door = p_y + 1;
-			data->place_y = 1;
-			data->place_x = 0;
-		}
-	}
-
-	// Check rightward
-	if (p_x + 1 < map.width && p_y < map.height && p_x + 1 >= 0 && p_y >= 0)
-	{
-		char tile_right = map.layout[p_y][p_x + 1];
-
-		if (tile_right == 'C' || tile_right == 'O')
-		{
-			data->x_door = p_x + 1;
-			data->y_door = p_y;
-			data->place_x = 1;
-			data->place_y = 0;
-		}
-	}
-
-	// Check upward
-	if (p_y - 1 >= 0 && p_x < map.width && p_x >= 0 && p_y - 1 < map.height)
-	{
-		char tile_up = map.layout[p_y - 1][p_x];
-
-		if (tile_up == 'C' || tile_up == 'O')
-		{
-			data->x_door = p_x;
-			data->y_door = p_y - 1;
-			data->place_y = -1;
-			data->place_x = 0;
-		}
-	}
-	// Check leftward
-	if (p_x - 1 >= 0 && p_y < map.height && p_y >= 0 && p_x - 1 < map.width)
-	{
-		char tile_left = map.layout[p_y][p_x - 1];
-
-		if (tile_left == 'C' || tile_left == 'O')
-		{
-			data->x_door = p_x - 1;
-			data->y_door = p_y;
-			data->place_x = -1;
-			data->place_y = 0;
-		}
-	}
-	if (map.layout[p_y][p_x] == 'O' || map.layout[p_y][p_x] == 'C')
-		data->is_c = true;
-	if (map.layout[p_y][p_x] != 'O' && map.layout[p_y][p_x] != 'C')
-		data->is_c = false;
-	if (
-		(map.layout[map_y][map_x - 1] == 'C' && ray.direct == -1) ||
-		(map.layout[map_y][map_x] == 'C' && ray.direct == 1) ||
-		(map.layout[map_y - 1][map_x] == 'C' && ray.direct == -1))
-	{
-		data->d_y = map_y;
-		data->d_x = map_x;
-		if (map.layout[map_y][map_x - 1] == 'C' && ray.direct == -1)
-			data->d_x--;
-		if (map.layout[map_y - 1][map_x] == 'C' && ray.direct == -1)
-			data->d_y--;
-		data->dist_door = get_distance_door(data, map_x, map_y);
-		texture = data->tex_door;
-		p_clrs = (uint32_t *)data->tex_door->pixels;
-		data->x_ray = x;
-	}
-
-	int offX;
-	if (ray.is_vr)
-		offX = (int)wall_hit_y % texture->height;
-	
+	if (is_vr)
+		offset_x = (int)wall_hit_y % texture->width;
 	else
-		offX = (int)wall_hit_x % texture->height;
+		offset_x = (int)wall_hit_x % texture->width;
+	return (offset_x);
+}
+void render_texture(t_data *data , double wall_height , 
+	double wall_bottom_pixel , mlx_texture_t *texture)
+{
+	double			wall_top_pixel;
+	unsigned long	index;
+	int				dist_top_text;
+	int				offsety;
+	int				y;
 
-	double wall_bottom_pixel = (WINDOW_HEIGHT / 2) + (wall_height / 2);
-	if (wall_bottom_pixel > WINDOW_HEIGHT)
-		wall_bottom_pixel = WINDOW_HEIGHT;
-
-	int y = 0;
-	unsigned long index = 0;
-	painting_part_col(img, 0, wall_top_pixel, x);
+	wall_top_pixel= wall_top_pixle(wall_height);
+	painting_part_col(data->window_img, 0, wall_top_pixel, data->x_ray);
 	y = wall_top_pixel;
+	index = 0;
 	while (y <= wall_bottom_pixel && index < texture->width * texture->height)
 	{
-		int dist_top_text = y - WINDOW_HEIGHT / 2 + wall_height / 2;
-		int offY = dist_top_text * texture->height / wall_height;
-		index = (texture->width * offY) + offX;
+		dist_top_text = y - WINDOW_HEIGHT / 2 + wall_height / 2;
+		offsety = dist_top_text * texture->height / wall_height;
+		index = (texture->width * offsety) + data->offsetx;
 		if (index < texture->height * texture->width)
-				ft_put_pixel(img, x, y, p_clrs[index], index, texture->width, offX);
+			ft_put_pixel(data, y, data->p_clrs[index], index, texture->width);
 		y++;
 	}
-	painting_part_col(img, wall_bottom_pixel, WINDOW_HEIGHT, x);
+	painting_part_col(data->window_img, wall_bottom_pixel, WINDOW_HEIGHT, data->x_ray);
+}
+int wall_painting(t_data *data, t_ray ray, 
+	double wall_height, int x, mlx_texture_t *texture)
+{
+	uint32_t *p_clrs;
+	int offsetx;
+	double wall_hit_x;
+	double wall_hit_y;
+	double wall_bottom_pixel;
+
+	p_clrs = (uint32_t *)texture->pixels;
+	wall_hit_x = data->player.x + ray.dx;
+	wall_hit_y = data->player.y + ray.dy;
+	if (draw_doors(wall_hit_x, wall_hit_y, ray, data->map))
+	{
+		texture = data->tex_door;
+		p_clrs = (uint32_t *)data->tex_door->pixels;
+	}
+	offsetx = ret_offset_x(wall_hit_x, wall_hit_y, ray.is_vr, texture);
+	wall_bottom_pixel = (WINDOW_HEIGHT / 2) + (wall_height / 2);
+	if (wall_bottom_pixel > WINDOW_HEIGHT)
+		wall_bottom_pixel = WINDOW_HEIGHT;
+	data->offsetx = offsetx;	
+	data->x_ray = x;
+	data->p_clrs = p_clrs;
+	render_texture(data, wall_height, wall_bottom_pixel, texture);
 	return (1);
 }
 
 void project_walls(t_data *data, t_ray ray, int x)
 {
-	double ray_dist;
-	double wall_expected_height;
-	t_textures textures;
-	static mlx_image_t *img;
+	t_textures	textures;
+	int			distance_projection_plane;
+	double		ray_dist;
+	double		correct_ray;
+	double		wall_expected_height;
 
-	img = data->window_img;
-	int distanceProjectionPlane = (WINDOW_WIDTH / 2) / tan(FOV / 2);
+	
+	distance_projection_plane = (WINDOW_WIDTH / 2) / tan(FOV / 2);
 	textures = data->textures;
-	double correct_ray;
 	ray_dist = ray_distance(ray.dx, ray.dy);
 	correct_ray = ray_dist * cos(ray.angle - data->player.angle);
-	wall_expected_height = (TILE_SIZE / correct_ray * distanceProjectionPlane);
+	wall_expected_height = (TILE_SIZE / correct_ray * distance_projection_plane);
 	if (ray.direct == -1 && ray.is_vr)
-		wall_painting(data, ray, wall_expected_height, img, x, textures.NO);
+		wall_painting(data, ray, wall_expected_height, x, textures.NO);
 	else if (ray.direct == -1 && !ray.is_vr)
-		wall_painting(data, ray, wall_expected_height, img, x, textures.SO);
+		wall_painting(data, ray, wall_expected_height, x, textures.SO);
 	else if (ray.direct == 1 && ray.is_vr)
-		wall_painting(data, ray, wall_expected_height, img, x, textures.WE);
+		wall_painting(data, ray, wall_expected_height, x, textures.WE);
 	else if (ray.direct == 1 && !ray.is_vr)
-		wall_painting(data, ray, wall_expected_height, img, x, textures.EA);
+		wall_painting(data, ray, wall_expected_height, x, textures.EA);
 }

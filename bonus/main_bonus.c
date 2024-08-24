@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/24 13:48:06 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/24 15:46:30 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void ft_hook(void *param)
 	t_player *player;
 
 	player = &data->player;
-	doors(data , map);
+	doors(data, map);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(data->mlx);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_W) || mlx_is_key_down(data->mlx, MLX_KEY_UP))
@@ -88,59 +88,9 @@ int render_map(t_data *data)
 	update_player(data);
 	return (1);
 }
-void ft_put_image(t_data *data, mlx_image_t *img)
-{
-	mlx_image_to_window(data->mlx, img, 300, 300);
-}
-void ft_strcpy(char *dest, char *src)
-{
-	while (*src)
-		*dest++ = *src++;
-	*dest = '\0';
-}
-void ft_strcut(char *dest, char *src)
-{
-	while (*dest)
-		dest++;
-	while (*src)
-		*dest++ = *src++;
-	*dest = '\0';
-}
-void animation_sprite(void *arg)
-{
-	t_data *data = (t_data *)arg;
-	static int i;
-	static bool is_pressed;
-	static mlx_image_t *remove_img = NULL;
-	if (mlx_is_key_down(data->mlx, MLX_KEY_SPACE))
-	{
 
-		mlx_delete_image(data->mlx, data->default_img);
-		is_pressed = true;
-		data->tex_plr = mlx_load_png("./sprite/Stechkin01.png");
-	}
-	if (is_pressed)
-	{
-		if (remove_img)
-			mlx_delete_image(data->mlx, remove_img);
-		char path[100] = "./sprite/StechkinEx";
-		char index[10];
-		char png[10] = ".png";
-		ft_strcpy(index, ft_itoa(i + 1));
-		ft_strcut(path, index);
-		ft_strcut(path, png);
-		mlx_texture_t *tex = mlx_load_png(path);
-		mlx_image_t *img = mlx_texture_to_image(data->mlx, tex);
-		remove_img = img;
-		ft_put_image(data, img);
-		i++;
-	}
-	if (i == NUM_IMAGES)
-	{
-		i = 0;
-		is_pressed = false;
-	}
-}
+
+
 void move_mouse(double x_pos, double y_pos, void *arg)
 {
 	t_data *data = (t_data *)arg;
@@ -148,42 +98,7 @@ void move_mouse(double x_pos, double y_pos, void *arg)
 	data->player.rotation_angle += delta_x * 0.0001;
 	mlx_set_mouse_pos(data->mlx, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 }
-void validate_door_positions(t_data *data, int y)
-{
-	int x;
-	bool x_door;
-	bool y_door;
 
-	x = 0;
-	while (x < data->map.width)
-	{
-		x_door = false;
-		y_door = false;
-		if (data->map.layout[y][x] == 'C')
-		{
-			if ((data->map.layout[y][x + 1] == '1' && data->map.layout[y][x - 1] == '1'))
-				x_door = true;
-			else if (data->map.layout[y + 1][x] == '1' && data->map.layout[y - 1][x] == '1')
-				y_door = true;
-			if (!x_door && !y_door)
-				print_error("Error\nInvalid door");
-		}
-		x++;
-	}
-}
-void parsing_doors(t_data *data)
-{
-
-	int x;
-	int y;
-
-	y = 0;
-	while (y < data->map.height)
-	{
-		validate_door_positions(data, y);
-		y++;
-	}
-}
 void parsing_part(t_data *data)
 {
 	load_map_data(data);

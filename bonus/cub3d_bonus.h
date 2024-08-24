@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/24 13:47:47 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/24 15:47:03 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 
 #define WINDOW_WIDTH 1800
 #define WINDOW_HEIGHT 1000
-
+#define NUM_IMAGES 68
 #define DEG 90
 #define P_RAD 4
 #define ROT_SPEED 10
@@ -60,15 +60,15 @@
 #define LIGHT_GREY 0xC0C0C0FF
 
 // Semi-transparent colors (50% opacity)
-#define SEMI_GREY		0x808080AA
-#define SEMI_RED		0xFF000080
-#define SEMI_LIME		0x00FF0080
-#define SEMI_BLUE		0x0000FF80
-#define SEMI_CYAN		0x00FFFF80
-#define SEMI_BLACK		0x00000080
-#define SEMI_WHITE		0xFFFFFF40
-#define SEMI_YELLOW		0xFFFF0060
-#define SEMI_MAGENTA	0xFF00FF80
+#define SEMI_GREY 0x808080AA
+#define SEMI_RED 0xFF000080
+#define SEMI_LIME 0x00FF0080
+#define SEMI_BLUE 0x0000FF80
+#define SEMI_CYAN 0x00FFFF80
+#define SEMI_BLACK 0x00000080
+#define SEMI_WHITE 0xFFFFFF40
+#define SEMI_YELLOW 0xFFFF0060
+#define SEMI_MAGENTA 0xFF00FF80
 
 #ifndef COLORS_H
 #define COLORS_H
@@ -141,13 +141,11 @@ typedef struct s_player
 	int radius;
 } t_player;
 
-
 typedef struct s_index
 {
 	int i;
 	int j;
-}t_index;
-
+} t_index;
 
 typedef struct s_map
 {
@@ -170,8 +168,7 @@ typedef struct s_minimap
 	t_point player_p;
 	t_point pn;
 	mlx_image_t *img;
-}t_minimap;
-
+} t_minimap;
 
 typedef struct s_data
 {
@@ -202,18 +199,21 @@ typedef struct s_data
 	t_minimap minimap;
 	int x_ray;
 	int dist_door;
-	bool  check_door;
+	bool check_door;
 	char wall_door;
 	int x_door;
 	int y_door;
 	int place_x;
 	int place_y;
-	bool is_c;
 	double angle_mouse;
 	char **top_map;
 	char *map_path;
-	
-	
+	int offsetx;
+	uint32_t *p_clrs;
+	mlx_texture_t *tex;
+	mlx_image_t *img;
+
+
 } t_data;
 // ===================== functions utils =====================
 char *ft_itoa(int n);
@@ -271,26 +271,29 @@ void project_walls(t_data *data, t_ray ray, int x);
 int update_player(t_data *data);
 // ================== minimap functions ==================
 int draw_minimap(t_data *data);
-void	ft_putendl_fd_color(char *s, int fd, char *color);
-int	count_lines(t_data *data);
-char	*remove_new_line(char *line);
-bool	is_direction(const char *str);
-bool	is_color(const char *str);
-bool	check_dirs(char *line, char *to_find);
-bool	check_character(char c);
-void	print_error(char *message);
-int	find_longest_line_index(t_data *data);
-void	validate_map(t_data *data);
-int	check_comma(char *clr);
-char	*get_two_char(char *line);
-int	get_len_map(t_data *data);
-int	find_colors(char **data);
-int	find_dirs(char **data);
-void	validate_colors(t_data *data);
-void	validate_color(char *clr);
-char	*get_first_char(char *line);
-void	set_top_map(t_data *data);
-int	count_empty_lines(char **map_data, int max_count);
-int	get_count_map(t_data *data, int i);
-void doors(t_data *data , t_map map);
+void ft_putendl_fd_color(char *s, int fd, char *color);
+int count_lines(t_data *data);
+char *remove_new_line(char *line);
+bool is_direction(const char *str);
+bool is_color(const char *str);
+bool check_dirs(char *line, char *to_find);
+bool check_character(char c);
+void print_error(char *message);
+int find_longest_line_index(t_data *data);
+void validate_map(t_data *data);
+int check_comma(char *clr);
+char *get_two_char(char *line);
+int get_len_map(t_data *data);
+int find_colors(char **data);
+int find_dirs(char **data);
+void validate_colors(t_data *data);
+void validate_color(char *clr);
+char *get_first_char(char *line);
+void set_top_map(t_data *data);
+int count_empty_lines(char **map_data, int max_count);
+int get_count_map(t_data *data, int i);
+void doors(t_data *data, t_map map);
+void parsing_doors(t_data *data);
+bool draw_doors(double wall_hit_x, double wall_hit_y, t_ray ray, t_map map);
+void animation_sprite(void *arg);
 #endif

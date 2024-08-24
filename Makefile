@@ -38,7 +38,8 @@ SRC_BONUS=$(BONUS)/main_bonus.c $(BONUS)/draw_objects_bonus.c $(BONUS)/player_bo
 	$(BONUS)/$(PARSING)/load_map_data_bonus.c $(BONUS)/$(PARSING)/load_map_data_utils_bonus.c \
 	$(BONUS)/$(PARSING)/init_clrs_dirs_bonus.c $(BONUS)/$(PARSING)/parse_map_bonus.c \
 	$(BONUS)/$(PARSING)/utils_bonus.c $(BONUS)/$(PARSING)/validate_dirs_clrs_bonus.c \
-	$(BONUS)/doors_bonus.c \
+	$(BONUS)/doors_bonus.c $(BONUS)/doors_utils_bonus.c \
+	$(BONUS)/sprite_bonus.c \
 	$(BONUS)/$(PARSING)/validate_dirs_clrs_utils_bonus.c $(BONUS)/$(PARSING)/validate_top_map_bonus.c \
 
 

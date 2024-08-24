@@ -6,13 +6,49 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 13:34:56 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/24 13:35:14 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/24 14:25:05 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "cub3d_bonus.h"
 
+void validate_door_positions(t_data *data, int y)
+{
+	int x;
+	bool x_door;
+	bool y_door;
+
+	x = 0;
+	while (x < data->map.width)
+	{
+		x_door = false;
+		y_door = false;
+		if (data->map.layout[y][x] == 'C')
+		{
+			if ((data->map.layout[y][x + 1] == '1' && data->map.layout[y][x - 1] == '1'))
+				x_door = true;
+			else if (data->map.layout[y + 1][x] == '1' && data->map.layout[y - 1][x] == '1')
+				y_door = true;
+			if (!x_door && !y_door)
+				print_error("Error\nInvalid door");
+		}
+		x++;
+	}
+}
+void parsing_doors(t_data *data)
+{
+
+	int x;
+	int y;
+
+	y = 0;
+	while (y < data->map.height)
+	{
+		validate_door_positions(data, y);
+		y++;
+	}
+}
 void close_doors(t_map map, int p_y, int p_x)
 {
 	if (p_y + 1 < map.height && p_x < map.width && p_y + 1 >= 0 && p_x >= 0)
@@ -46,8 +82,8 @@ void open_doors(t_map map, int p_y, int p_x)
 }
 void doors(t_data *data , t_map map)
 {
-	int p_x;
-	int p_y;
+	int	p_x;
+	int	p_y;
 	
 	p_x = (int)(data->player.x / TILE_SIZE);
 	p_y = (int)(data->player.y / TILE_SIZE);
