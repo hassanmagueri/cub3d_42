@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/24 13:35:28 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/24 13:47:47 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,14 @@ typedef struct s_player
 	int radius;
 } t_player;
 
+
+typedef struct s_index
+{
+	int i;
+	int j;
+}t_index;
+
+
 typedef struct s_map
 {
 	size_t width;
@@ -155,6 +163,15 @@ typedef struct s_textures
 	mlx_texture_t *WE;
 	mlx_texture_t *EA;
 } t_textures;
+
+typedef struct s_minimap
+{
+	t_point start_p;
+	t_point player_p;
+	t_point pn;
+	mlx_image_t *img;
+}t_minimap;
+
 
 typedef struct s_data
 {
@@ -180,9 +197,9 @@ typedef struct s_data
 	mlx_texture_t *texture;
 	mlx_image_t *spr_img;
 	mlx_image_t *default_img;
-	mlx_image_t *minimap_img;
 	mlx_texture_t *tex_plr;
 	mlx_texture_t *tex_door;
+	t_minimap minimap;
 	int x_ray;
 	int dist_door;
 	bool  check_door;

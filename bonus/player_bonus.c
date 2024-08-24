@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:51:11 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/23 18:32:51 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/24 13:51:47 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ bool	is_wall(t_data *data, int x, int y)
 
 	map = data->map.layout;
 	t_player player = data->player;
-	int player_radian = P_RAD;
+	int player_radian = P_RAD - 2;
 	x = x * SCALE;
 	y = y * SCALE;
 	i = y - player_radian;

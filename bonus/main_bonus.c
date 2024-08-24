@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/24 13:35:08 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/24 13:48:06 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,7 +239,7 @@ int32_t main(int ac, char const **av)
 	data.wall_door = 'C';
 	data.window_img = mlx_new_image(data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data.background_img = mlx_new_image(data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	data.minimap_img = mlx_new_image(data.mlx, MINIMAP_HEIGHT * SCALE_SIZE, MINIMAP_WIDTH * SCALE_SIZE);
+	data.minimap.img = mlx_new_image(data.mlx, MINIMAP_HEIGHT * SCALE_SIZE, MINIMAP_WIDTH * SCALE_SIZE);
 	for (int i = 0; i < data.background_img->height / 2; i++)
 		for (int j = 0; j < data.background_img->width; j++)
 		{
@@ -248,7 +248,7 @@ int32_t main(int ac, char const **av)
 		}
 	mlx_image_to_window(data.mlx, data.background_img, 0, 0);
 	mlx_image_to_window(data.mlx, data.window_img, 0, 0);
-	mlx_image_to_window(data.mlx, data.minimap_img, 0, 0);
+	mlx_image_to_window(data.mlx, data.minimap.img, 0, 0);
 	data.tex_plr = mlx_load_png("./sprite/Stechkin01.png");
 	data.tex_door = mlx_load_png("./images/door_close.png");
 	data.default_img = mlx_texture_to_image(data.mlx, data.tex_plr);
