@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 21:40:55 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/23 20:41:47 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/24 16:06:39 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	validate_top_map(t_data *data)
 	int		i;
 	int		j;
 
-	data->top_map = (char **)malloc(sizeof(char *) * 7 );
+	data->top_map = (char **)ft_malloc(sizeof(char *) * 7, ALLOC);
 	fd = open(data->map_path, O_RDONLY);
 	if (fd < 0)
 		ft_putendl_fd_color("Error\nOpen failure", 2, RED_E);
@@ -106,8 +106,8 @@ void	set_map(t_data *data)
 
 	set_top_map(data);
 	i = count_empty_lines(data->map_data, 6);
-	data->map.layout = (char **)malloc(sizeof(char *)
-			* (get_count_map(data, i) + 1));
+	data->map.layout = (char **)ft_malloc(sizeof(char *)
+			* (get_count_map(data, i) + 1), ALLOC);
 	j = 0;
 	while (data->map_data[i])
 	{

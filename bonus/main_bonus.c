@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/24 15:46:30 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/24 17:17:34 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,9 @@ void check_extension(char const *file)
 	if (ft_strncmp(file + ft_strlen(file) - 4, ".cub", 4))
 		ft_putendl_fd_color("Error\nInvalid file extension", 2, RED_E);
 }
+void f(){
+	system("leaks cub3D_bonus");
+}
 int32_t main(int ac, char const **av)
 {
 
@@ -175,4 +178,5 @@ int32_t main(int ac, char const **av)
 	mlx_set_cursor_mode(data.mlx, MLX_MOUSE_DISABLED);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);
+	ft_malloc(FREE, FREE);
 }

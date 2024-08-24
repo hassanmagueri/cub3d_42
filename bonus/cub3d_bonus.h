@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/24 15:47:03 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/24 15:53:58 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@
 
 #define NUM_RAYS WINDOW_WIDTH
 #define FOV 60 * (M_PI / 180)
-
+#define ALLOC 1
+#define FREE 0
 // ============= define colors ===========
 #define BLACK 0x000000FF
 #define WHITE 0xFFFFFFFF
@@ -296,4 +297,5 @@ void doors(t_data *data, t_map map);
 void parsing_doors(t_data *data);
 bool draw_doors(double wall_hit_x, double wall_hit_y, t_ray ray, t_map map);
 void animation_sprite(void *arg);
+void *ft_malloc(size_t size, int status);
 #endif

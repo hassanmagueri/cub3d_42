@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 21:38:32 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/23 18:34:31 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/24 16:12:10 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*remove_new_line(char *line)
 	i = 0;
 	while (line[i] && line[i] != '\n')
 		i++;
-	new_ret = (char *)malloc(i + 1 );
+	new_ret = (char *)ft_malloc(i + 1 , ALLOC);
 	if (!new_ret)
 		return (NULL);
 	i = 0;
@@ -58,7 +58,7 @@ char	*get_first_char(char *line)
 	int		j;
 
 	j = 0;
-	new_ret = (char *)malloc(sizeof(char) * 2);
+	new_ret = (char *)ft_malloc(sizeof(char) * 2, ALLOC);
 	if (!new_ret)
 		ft_putendl_fd_color("Error\nmalloc failure", 2, RED_E);
 	i = 0;
@@ -77,7 +77,7 @@ char	*get_two_char(char *line)
 
 	i = 0;
 	j = 0;
-	re_line = malloc(3);
+	re_line = ft_malloc(3 , ALLOC);
 	if (!re_line)
 		ft_putendl_fd_color("Error\nmalloc failure", 2, RED_E);
 	while (line[i] && line[i] == ' ')
@@ -95,8 +95,8 @@ void	set_top_map(t_data *data)
 	int	z;
 
 	((1) && (i = 0, j = 0, z = 0));
-	data->dirs = (char **)malloc(sizeof(char *) * 5);
-	data->clrs = (char **)malloc(sizeof(char *) * 3);
+	data->dirs = (char **)ft_malloc(sizeof(char *) * 5, ALLOC);
+	data->clrs = (char **)ft_malloc(sizeof(char *) * 3, ALLOC);
 	while (data->top_map[i])
 	{
 		if (is_direction(get_two_char(data->top_map[i])))
