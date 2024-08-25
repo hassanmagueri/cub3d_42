@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/25 04:47:16 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/25 14:37:53 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,16 +274,12 @@ int32_t main(int ac, char const **av)
 	check_extension(av[1]);
 	data.map_path = ft_strdup(av[1]);
 	parsing_part(&data);
-	int i = 0;
 	data.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D_bonus", false);
-
 	init_vars(&data);
-
 	image_to_window(&data, data.background_img, 0, 0);
 	image_to_window(&data, data.window_img, 0, 0);
 	image_to_window(&data, data.minimap.img, 0, 0);
 	image_to_window(&data, data.default_img, 300, 300);
-	
 	painting_background(data.background_img, data.ceiling, data.floor);
 	render_map(&data);
 	mlx_loop_hook(data.mlx, animation_sprite, &data);

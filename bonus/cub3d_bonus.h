@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 04:42:49 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/25 04:42:51 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/25 13:31:50 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,20 @@
 #define COLORS_H
 #define RED_E "\033[31m"
 #endif
+
+typedef enum e_status
+{
+    TEXTURE,
+    IMAGE,
+    DELETE
+} t_status;
+
+typedef struct cleanup
+{
+    void *adrress;
+    t_status status;
+    struct cleanup *next;
+} t_delete;
 
 typedef struct t_colors
 {
@@ -295,4 +309,5 @@ void parsing_doors(t_data *data);
 bool draw_doors(double wall_hit_x, double wall_hit_y, t_ray ray, t_map map);
 void animation_sprite(void *arg);
 void *ft_malloc(size_t size, int status);
+void save_imgs_texs(t_data *data, void *adrress, t_status status);
 #endif
