@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 18:56:00 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/24 13:46:59 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/25 03:06:15 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	border_minimap(mlx_image_t *img, t_circle c)
 				< pow(img->width / 2 - 8, 2)
 			)
 				mlx_put_pixel(img, j, i, BLACK);
-			if (pow(j - c.x, 2) + pow(i - c.y, 2) > pow(img->width / 2 - 8, 2))
+			if (pow(j - c.x, 2) + pow(i - c.y, 2) >= pow(img->width / 2 - 8, 2))
 				mlx_put_pixel(img, j, i, 0);
 			j++;
 		}

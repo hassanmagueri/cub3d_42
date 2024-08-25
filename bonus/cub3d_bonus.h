@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/24 15:47:03 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/24 21:10:39 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,6 @@ typedef struct s_player
 	int rotation_speed;
 	int walk_direction; // -1 1
 	int move_speed;
-	mlx_image_t *img;
 	int radius;
 } t_player;
 
@@ -188,7 +187,6 @@ typedef struct s_data
 	t_ray rays[NUM_RAYS];
 	t_player player;
 	t_textures textures;
-	mlx_image_t *player_img;
 	mlx_image_t *window_img;
 	mlx_image_t *background_img;
 	mlx_texture_t *texture;
@@ -212,8 +210,6 @@ typedef struct s_data
 	uint32_t *p_clrs;
 	mlx_texture_t *tex;
 	mlx_image_t *img;
-
-
 } t_data;
 // ===================== functions utils =====================
 char *ft_itoa(int n);

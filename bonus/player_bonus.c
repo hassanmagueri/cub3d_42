@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:51:11 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/24 13:51:47 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/25 02:36:44 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,16 @@ t_player new_player(t_data *data, int x, int y, int angle)
 {
 	t_player player;
 
-	player.img = new_image_to_window(data->mlx, TILE_SIZE * SCALE * data->map.width, TILE_SIZE * SCALE * data->map.height);
 	player.x = x;
 	player.y = y;
 	player.angle = degtorad(angle);
-	// printf("angle: %f\n", radtodeg(player.angle));
 	player.rotation_angle = 0;
 	player.rotation_speed = 3;
 	player.walk_direction = 0;
 	player.move_speed = 3;
 	player.radius = P_RAD;
 	data->player = player;
-	return player;
+	return (player);
 }
 
 int create_vector_player(t_data *data)
@@ -70,7 +68,7 @@ int create_vector_player(t_data *data)
 			((data->player.x + cos(player.angle) * player.radius) * SCALE),
 			((data->player.y + sin(player.angle) * player.radius) * SCALE)),
 		RED);
-	draw_line(line, data->player.img);
+	// draw_line(line, data->player.img);
 	return (1);
 }
 
@@ -82,14 +80,13 @@ int draw_player(t_data *data)
 
 	player = data->player;
 	radius = 8;
-	img = data->player.img;
+	// img = data->player.img;
 	t_circle c = new_circle(player.x * SCALE, player.y * SCALE, player.radius, 0xFF0000FF);
 	draw_circle(c, img);
 	// c.radius = 100;
 	// c.color = BLUE;
 	// draw_circle(c, player.img);
 	create_vector_player(data);
-	data->player_img = img;
 	return (1);
 }
 
@@ -120,27 +117,24 @@ bool	is_wall(t_data *data, int x, int y)
 	return false;
 }
 
-// int	update_player(t_data *data, t_player player_ins)
 int update_player(t_data *data)
 {
 	t_player *player;
 	double new_x, new_y;
 	double walk_inside;
-	player = &data->player;
-	player->img = reset_img(data->player.img);
-	player->angle += player->rotation_angle * ROT_SPEED;
-	// player->angle += player->rotation_angle * data->angle_mouse;
+	int move_step;
 
+	player = &data->player;
+	player->angle += player->rotation_angle * ROT_SPEED;
 	walk_inside = 0;
 	if (abs(player->walk_direction) == 2)
 	{
 		player->walk_direction /= 2;
 		walk_inside = degtorad(90);
 	}
-	int move_step = player->walk_direction * MOVE_SPEED;
+	move_step = player->walk_direction * MOVE_SPEED;
 	new_x = player->x + (cos(player->angle + walk_inside) * move_step);
 	new_y = player->y + (sin(player->angle + walk_inside) * move_step);
-	static int k;
 	if (!is_wall(data, new_x, new_y))
 		(1) && (player->x = new_x, player->y = new_y);
 	draw_minimap(data);

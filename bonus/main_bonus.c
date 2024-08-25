@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/24 15:46:30 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/25 03:08:19 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,42 +50,51 @@ void ft_hook(void *param)
 		update_player(data);
 }
 
+void set_player_direction(t_data *data, t_index index)
+{
+	t_map	map;
+	int		angle;
+	int		i;
+	int		j;
+
+	i = index.i;
+	j = index.j;
+	map = data->map;
+	if (map.layout[i][j] == 'N')
+		angle = 270;
+	else if (map.layout[i][j] == 'W')
+		angle = 180;
+	else if (map.layout[i][j] == 'S')
+		angle = 90;
+	else if (map.layout[i][j] == 'E')
+		angle = 0;
+	data->player = new_player(data, j * TILE_SIZE + TILE_SIZE / 2,
+								i * TILE_SIZE + TILE_SIZE / 2, angle);
+}
+
 int render_map(t_data *data)
 {
-	mlx_image_t *map_img;
-	mlx_image_t *player_img = data->player.img;
-	t_map map;
-	int i;
-	int j;
+	t_map	map;
+	int		i;
+	int		j;
 
 	i = 0;
 	map = data->map;
-	map_img = new_image_to_window(data->mlx, TILE_SIZE * SCALE * map.width, TILE_SIZE * SCALE * map.height);
 	while (i < map.height)
 	{
 		j = 0;
 		while (j < map.width)
 		{
-			if (map.layout[i][j] == 'N' || map.layout[i][j] == 'S' || map.layout[i][j] == 'W' || map.layout[i][j] == 'E')
+			if (map.layout[i][j] == 'N' || map.layout[i][j] == 'S'
+				|| map.layout[i][j] == 'W' || map.layout[i][j] == 'E')
 			{
-				int angle;
-				if (map.layout[i][j] == 'N')
-					angle = 270;
-				else if (map.layout[i][j] == 'W')
-					angle = 180;
-				else if (map.layout[i][j] == 'S')
-					angle = 90;
-				else if (map.layout[i][j] == 'E')
-					angle = 0;
-				data->player = new_player(data, j * TILE_SIZE + TILE_SIZE / 2,
-										  i * TILE_SIZE + TILE_SIZE / 2, angle);
+				set_player_direction(data, (t_index){i, j});
+				return (update_player(data), 1);
 			}
 			j++;
 		}
-
 		i++;
 	}
-	update_player(data);
 	return (1);
 }
 
@@ -130,49 +139,156 @@ void check_extension(char const *file)
 	if (ft_strncmp(file + ft_strlen(file) - 4, ".cub", 4))
 		ft_putendl_fd_color("Error\nInvalid file extension", 2, RED_E);
 }
+
+int painting_background(mlx_image_t *img, t_clr ceiling, t_clr floor)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < img->height / 2)
+	{
+		j = 0;
+		while (j < img->width)
+		{
+			mlx_put_pixel(img, j, i, ft_pixel(ceiling));
+			mlx_put_pixel(img, j, i + img->height / 2, ft_pixel(floor));
+			j++;
+		}
+		i++;
+	}
+	return 0;
+}
+
+void delete_image(mlx_t *mlx, mlx_image_t *img)
+{
+	if (img)
+		mlx_delete_image(mlx, img);
+}
+
+void delete_texture(mlx_texture_t *texture)
+{
+	if (texture)
+		mlx_delete_texture(texture);
+}
+
+void	terminate_mlx(t_data *data)
+{
+	delete_texture(data->tex);
+	delete_texture(data->tex_door);
+	delete_texture(data->texture);
+	delete_texture(data->tex_plr);
+	delete_texture(data->textures.EA);
+	delete_texture(data->textures.NO);
+	delete_texture(data->textures.SO);
+	delete_texture(data->textures.WE);
+	delete_image(data->mlx, data->minimap.img);
+	delete_image(data->mlx, data->background_img);
+	delete_image(data->mlx, data->img);
+	delete_image(data->mlx, data->spr_img);
+	delete_image(data->mlx, data->spr_img);
+	delete_image(data->mlx, data->window_img);
+	mlx_terminate(data->mlx);
+	exit(1);
+}
+
+void set_mlx_vars_null(t_data *data)
+{
+	data->minimap.img		= NULL;
+	data->background_img	= NULL;
+	data->default_img		= NULL;
+	data->img				= NULL;
+	data->spr_img			= NULL;
+	data->tex				= NULL;
+	data->tex_door			= NULL;
+	data->texture			= NULL;
+	data->tex_plr			= NULL;
+	data->textures			= (t_textures){NULL, NULL, NULL, NULL};
+	data->window_img		= NULL;
+}
+
+mlx_texture_t*	load_png(t_data *data, char *path)
+{
+	mlx_texture_t* texture;
+
+	texture = mlx_load_png(path);
+	if (texture == NULL)
+		terminate_mlx(data);
+	return (texture);
+}
+
+mlx_image_t*	new_image(t_data *data, int width, int height)
+{
+	mlx_image_t* img;
+
+	img = mlx_new_image(data->mlx, width, height);
+	if (img == NULL)
+		terminate_mlx(data);
+	return (img);
+}
+
+mlx_image_t*	texture_to_image(t_data *data, mlx_texture_t *texture)
+{
+	mlx_image_t*	img;
+
+	if (texture == NULL)
+		terminate_mlx(data);
+	img = mlx_texture_to_image(data->mlx, texture);
+	if (img == NULL)
+		terminate_mlx(data);
+	return (img);
+}
+
+void	init_vars(t_data *data)
+{
+	set_mlx_vars_null(data);
+
+	data->textures.EA	= load_png(data, data->EA);
+	data->textures.NO	= load_png(data, data->NO);
+	data->textures.SO	= load_png(data, data->SO);
+	data->textures.WE	= load_png(data, data->WE);
+	data->tex_door		= load_png(data, "./images/door_close.png");
+	data->window_img	= new_image(data, WINDOW_WIDTH, WINDOW_HEIGHT);
+	data->background_img= new_image(data, WINDOW_WIDTH, WINDOW_HEIGHT);
+	data->minimap.img	= new_image(data, MINIMAP_HEIGHT * SCALE_SIZE, MINIMAP_WIDTH * SCALE_SIZE);
+	data->tex_plr		= load_png(data, "./sprite/Stechkin01.png");
+	data->default_img	= texture_to_image(data, data->tex_plr);
+}
+
+void	image_to_window(t_data *data, mlx_image_t *img, int x, int y)
+{
+	int res;
+
+	res = mlx_image_to_window(data->mlx, img, x, y);
+	if (res == -1)
+		terminate_mlx(data);
+}
+
 int32_t main(int ac, char const **av)
 {
+	t_data	data;
 
-	t_data data;
 	if (ac != 2)
 		ft_putendl_fd_color("Error\nInvalid number of arguments", 2, RED_E);
 	check_extension(av[1]);
 	data.map_path = ft_strdup(av[1]);
 	parsing_part(&data);
-	int x = 0;
-	while (data.map.layout[x])
-	{
-		printf("%s\n", data.map.layout[x]);
-		x++;
-	}
 	int i = 0;
 	data.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D_bonus", false);
-	data.textures.EA = mlx_load_png(data.EA);
-	data.textures.NO = mlx_load_png(data.NO);
-	data.textures.SO = mlx_load_png(data.SO);
-	data.textures.WE = mlx_load_png(data.WE);
-	data.wall_door = 'C';
-	data.window_img = mlx_new_image(data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	data.background_img = mlx_new_image(data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	data.minimap.img = mlx_new_image(data.mlx, MINIMAP_HEIGHT * SCALE_SIZE, MINIMAP_WIDTH * SCALE_SIZE);
-	for (int i = 0; i < data.background_img->height / 2; i++)
-		for (int j = 0; j < data.background_img->width; j++)
-		{
-			mlx_put_pixel(data.background_img, j, i, ft_pixel(data.ceiling));
-			mlx_put_pixel(data.background_img, j, i + data.background_img->height / 2, ft_pixel(data.floor));
-		}
-	mlx_image_to_window(data.mlx, data.background_img, 0, 0);
-	mlx_image_to_window(data.mlx, data.window_img, 0, 0);
-	mlx_image_to_window(data.mlx, data.minimap.img, 0, 0);
-	data.tex_plr = mlx_load_png("./sprite/Stechkin01.png");
-	data.tex_door = mlx_load_png("./images/door_close.png");
-	data.default_img = mlx_texture_to_image(data.mlx, data.tex_plr);
-	mlx_image_to_window(data.mlx, data.default_img, 300, 300);
-	mlx_loop_hook(data.mlx, animation_sprite, &data);
+
+	init_vars(&data);
+
+	image_to_window(&data, data.background_img, 0, 0);
+	image_to_window(&data, data.window_img, 0, 0);
+	image_to_window(&data, data.minimap.img, 0, 0);
+	image_to_window(&data, data.default_img, 300, 300);
+	
+	painting_background(data.background_img, data.ceiling, data.floor);
 	render_map(&data);
-	mlx_cursor_hook(data.mlx, move_mouse, &data);
+	// mlx_loop_hook(data.mlx, animation_sprite, &data);
+	// mlx_cursor_hook(data.mlx, move_mouse, &data);
 	mlx_loop_hook(data.mlx, ft_hook, &data);
-	mlx_set_cursor_mode(data.mlx, MLX_MOUSE_DISABLED);
+	// mlx_set_cursor_mode(data.mlx, MLX_MOUSE_DISABLED);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);
 }
