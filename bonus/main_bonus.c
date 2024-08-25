@@ -6,13 +6,14 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/25 03:08:19 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/25 04:47:16 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX/MLX42.h"
-#include "cub3d_bonus.h"
+#include "./cub3d_bonus.h"
+
 #define NUM_IMAGES 68
+
 static size_t get_digits(int n)
 {
 	size_t i;
@@ -219,7 +220,7 @@ mlx_texture_t*	load_png(t_data *data, char *path)
 
 mlx_image_t*	new_image(t_data *data, int width, int height)
 {
-	mlx_image_t* img;
+	mlx_image_t*	img;
 
 	img = mlx_new_image(data->mlx, width, height);
 	if (img == NULL)
@@ -285,10 +286,11 @@ int32_t main(int ac, char const **av)
 	
 	painting_background(data.background_img, data.ceiling, data.floor);
 	render_map(&data);
-	// mlx_loop_hook(data.mlx, animation_sprite, &data);
-	// mlx_cursor_hook(data.mlx, move_mouse, &data);
+	mlx_loop_hook(data.mlx, animation_sprite, &data);
+	mlx_cursor_hook(data.mlx, move_mouse, &data);
 	mlx_loop_hook(data.mlx, ft_hook, &data);
-	// mlx_set_cursor_mode(data.mlx, MLX_MOUSE_DISABLED);
+	mlx_set_cursor_mode(data.mlx, MLX_MOUSE_DISABLED);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);
+	// ft_malloc(FREE, FREE);
 }

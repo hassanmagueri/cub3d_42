@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 02:37:25 by belguabd          #+#    #+#             */
-/*   Updated: 2024/07/13 21:09:32 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/24 16:31:19 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <limits.h>
 # include <stdlib.h>
 # include <stdbool.h>
-
+#include "../../cub3d_bonus.h"
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 44
 # endif
