@@ -6,27 +6,48 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:30:52 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/25 03:17:22 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/25 15:50:17 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "./cub3d_bonus.h"
 
-mlx_image_t	*reset_img(mlx_image_t *img)
+double	degtorad(int deg)
 {
-	size_t i;
-	for (i = 0; i  < img->width; i++)
-	{
-		size_t j;
-		for (j = 0; j < img->height; j++)
-			mlx_put_pixel(img, i, j, 0);
-	}
-	return img;
+	return (deg * (M_PI / 180));
 }
 
-t_line new_line(t_point p1,t_point p2, int color)
+double	radtodeg(double rad)
 {
-	t_line line;
+	return (rad * (180 / M_PI));
+}
+
+int	low(int n1, int n2)
+{
+	if (n2 < n1)
+		n1 = n2;
+	return (n1);
+}
+
+int	xtoj(int x)
+{
+	int	j;
+
+	j = x / TILE_SIZE;
+	return (x / TILE_SIZE);
+}
+
+int	ytoi(int y)
+{
+	int	i;
+
+	i = y / TILE_SIZE;
+	return (y / TILE_SIZE);
+}
+
+t_line	new_line(t_point p1, t_point p2, int color)
+{
+	t_line	line;
 
 	line.p1.x = p1.x;
 	line.p1.y = p1.y;
@@ -36,15 +57,19 @@ t_line new_line(t_point p1,t_point p2, int color)
 	return (line);
 }
 
-int32_t ft_pixel(t_clr color)
+int	ft_pixel(t_clr color)
 {
-	uint8_t r = color.red;
-	uint8_t g = color.green;
-	uint8_t b = color.blue;
-	
+	uint8_t	r;
+	uint8_t	g;
+	uint8_t	b;
+
+	r = color.red;
+	g = color.green;
+	b = color.blue;
 	return (r << 24 | g << 16 | b << 8 | 255);
 }
-t_rect new_rect(int x, int y, int side, int color)
+
+t_rect	new_rect(int x, int y, int side, int color)
 {
 	t_rect	rect;
 
@@ -52,10 +77,10 @@ t_rect new_rect(int x, int y, int side, int color)
 	rect.y = y;
 	rect.side = side;
 	rect.color = color;
-	return rect;
+	return (rect);
 }
 
-t_circle new_circle(int x, int y, int radius, int color)
+t_circle	new_circle(int x, int y, int radius, int color)
 {
 	t_circle	circle;
 
@@ -63,5 +88,5 @@ t_circle new_circle(int x, int y, int radius, int color)
 	circle.y = y;
 	circle.radius = radius;
 	circle.color = color;
-	return circle;
+	return (circle);
 }

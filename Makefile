@@ -1,4 +1,4 @@
-CC = cc  -Ofast #-g -fsanitize=address#-Wall -Wextra -Werror 
+CC = cc  -Ofast -g -fsanitize=address#-Wall -Wextra -Werror 
 #==============folders==============#
 PARSING=parsing
 UTILS=utils
@@ -39,7 +39,7 @@ SRC_BONUS=$(BONUS)/main_bonus.c $(BONUS)/draw_objects_bonus.c $(BONUS)/player_bo
 	$(BONUS)/$(PARSING)/init_clrs_dirs_bonus.c $(BONUS)/$(PARSING)/parse_map_bonus.c \
 	$(BONUS)/$(PARSING)/utils_bonus.c $(BONUS)/$(PARSING)/validate_dirs_clrs_bonus.c \
 	$(BONUS)/doors_bonus.c $(BONUS)/doors_utils_bonus.c \
-	$(BONUS)/mem_mgr/mem_mgr_bonus.c\
+	$(BONUS)/mem_mgr/mem_mgr_bonus.c $(BONUS)/cleanup_mlx/cleanup_imges_textures.c\
 	$(BONUS)/sprite_bonus.c \
 	$(BONUS)/$(PARSING)/validate_dirs_clrs_utils_bonus.c $(BONUS)/$(PARSING)/validate_top_map_bonus.c \
 
@@ -48,6 +48,8 @@ SRC_BONUS=$(BONUS)/main_bonus.c $(BONUS)/draw_objects_bonus.c $(BONUS)/player_bo
 OBJ_BONUS = $(SRC_BONUS:.c=.o)
 
 all: $(NAME) 
+
+
 
 $(NAME): $(OBJ) 
 	$(CC) $(MLX_FLAGS) $(MANDATORY)/$(MLX_NAME) $(OBJ) -o $(NAME)

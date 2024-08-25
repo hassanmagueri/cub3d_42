@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/25 15:08:39 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/25 16:31:44 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 #define NUM_IMAGES 68
 
-static size_t get_digits(int n)
+static size_t	get_digits(int n)
 {
-	size_t i;
+	size_t	i;
 
 	i = 1;
 	while (n /= 10)
@@ -24,20 +24,21 @@ static size_t get_digits(int n)
 	return (i);
 }
 
-void ft_hook(void *param)
+void	ft_hook(void *param)
 {
+	t_data		*data;
+	t_map		map;
+	t_player	*player;
 
-	t_data *data = param;
-	t_map map = data->map;
-	t_player *player;
-
+	data = (t_data *)param;
+	map = data->map;
 	player = &data->player;
 	doors(data, map);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(data->mlx);
-	if (mlx_is_key_down(data->mlx, MLX_KEY_W) || mlx_is_key_down(data->mlx, MLX_KEY_UP))
+	if (mlx_is_key_down(data->mlx, MLX_KEY_W))
 		player->walk_direction = 1;
-	if (mlx_is_key_down(data->mlx, MLX_KEY_S) || mlx_is_key_down(data->mlx, MLX_KEY_DOWN))
+	if (mlx_is_key_down(data->mlx, MLX_KEY_S))
 		player->walk_direction = -1;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_A))
 		player->walk_direction = -2;
@@ -51,7 +52,7 @@ void ft_hook(void *param)
 		update_player(data);
 }
 
-void set_player_direction(t_data *data, t_index index)
+void	set_player_direction(t_data *data, t_index index)
 {
 	t_map	map;
 	int		angle;
@@ -70,10 +71,10 @@ void set_player_direction(t_data *data, t_index index)
 	else if (map.layout[i][j] == 'E')
 		angle = 0;
 	data->player = new_player(data, j * TILE_SIZE + TILE_SIZE / 2,
-								i * TILE_SIZE + TILE_SIZE / 2, angle);
+			i * TILE_SIZE + TILE_SIZE / 2, angle);
 }
 
-int render_map(t_data *data)
+int	render_map(t_data *data)
 {
 	t_map	map;
 	int		i;
@@ -99,17 +100,18 @@ int render_map(t_data *data)
 	return (1);
 }
 
-
-
-void move_mouse(double x_pos, double y_pos, void *arg)
+void	move_mouse(double x_pos, double y_pos, void *arg)
 {
-	t_data *data = (t_data *)arg;
-	double delta_x = x_pos - (WINDOW_WIDTH / 2);
+	t_data	*data;
+	double	delta_x;
+
+	data = (t_data *)arg;
+	delta_x = x_pos - (WINDOW_WIDTH / 2);
 	data->player.rotation_angle += delta_x * 0.0001;
 	mlx_set_mouse_pos(data->mlx, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 }
 
-void parsing_part(t_data *data)
+void	parsing_part(t_data *data)
 {
 	load_map_data(data);
 	validate_top_map(data);
@@ -120,11 +122,12 @@ void parsing_part(t_data *data)
 	init_clrs_dirs(data);
 	parsing_doors(data);
 }
-int ft_strncmp(const char *s1, const char *s2, size_t n)
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	unsigned char *str1;
-	unsigned char *str2;
-	size_t i;
+	size_t			i;
+	unsigned char	*str1;
+	unsigned char	*str2;
 
 	str1 = (unsigned char *)s1;
 	str2 = (unsigned char *)s2;
@@ -135,13 +138,14 @@ int ft_strncmp(const char *s1, const char *s2, size_t n)
 		i++;
 	return (str1[i] - str2[i]);
 }
-void check_extension(char const *file)
+
+void	check_extension(char const *file)
 {
 	if (ft_strncmp(file + ft_strlen(file) - 4, ".cub", 4))
 		ft_putendl_fd_color("Error\nInvalid file extension", 2, RED_E);
 }
 
-int painting_background(mlx_image_t *img, t_clr ceiling, t_clr floor)
+int	painting_background(mlx_image_t *img, t_clr ceiling, t_clr floor)
 {
 	int	i;
 	int	j;
@@ -158,10 +162,10 @@ int painting_background(mlx_image_t *img, t_clr ceiling, t_clr floor)
 		}
 		i++;
 	}
-	return 0;
+	return (0);
 }
 
-int32_t main(int ac, char const **av)
+int	main(int ac, char const **av)
 {
 	t_data	data;
 
@@ -170,17 +174,14 @@ int32_t main(int ac, char const **av)
 	check_extension(av[1]);
 	data.map_path = ft_strdup(av[1]);
 	parsing_part(&data);
-	int i = 0;
 	data.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D_bonus", false);
 	if (data.mlx == NULL)
-		return 1; // handle error;
+		return (1); // handle error;
 	init_vars(&data);
-
 	image_to_window(&data, data.background_img, 0, 0);
 	image_to_window(&data, data.window_img, 0, 0);
 	image_to_window(&data, data.minimap.img, 0, 0);
 	image_to_window(&data, data.default_img, 300, 300);
-	
 	painting_background(data.background_img, data.ceiling, data.floor);
 	render_map(&data);
 	mlx_loop_hook(data.mlx, animation_sprite, &data);
