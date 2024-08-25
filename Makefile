@@ -27,7 +27,7 @@ SRC = $(MANDATORY)/main.c $(MANDATORY)/draw_objects.c $(MANDATORY)/player.c  \
 
 OBJ = $(SRC:.c=.o)
 
-SRC_BONUS=$(BONUS)/main_bonus.c $(BONUS)/draw_objects_bonus.c $(BONUS)/player_bonus.c \
+SRC_BONUS=$(BONUS)/main_bonus.c $(BONUS)/draw_objects_bonus.c $(BONUS)/player_bonus.c $(BONUS)/protected_mlx.c \
 	$(BONUS)/$(GET_NEXT_LINE)/get_next_line_bonus.c \
 	$(BONUS)/$(GET_NEXT_LINE)/get_next_line_utils_bonus.c \
 	$(BONUS)/$(UTILS)/ft_strcmp_bonus.c $(BONUS)/$(UTILS)/ft_strlcat_bonus.c \
