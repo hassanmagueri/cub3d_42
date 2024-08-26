@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 18:56:00 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/25 03:06:15 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/26 04:10:32 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ int	border_minimap(mlx_image_t *img, t_circle c)
 	int	j;
 
 	i = 0;
-	while (i < img->width)
+	while ((size_t)i < img->width)
 	{
 		j = 0;
-		while (j < img->width)
+		while ((size_t)j < img->width)
 		{
 			if (pow(j - c.x, 2) + pow(i - c.y, 2) >= pow(img->width / 2 - 16, 2)
 				&& pow(j - c.x, 2) + pow(i - c.y, 2)
@@ -69,8 +69,8 @@ int	index_scale(double p1, double p2, int index_p, int index)
 
 bool	is_out(int i_scale, int j_scale, t_minimap minimap, t_map map)
 {
-	return (i_scale - (int)minimap.pn.y < 0 || j_scale - (int)minimap.pn.x < 0
-		|| i_scale >= map.height || j_scale >= map.width);
+	return ((double)i_scale - (int)minimap.pn.y < 0 || (double)j_scale - (int)minimap.pn.x < 0
+		|| (size_t)i_scale >= map.height || (size_t)j_scale >= map.width);
 }
 
 int	wall_col_putpixel(t_minimap minimap, t_player player,
@@ -131,7 +131,7 @@ int	set_walls(t_data *data)
 	return (1);
 }
 
-int	set_rays(t_player player, mlx_image_t *img, t_map map, t_ray rays[NUM_RAYS])
+int	set_rays(mlx_image_t *img, t_ray rays[NUM_RAYS])
 {
 	int	i;
 	int	x;
@@ -160,10 +160,10 @@ int	reset_minimap(mlx_image_t *img, t_circle c)
 	int	j;
 
 	i = 0;
-	while (i < img->height)
+	while ((size_t)i < img->height)
 	{
 		j = 0;
-		while (j < img->width)
+		while ((size_t)j < img->width)
 		{
 			if (pow(j - c.x, 2) + pow(i - c.y, 2) < pow(img->width / 2, 2))
 				mlx_put_pixel(img, j, i, SEMI_WHITE);

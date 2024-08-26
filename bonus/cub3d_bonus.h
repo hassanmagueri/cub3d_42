@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 04:42:49 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/25 20:08:31 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/26 13:47:34 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,19 +270,33 @@ mlx_image_t *reset_img(mlx_image_t *img);
 int32_t ft_pixel(t_clr color);
 
 // ================== ray functions ==================
-int new_ray(t_data *data, double ray_angle);
-int cast_rays(t_data *data, t_map map, t_player player, t_ray (*rays)[NUM_RAYS]);
+int				new_ray(t_data *data, double ray_angle);
+int				cast_rays(t_data *data, t_map map, t_player player, t_ray (*rays)[NUM_RAYS]);
 // bool is_wall(t_map map, int x, int y);
-bool is_wall(t_data *data, int x, int y);
+bool			is_wall(t_data *data, int x, int y);
 
-t_ray horizontal_ray(t_player player, t_map map, double ray_angle);
-t_ray vertical_ray(t_player player, t_map map, double ray_angle);
+t_ray			horizontal_ray(t_player player, t_map map, double ray_angle);
+t_ray			vertical_ray(t_player player, t_map map, double ray_angle);
 
 // ================== walls functions ==================
-void project_walls(t_data *data, t_ray ray, int x);
-int update_player(t_data *data);
+void			project_walls(t_data *data, t_ray ray, int x);
+int				update_player(t_data *data);
 // ================== minimap functions ==================
-int draw_minimap(t_data *data);
+int				draw_minimap(t_data *data);
+
+// ================== protected function ==================
+
+void			init_vars(t_data *data);
+void			delete_image(mlx_t *mlx, mlx_image_t *img);
+void			delete_texture(mlx_texture_t *texture);
+void			terminate_mlx(t_data *data);
+void			set_mlx_vars_null(t_data *data);
+void			image_to_window(t_data *data, mlx_image_t *img, int x, int y);
+mlx_image_t*	new_image(t_data *data, int width, int height);
+mlx_image_t*	texture_to_image(t_data *data, mlx_texture_t *texture);
+mlx_texture_t*	load_png(t_data *data, char *path);
+
+// ================== brahim ==================
 void ft_putendl_fd_color(char *s, int fd, char *color);
 int count_lines(t_data *data);
 char *remove_new_line(char *line);

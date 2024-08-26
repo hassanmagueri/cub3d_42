@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:04:15 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/25 20:08:37 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/26 13:48:18 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,11 @@ char *swap_bytes(char *str)
 	return str;
 }
 
-void ft_put_pixel(t_data *data, int y, uint32_t color, int index, uint32_t width)
+void ft_put_pixel( t_data *data, int y, uint32_t color)
 {
 	swap_bytes((char *)(&color));
-	if (data->x_ray >= 0 && data->x_ray < data->window_img->width && y >= 0 && y < data->window_img->height)
+	if (data->x_ray>= 0 && (size_t)data->x_ray < data->window_img->width 
+		&& y >= 0 && (size_t)y < data->window_img->height)
 		mlx_put_pixel(data->window_img, data->x_ray, y, color);
 }
 
@@ -93,7 +94,7 @@ void render_texture(t_data *data, double wall_height,
 		offsety = dist_top_text * texture->height / wall_height;
 		index = (texture->width * offsety) + data->offsetx;
 		if (index < texture->height * texture->width)
-			ft_put_pixel(data, y, data->p_clrs[index], index, texture->width);
+			ft_put_pixel(data, y, data->p_clrs[index]);
 		y++;
 	}
 	painting_part_col(data->window_img, wall_bottom_pixel, WINDOW_HEIGHT, data->x_ray);

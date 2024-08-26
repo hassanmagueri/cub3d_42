@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprite_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:43:21 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/25 13:39:01 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/25 23:00:39 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ void load_and_display_image(t_data *data, int i)
 	ft_strcut(path, ".png");
 	data->tex = mlx_load_png(path);
 	if(!data->tex)
-		save_imgs_texs(data, data->tex, DELETE);
+		terminate_mlx(data);
 	save_imgs_texs(data, data->tex, TEXTURE);
 	data->img = mlx_texture_to_image(data->mlx, data->tex);
 	if(!data->img)
-		save_imgs_texs(data, data->img, DELETE);
+		terminate_mlx( data);
 	save_imgs_texs(data, data->img, IMAGE);
 	remove_img = data->img;
 	ft_put_image(data, data->img);

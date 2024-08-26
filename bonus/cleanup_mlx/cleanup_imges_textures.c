@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 11:46:14 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/25 15:28:11 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/26 13:48:32 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,11 @@ void save_imgs_texs(t_data *data, void *adrress, t_status status)
         while (head)
         {
             if (head->status == TEXTURE)
-                mlx_delete_texture(head->adrress);
+                mlx_delete_texture((mlx_texture_t *)head->adrress);
             else if (head->status == IMAGE)
-                mlx_delete_image(data->mlx, head->adrress);
+                mlx_delete_image(data->mlx,(mlx_image_t *) head->adrress);
             head = head->next;
         }
-        exit(EXIT_FAILURE);
         head = NULL;
     }
 }

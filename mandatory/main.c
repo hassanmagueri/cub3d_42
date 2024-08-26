@@ -6,12 +6,13 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/25 00:16:37 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/25 22:51:26 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MLX/MLX42.h"
 #include "cub3d.h"
+// #include <cstdio>
 
 void ft_hook(void *param)
 {
@@ -148,6 +149,8 @@ void check_extension(char const *file)
 	if (ft_strncmp(file + ft_strlen(file) - 4, ".cub", 4))
 		ft_putendl_fd_color("Error\nInvalid file extension", 2, RED_E);
 }
+
+
 int32_t main(int ac, char const **av)
 {
 
