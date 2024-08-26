@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/25 14:37:53 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/25 15:58:32 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,10 +265,13 @@ void	image_to_window(t_data *data, mlx_image_t *img, int x, int y)
 		terminate_mlx(data);
 }
 
+void v(){system("lsof -c cub3D_bonus");}
+
 int32_t main(int ac, char const **av)
 {
 	t_data	data;
 
+	// atexit(v);
 	if (ac != 2)
 		ft_putendl_fd_color("Error\nInvalid number of arguments", 2, RED_E);
 	check_extension(av[1]);

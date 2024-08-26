@@ -6,13 +6,11 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 11:46:14 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/25 13:38:29 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/25 15:28:11 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_bonus.h"
-
-
 
 t_delete *create_node(void *adrress, t_status status)
 {
