@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/25 16:31:44 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/26 03:07:41 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #define NUM_IMAGES 68
 
-static size_t	get_digits(int n)
+size_t	get_digits(int n)
 {
 	size_t	i;
 
@@ -59,6 +59,8 @@ void	set_player_direction(t_data *data, t_index index)
 	int		i;
 	int		j;
 
+	angle = 0;
+	map = data->map;
 	i = index.i;
 	j = index.j;
 	map = data->map;
@@ -77,8 +79,8 @@ void	set_player_direction(t_data *data, t_index index)
 int	render_map(t_data *data)
 {
 	t_map	map;
-	int		i;
-	int		j;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
 	map = data->map;
@@ -105,6 +107,7 @@ void	move_mouse(double x_pos, double y_pos, void *arg)
 	t_data	*data;
 	double	delta_x;
 
+	(void) y_pos;
 	data = (t_data *)arg;
 	delta_x = x_pos - (WINDOW_WIDTH / 2);
 	data->player.rotation_angle += delta_x * 0.0001;
@@ -147,8 +150,8 @@ void	check_extension(char const *file)
 
 int	painting_background(mlx_image_t *img, t_clr ceiling, t_clr floor)
 {
-	int	i;
-	int	j;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
 	while (i < img->height / 2)
@@ -164,11 +167,12 @@ int	painting_background(mlx_image_t *img, t_clr ceiling, t_clr floor)
 	}
 	return (0);
 }
-
+void f(){system("leaks cub3D_bonus");}
 int	main(int ac, char const **av)
 {
 	t_data	data;
 
+	atexit(f);
 	if (ac != 2)
 		ft_putendl_fd_color("Error\nInvalid number of arguments", 2, RED_E);
 	check_extension(av[1]);
@@ -176,7 +180,7 @@ int	main(int ac, char const **av)
 	parsing_part(&data);
 	data.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D_bonus", false);
 	if (data.mlx == NULL)
-		return (1); // handle error;
+		return (ft_malloc(FREE,FREE), EXIT_FAILURE);
 	init_vars(&data);
 	image_to_window(&data, data.background_img, 0, 0);
 	image_to_window(&data, data.window_img, 0, 0);
@@ -190,5 +194,4 @@ int	main(int ac, char const **av)
 	mlx_set_cursor_mode(data.mlx, MLX_MOUSE_DISABLED);
 	mlx_loop(data.mlx);
 	terminate_mlx(&data);
-	// ft_malloc(FREE, FREE);
 }

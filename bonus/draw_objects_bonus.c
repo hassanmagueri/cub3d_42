@@ -6,12 +6,11 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:46 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/25 15:44:49 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/26 03:48:00 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./cub3d_bonus.h"
-#include <math.h>
 
 void	put_pixels_line(mlx_image_t *image, t_line line, double steps)
 {
@@ -32,8 +31,6 @@ void	put_pixels_line(mlx_image_t *image, t_line line, double steps)
 			mlx_put_pixel(image, x, y, line.color);
 		x += xinc;
 		y += yinc;
-		line.color--;
-		line.color--;
 		i++;
 	}
 }
@@ -71,15 +68,15 @@ int	draw_circle(t_circle circle, mlx_image_t *image)
 	int	x;
 	int	y;
 
-	x = circle.x - circle.radius;
-	while (x < circle.x + circle.radius)
+	x = (circle.x - circle.radius);
+	while (x < (circle.x + circle.radius))
 	{
-		y = circle.y - circle.radius;
-		while (y < circle.y + circle.radius)
+		y = (circle.y - circle.radius);
+		while (y < (circle.y + circle.radius))
 		{
 			if ((pow(x - circle.x, 2) + pow(y - circle.y, 2))
 				< pow(circle.radius, 2)
-				&& x < image->width && y < image->height)
+				&& (size_t)x < image->width && (size_t)y < image->height)
 				mlx_put_pixel(image, x, y, circle.color);
 			y++;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   walls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:04:15 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/24 15:09:16 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/26 05:35:21 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,3 +96,5 @@ void	project_walls(t_data *data, t_ray ray, int x)
 	else if (ray.direct == 1 && !ray.is_vr)
 		wall_painting(data, ray, x, textures.EA);
 }
+
+// tchecki textures w

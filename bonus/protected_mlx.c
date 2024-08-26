@@ -6,11 +6,12 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 15:59:53 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/25 16:03:43 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/25 22:58:10 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./cub3d_bonus.h"
+
 
 void	delete_image(mlx_t *mlx, mlx_image_t *img)
 {
@@ -24,7 +25,7 @@ void	delete_texture(mlx_texture_t *texture)
 		mlx_delete_texture(texture);
 }
 
-void	terminate_mlx(t_data *data)
+void	terminate_mlx(t_data *data )
 {
 	delete_texture(data->tex);
 	delete_texture(data->tex_door);
@@ -41,7 +42,9 @@ void	terminate_mlx(t_data *data)
 	delete_image(data->mlx, data->spr_img);
 	delete_image(data->mlx, data->window_img);
 	mlx_terminate(data->mlx);
-	exit(1);
+	save_imgs_texs(data , NULL , DELETE);
+	ft_malloc(FREE , FREE);
+	exit(EXIT_FAILURE);
 }
 
 void	set_mlx_vars_null(t_data *data)

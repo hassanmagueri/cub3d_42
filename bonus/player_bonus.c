@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:51:11 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/25 15:57:43 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/26 04:13:06 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,6 @@ int	create_vector_player(t_data *data)
 				((data->player.x + cos(player.angle) * player.radius) * SCALE),
 				((data->player.y + sin(player.angle) * player.radius) * SCALE)),
 			RED);
-	return (1);
-}
-
-int	draw_player(t_data *data)
-{
-	int			radius;
-	t_player	player;
-	t_circle	c;
-	mlx_image_t	*img;
-
-	player = data->player;
-	radius = 8;
-	c = new_circle(player.x * SCALE, player.y * SCALE,
-			player.radius, 0xFF0000FF);
-	draw_circle(c, img);
-	create_vector_player(data);
 	return (1);
 }
 
@@ -109,8 +93,8 @@ int	update_player(t_data *data)
 	new_y = player->y + (sin(player->angle + walk_inside) * move_step);
 	if (!is_wall(data, new_x, new_y))
 		(1) && (player->x = new_x, player->y = new_y);
-	draw_minimap(data);
 	cast_rays(data, data->map, data->player, &data->rays);
+	draw_minimap(data);
 	player->walk_direction = 0;
 	player->rotation_angle = 0;
 	return (1);

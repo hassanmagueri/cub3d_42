@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:10:59 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/25 16:21:50 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/26 03:12:50 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ t_ray	low_ray(t_ray ver, t_ray hor)
 bool	check_is_wall(t_map map, t_player player, double x, double y)
 {
 	char	**layout;
-	int		i;
-	int		j;
+	size_t	i;
+	size_t	j;
 
 	x += player.x;
 	y += player.y;
@@ -82,7 +82,7 @@ int	cast_rays(t_data *data, t_map map, t_player player, t_ray (*rays)[NUM_RAYS])
 
 t_ray	vertical_ray(t_player player, t_map map, double ray_angle)
 {
-	int			i;	
+	size_t			i;	
 	int			direct;	
 	double		dx;
 	double		player_tile_x;
@@ -115,7 +115,7 @@ t_ray	horizontal_ray(t_player player, t_map map, double ray_angle)
 	double		player_y_distance;
 	int			direct;
 	double		dy;
-	int			i;
+	size_t			i;
 
 	i = 0;
 	direct = -1;
