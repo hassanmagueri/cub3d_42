@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 21:40:55 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/24 16:06:39 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/26 14:49:43 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ void	validate_colors(t_data *data)
 
 void	validate_top_map(t_data *data)
 {
-	char	*two_chr;
-	char	*line;
 	int		fd;
 	int		i;
 	int		j;
@@ -100,7 +98,6 @@ void	check_newline(char **map)
 
 void	set_map(t_data *data)
 {
-	char	*line;
 	int		i;
 	int		j;
 

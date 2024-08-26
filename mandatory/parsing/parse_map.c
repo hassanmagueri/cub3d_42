@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:19:21 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/24 12:24:19 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/26 14:34:29 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	fill_line(t_data *data)
 	while (data->map.layout[i])
 	{
 		j = 0;
-		line = (char *)malloc(sizeof(char) * (max_len + 1));
+		line = (char *)ft_malloc(sizeof(char) * (max_len + 1), ALLOC);
 		while (data->map.layout[i][j])
 		{
 			if (data->map.layout[i][j] == ' ')
@@ -123,7 +123,6 @@ void	fill_line(t_data *data)
 
 void	parse_map(t_data *data)
 {
-	int	i;
 	int	y;
 
 	validate_map(data);

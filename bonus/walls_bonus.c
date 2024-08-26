@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:04:15 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/26 13:48:18 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/26 14:48:33 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int wall_painting(t_data *data, t_ray ray,
 	p_clrs = (uint32_t *)texture->pixels;
 	wall_hit_x = data->player.x + ray.dx;
 	wall_hit_y = data->player.y + ray.dy;
-	if (draw_doors(data, wall_hit_x, wall_hit_y, ray, data->map))
+	if (draw_doors(data, wall_hit_x, wall_hit_y, ray))
 	{
 		texture = data->tex_door;
 		p_clrs = (uint32_t *)data->tex_door->pixels;

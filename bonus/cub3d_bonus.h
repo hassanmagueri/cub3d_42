@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 04:42:49 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/26 13:47:34 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/26 15:27:43 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ typedef enum e_status
 
 typedef struct cleanup
 {
-    void *adrress;
+    void *address;
     t_status status;
     struct cleanup *next;
 } t_delete;
@@ -320,7 +320,7 @@ int count_empty_lines(char **map_data, int max_count);
 int get_count_map(t_data *data, int i);
 void doors(t_data *data, t_map map);
 void parsing_doors(t_data *data);
-bool draw_doors(t_data *data ,double wall_hit_x, double wall_hit_y, t_ray ray, t_map map);
+bool draw_doors(t_data *data ,double wall_hit_x, double wall_hit_y, t_ray ray);
 void animation_sprite(void *arg);
 void *ft_malloc(size_t size, int status);
 void save_imgs_texs(t_data *data, void *adrress, t_status status);

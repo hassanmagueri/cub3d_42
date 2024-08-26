@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/25 14:58:46 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/26 14:37:56 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,5 +271,5 @@ double	ray_distance(double dx, double dy);
 char	*swap_bytes(char *str);
 int	ret_offset_x(double wall_hit_x, double wall_hit_y,
 		bool is_vr, mlx_texture_t *texture);
-// void *malloc(size_t size, int status);
+void *ft_malloc(size_t size, int status);
 #endif

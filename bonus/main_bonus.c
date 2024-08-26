@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/26 13:47:56 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/26 16:47:32 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,8 +179,8 @@ int	main(int ac, char const **av)
 	data.map_path = ft_strdup(av[1]);
 	parsing_part(&data);
 	data.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D_bonus", false);
-	if (data.mlx == NULL)
-		return (ft_malloc(FREE,FREE), EXIT_FAILURE);
+	// if (data.mlx == NULL)
+		// return (ft_malloc(FREE,FREE), EXIT_FAILURE);
 	init_vars(&data);
 	image_to_window(&data, data.background_img, 0, 0);
 	image_to_window(&data, data.window_img, 0, 0);
