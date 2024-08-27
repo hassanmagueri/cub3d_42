@@ -15,7 +15,7 @@ NAME_BONUS=cub3D_bonus
 MLX_NAME = MLX/libmlx42.a
 MLX_FLAGS = -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
 SRC = $(MANDATORY)/main.c $(MANDATORY)/draw_objects.c $(MANDATORY)/player.c  \
-	$(MANDATORY)/mlx_help.c $(MANDATORY)/rays.c $(MANDATORY)/rays_utils	.c $(MANDATORY)/walls.c $(MANDATORY)/wall_utils.c\
+	$(MANDATORY)/mlx_help.c $(MANDATORY)/ray.c $(MANDATORY)/walls.c $(MANDATORY)/wall_utils.c\
 	$(MANDATORY)/$(GET_NEXT_LINE)/get_next_line.c \
 	$(MANDATORY)/$(GET_NEXT_LINE)/get_next_line_utils.c \
 	$(MANDATORY)/$(UTILS)/ft_strcmp.c $(MANDATORY)/$(UTILS)/ft_strlcat.c \
@@ -25,6 +25,7 @@ SRC = $(MANDATORY)/main.c $(MANDATORY)/draw_objects.c $(MANDATORY)/player.c  \
 	$(MANDATORY)/$(PARSING)/load_map_data.c $(MANDATORY)/$(PARSING)/load_map_data_utils.c \
 	$(MANDATORY)/$(PARSING)/init_clrs_dirs.c $(MANDATORY)/$(PARSING)/parse_map.c \
 	$(MANDATORY)/$(PARSING)/utils.c $(MANDATORY)/$(PARSING)/validate_dirs_clrs.c \
+	$(MANDATORY)/$(PARSING)/validate_top_map_utils.c\
 	$(MANDATORY)/mem_mgr/mem_mgr.c \
 	$(MANDATORY)/$(PARSING)/validate_dirs_clrs_utils.c $(MANDATORY)/$(PARSING)/validate_top_map.c \
 
@@ -47,8 +48,9 @@ SRC_BONUS=$(BONUS)/main_bonus.c $(BONUS)/draw_objects_bonus.c $(BONUS)/player_bo
 	$(BONUS)/$(PARSING)/utils_bonus.c $(BONUS)/$(PARSING)/validate_dirs_clrs_bonus.c \
 	$(BONUS)/doors_bonus.c $(BONUS)/doors_utils_bonus.c \
 	$(BONUS)/mem_mgr/mem_mgr_bonus.c $(BONUS)/cleanup_mlx/cleanup_imges_textures.c\
-	$(BONUS)/sprite_bonus.c \
-	$(BONUS)/$(PARSING)/validate_dirs_clrs_utils_bonus.c $(BONUS)/$(PARSING)/validate_top_map_bonus.c \
+	$(BONUS)/sprite_bonus.c $(BONUS)/mouse_bonus.c $(BONUS)/walls_utils_bonus.c\
+	$(BONUS)/$(PARSING)/validate_dirs_clrs_utils1_bonus.c $(BONUS)/$(PARSING)/validate_top_map_bonus.c \
+	$(BONUS)/$(PARSING)/validate_dirs_clrs_utils2_bonus.c
 
 
 

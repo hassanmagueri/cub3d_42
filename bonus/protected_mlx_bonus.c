@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   protected_mlx_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 15:59:53 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/27 04:37:13 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/27 15:59:59 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	terminate_mlx(t_data *data)
 	delete_image(data->mlx, data->spr_img);
 	delete_image(data->mlx, data->window_img);
 	mlx_terminate(data->mlx);
-	// save_imgs_texs(data, NULL, DELETE);
+	save_imgs_texs(data, NULL, DELETE);
+	// ft_malloc(FREE, FREE);
 	exit(EXIT_FAILURE);
 }
 

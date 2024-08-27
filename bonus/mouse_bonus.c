@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   mouse_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/08 02:37:25 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/27 16:52:46 by belguabd         ###   ########.fr       */
+/*   Created: 2024/08/27 15:51:31 by belguabd          #+#    #+#             */
+/*   Updated: 2024/08/27 15:52:48 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "cub3d_bonus.h"
 
-# include <unistd.h>
-# include <fcntl.h>
-# include <limits.h>
-# include <stdlib.h>
-# include <stdbool.h>
-# include "../../cub3d.h"
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 44
-# endif
+void	move_mouse(double x_pos, double y_pos, void *arg)
+{
+	t_data	*data;
+	double	delta_x;
 
-char	*get_next_line(int fd);
-size_t	ft_strlen(const char *s);
-char	*ft_strdup(const char *s1);
-char	*ft_strjoin(char *line, char *buffer);
-#endif
+	(void) y_pos;
+	data = (t_data *)arg;
+	delta_x = x_pos - (WINDOW_WIDTH / 2);
+	data->player.rotation_angle += delta_x * 0.0001;
+	mlx_set_mouse_pos(data->mlx, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+}

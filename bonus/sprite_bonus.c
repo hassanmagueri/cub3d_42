@@ -6,23 +6,25 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:43:21 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/26 16:50:40 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/27 15:15:43 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-void ft_put_image(t_data *data, mlx_image_t *img)
+void	ft_put_image(t_data *data, mlx_image_t *img)
 {
 	mlx_image_to_window(data->mlx, img, 300, 300);
 }
-void ft_strcpy(char *dest, char *src)
+
+void	ft_strcpy(char *dest, char *src)
 {
 	while (*src)
 		*dest++ = *src++;
 	*dest = '\0';
 }
-void ft_strcut(char *dest, char *src)
+
+void	ft_strcut(char *dest, char *src)
 {
 	while (*dest)
 		dest++;
@@ -30,11 +32,12 @@ void ft_strcut(char *dest, char *src)
 		*dest++ = *src++;
 	*dest = '\0';
 }
-void load_and_display_image(t_data *data, int i)
+
+void	load_and_display_image(t_data *data, int i)
 {
-	static mlx_image_t *remove_img;
-	char path[100];
-	char index[10];
+	static mlx_image_t	*remove_img;
+	char				path[100];
+	char				index[10];
 
 	if (remove_img)
 		mlx_delete_image(data->mlx, remove_img);
@@ -53,11 +56,13 @@ void load_and_display_image(t_data *data, int i)
 	remove_img = data->img;
 	ft_put_image(data, data->img);
 }
-void animation_sprite(void *arg)
+
+void	animation_sprite(void *arg)
 {
-	t_data *data;
-	static bool is_pressed;
-	static int i;
+	t_data		*data;
+	static bool	is_pressed;
+	static int	i;
+
 	data = (t_data *)arg;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_SPACE))
 	{

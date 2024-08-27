@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 21:30:58 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/26 14:34:23 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/27 16:37:05 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void	load_map_data(t_data *data)
 	fd = open(data->map_path, O_RDONLY, 0666);
 	if (fd < 0)
 		ft_putendl_fd_color("Error\nOpen failure", 2, RED_E);
-	data->map_data = (char **)ft_malloc(sizeof(char *) * (count_lines(data) + 1), ALLOC);
+	data->map_data = (char **)ft_malloc(sizeof(char *)
+			* (count_lines(data) + 1), ALLOC);
 	i = 0;
 	line = get_next_line(fd);
 	while (line)

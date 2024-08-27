@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   validate_dirs_clrs_utils2_bonus.c                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/08 02:37:25 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/27 16:52:46 by belguabd         ###   ########.fr       */
+/*   Created: 2024/08/27 16:17:30 by belguabd          #+#    #+#             */
+/*   Updated: 2024/08/27 16:18:10 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "../cub3d_bonus.h"
 
-# include <unistd.h>
-# include <fcntl.h>
-# include <limits.h>
-# include <stdlib.h>
-# include <stdbool.h>
-# include "../../cub3d.h"
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 44
-# endif
+void	check_newline(char **map)
+{
+	int	y;
 
-char	*get_next_line(int fd);
-size_t	ft_strlen(const char *s);
-char	*ft_strdup(const char *s1);
-char	*ft_strjoin(char *line, char *buffer);
-#endif
+	y = 0;
+	while (map[y])
+	{
+		if (!map[y][0])
+			ft_putendl_fd_color("Error\nInvalid map", 2, RED_E);
+		y++;
+	}
+}

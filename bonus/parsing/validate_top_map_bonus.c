@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 21:40:55 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/26 14:49:43 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/27 16:18:03 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,18 +82,6 @@ int	find_colors(char **data)
 	if (count_clr != 2)
 		return (-1);
 	return (0);
-}
-
-void	check_newline(char **map)
-{
-
-	int y = 0;
-	while (map[y])
-	{
-		if (!map[y][0])
-			ft_putendl_fd_color("Error\nInvalid map", 2, RED_E);
-		y++;
-	}
 }
 
 void	set_map(t_data *data)

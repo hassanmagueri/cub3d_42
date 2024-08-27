@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/27 14:12:23 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/27 16:50:15 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,19 @@
 #define RED_E "\033[31m"
 #endif
 
+typedef struct s_splt
+{
+	char	**res;
+	int		i;
+	int		j;
+	int		to_find;
+}	t_splt;
+
+typedef struct s_mem_mgr
+{
+    void *address;
+    struct s_mem_mgr *next;
+} t_free;
 typedef struct t_colors
 {
 	int red;
@@ -273,4 +286,5 @@ char	*swap_bytes(char *str);
 int	ret_offset_x(double wall_hit_x, double wall_hit_y,
 		bool is_vr, mlx_texture_t *texture);
 void *ft_malloc(size_t size, int status);
+void	check_newline(char **map);
 #endif

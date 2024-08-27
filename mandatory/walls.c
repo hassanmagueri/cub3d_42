@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:04:15 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/26 17:25:31 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/27 16:35:15 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,12 @@ void	project_walls(t_data *data, t_ray ray, int x)
 	ray_dist = ray_distance(ray.dx, ray.dy);
 	correct_ray = ray_dist * cos(ray.angle - data->player.angle);
 	data->wall_height = (TILE_SIZE / correct_ray * distance_projection_plane);
-	if (ray.direct == -1 && ray.is_vr)
+	if (ray.direct == -1 && !ray.is_vr)
 		wall_painting(data, ray, x, textures.NO);
-	else if (ray.direct == -1 && !ray.is_vr)
-		wall_painting(data, ray, x, textures.SO);
-	else if (ray.direct == 1 && ray.is_vr)
+	else if (ray.direct == -1 && ray.is_vr)
 		wall_painting(data, ray, x, textures.WE);
-	else if (ray.direct == 1 && !ray.is_vr)
+	else if (ray.direct == 1 && ray.is_vr)
 		wall_painting(data, ray, x, textures.EA);
+	else if (ray.direct == 1 && !ray.is_vr)
+		wall_painting(data, ray, x, textures.SO);
 }
-
-// tchecki textures w
