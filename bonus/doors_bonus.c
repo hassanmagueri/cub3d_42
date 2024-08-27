@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doors_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 13:34:56 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/26 14:47:11 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/27 03:21:56 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void validate_door_positions(t_data *data, int y)
 		x++;
 	}
 }
-void parsing_doors(t_data *data)
+
+void	parsing_doors(t_data *data)
 {
 	size_t y;
 

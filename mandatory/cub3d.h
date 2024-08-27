@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/26 14:37:56 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/27 06:25:50 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,7 +228,8 @@ int new_ray(t_data *data, double ray_angle);
 int cast_rays(t_data *data, t_map map, t_player player, t_ray (*rays)[NUM_RAYS]);
 // bool is_wall(t_map map, int x, int y);
 bool is_wall(t_data *data, int x, int y);
-
+t_ray	low_ray(t_ray ver, t_ray hor);
+bool	check_is_wall(t_map map, t_player player, double x, double y);
 t_ray horizontal_ray(t_player player, t_map map, double ray_angle);
 t_ray vertical_ray(t_player player, t_map map, double ray_angle);
 

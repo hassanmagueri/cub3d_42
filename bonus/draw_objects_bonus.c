@@ -6,11 +6,36 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:46 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/26 03:48:00 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/27 04:20:09 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./cub3d_bonus.h"
+
+int	border_minimap(mlx_image_t *img, t_circle c)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while ((size_t)i < img->width)
+	{
+		j = 0;
+		while ((size_t)j < img->width)
+		{
+			if (pow(j - c.x, 2) + pow(i - c.y, 2) >= pow(img->width / 2 - 16, 2)
+				&& pow(j - c.x, 2) + pow(i - c.y, 2)
+				< pow(img->width / 2 - 8, 2)
+			)
+				mlx_put_pixel(img, j, i, BLACK);
+			if (pow(j - c.x, 2) + pow(i - c.y, 2) >= pow(img->width / 2 - 8, 2))
+				mlx_put_pixel(img, j, i, 0);
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
 
 void	put_pixels_line(mlx_image_t *image, t_line line, double steps)
 {
@@ -25,10 +50,11 @@ void	put_pixels_line(mlx_image_t *image, t_line line, double steps)
 	x = line.p1.x;
 	y = line.p1.y;
 	i = 0;
-	while (i <= steps && x < image->width && y < image->height)
+	while (i <= steps && x < image->width && y < image->height
+		&& (line.color * 2) % 255)
 	{
 		if (x < image->width && x >= 0 && y >= 0 && y < image->height)
-			mlx_put_pixel(image, x, y, line.color);
+			mlx_put_pixel(image, x, y, line.color -= 2);
 		x += xinc;
 		y += yinc;
 		i++;
@@ -52,15 +78,6 @@ int	draw_line(t_line line, mlx_image_t *image)
 		steps = fabs(dx);
 	put_pixels_line(image, line, steps);
 	return (1);
-}
-
-t_point	new_point(double x, double y)
-{
-	t_point	p;
-
-	p.x = x;
-	p.y = y;
-	return (p);
 }
 
 int	draw_circle(t_circle circle, mlx_image_t *image)
@@ -97,26 +114,6 @@ int	draw_react(t_rect rect, mlx_image_t *image)
 		while (j <= rect.y + rect.side)
 		{
 			mlx_put_pixel(image, j, i, rect.color);
-			j++;
-		}
-		i++;
-	}
-	return (1);
-}
-
-int	draw_wall(t_wall wall, mlx_image_t *image)
-{
-	double	i;
-	double	j;
-
-	i = wall.x;
-	while (i < (wall.x + wall.width))
-	{
-		j = wall.y;
-		while (j < (wall.y + wall.height))
-		{
-			if (i <= image->width && i >= 0 && j >= 0 && j <= image->height)
-				mlx_put_pixel(image, i, j, wall.color);
 			j++;
 		}
 		i++;
