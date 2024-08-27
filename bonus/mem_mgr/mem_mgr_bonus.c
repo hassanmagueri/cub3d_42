@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 11:46:14 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/27 16:28:43 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/27 20:06:06 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	*ft_malloc(size_t size, int status)
 			return (NULL);
 		new_node = create_new_node(new);
 		if (!new_node)
-			ft_putendl_fd_color("Error\nFailed to create node", 2, RED);
+			ft_putendl_fd_color("Error\nFailed to create node", 2, RED_E);
 		add_back(&head, new_node);
 		return (new);
 	}

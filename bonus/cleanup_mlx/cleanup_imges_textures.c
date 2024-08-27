@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 11:46:14 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/27 16:27:19 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/27 20:06:19 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	save_imgs_texs(t_data *data, void *address, t_status status)
 
 	new = create_node(address, status);
 	if (!new)
-		ft_putendl_fd_color("Error\nFailed to create node", 2, RED);
+		ft_putendl_fd_color("Error\nFailed to create node", 2, RED_E);
 	if (status == TEXTURE || status == IMAGE)
 		addback(&head, new);
 	else if (status == DELETE)
