@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 04:42:49 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/26 21:00:22 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/27 04:15:26 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,9 @@
 #define SEMI_BLUE 0x0000FF80
 #define SEMI_CYAN 0x00FFFF80
 #define SEMI_BLACK 0x00000080
-#define SEMI_WHITE 0xFFFFFF40
-#define SEMI_YELLOW 0xFFFF0060
+#define SEMI_DARK 0x40404080
+#define SEMI_WHITE 0xFFFFFF80
+#define SEMI_YELLOW 0xFFFF00A0
 #define SEMI_MAGENTA 0xFF00FF80
 
 #ifndef COLORS_H
@@ -86,7 +87,7 @@ typedef enum e_status
 
 typedef struct cleanup
 {
-    void *adrress;
+    void *address;
     t_status status;
     struct cleanup *next;
 } t_delete;
@@ -278,16 +279,20 @@ int				cast_rays(t_data *data, t_map map, t_player player, t_ray (*rays)[NUM_RAY
 bool			is_wall(t_data *data, int x, int y);
 
 t_ray			horizontal_ray(t_player player, t_map map, double ray_angle);
-// t_ray			vertical_ray(t_player player, t_map map, double ray_angle);
-t_ray	vertical_ray(t_player player, t_map map, double ray_angle, double ray_dist);
-
+t_ray	vertical_ray(t_player player, t_map map, double ray_angle);
+t_ray	low_ray(t_ray ver, t_ray hor);
+bool	check_is_wall(t_map map, t_player player, double x, double y);
 // ================== walls functions ==================
 void			project_walls(t_data *data, t_ray ray, int x);
 int				update_player(t_data *data);
 double	ray_distance(double dx, double dy);
 // ================== minimap functions ==================
 int				draw_minimap(t_data *data);
-
+int	draw_react_minimap(t_rect rect, mlx_image_t *image, int width, int height);
+int	reset_minimap(mlx_image_t *img, t_circle c);
+bool	is_out(int i_scale, int j_scale, t_map map);
+int	set_rays(mlx_image_t *img, t_ray rays[NUM_RAYS]);
+int	border_minimap(mlx_image_t *img, t_circle c);
 // ================== protected function ==================
 
 void			init_vars(t_data *data);
@@ -324,7 +329,7 @@ int count_empty_lines(char **map_data, int max_count);
 int get_count_map(t_data *data, int i);
 void doors(t_data *data, t_map map);
 void parsing_doors(t_data *data);
-bool draw_doors(double wall_hit_x, double wall_hit_y, t_ray ray, t_map map);
+bool draw_doors(t_data *data ,double wall_hit_x, double wall_hit_y, t_ray ray);
 void animation_sprite(void *arg);
 void *ft_malloc(size_t size, int status);
 void save_imgs_texs(t_data *data, void *adrress, t_status status);

@@ -6,56 +6,11 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 18:56:00 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/26 14:44:27 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/27 04:15:59 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./cub3d_bonus.h"
-
-int	draw_react_minimap(t_rect rect, mlx_image_t *image, int width, int height)
-{
-	double	i;
-	double	j;
-
-	i = rect.y;
-	while (i <= rect.y + height)
-	{
-		j = rect.x;
-		while (j <= rect.x + width)
-		{
-			if (j >= 0 && i >= 0 && j <= image->width && i <= image->height)
-				mlx_put_pixel(image, j, i, rect.color);
-			j++;
-		}
-		i++;
-	}
-	return (1);
-}
-
-int	border_minimap(mlx_image_t *img, t_circle c)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while ((size_t)i < img->width)
-	{
-		j = 0;
-		while ((size_t)j < img->width)
-		{
-			if (pow(j - c.x, 2) + pow(i - c.y, 2) >= pow(img->width / 2 - 16, 2)
-				&& pow(j - c.x, 2) + pow(i - c.y, 2)
-				< pow(img->width / 2 - 8, 2)
-			)
-				mlx_put_pixel(img, j, i, BLACK);
-			if (pow(j - c.x, 2) + pow(i - c.y, 2) >= pow(img->width / 2 - 8, 2))
-				mlx_put_pixel(img, j, i, 0);
-			j++;
-		}
-		i++;
-	}
-	return (1);
-}
 
 int	index_scale(double p1, double p2, int index_p, int index)
 {
@@ -65,12 +20,6 @@ int	index_scale(double p1, double p2, int index_p, int index)
 		- ((int)(p2 / TILE_SIZE)*TILE_SIZE + TILE_SIZE / 2) * SCALE;
 	return ((int)
 		((index + index_p * SCALE_SIZE + player_off_tile) / SCALE_SIZE));
-}
-
-bool	is_out(int i_scale, int j_scale, t_minimap minimap, t_map map)
-{
-	return ((double)i_scale - (int)minimap.pn.y < 0 || (double)j_scale - (int)minimap.pn.x < 0
-		|| (size_t)i_scale >= map.height || (size_t)j_scale >= map.width);
 }
 
 int	wall_col_putpixel(t_minimap minimap, t_player player,
@@ -83,10 +32,12 @@ int	wall_col_putpixel(t_minimap minimap, t_player player,
 		- minimap.pn.y;
 	j_scl = index_scale(minimap.player_p.x, player.x, minimap.start_p.x, ind.j)
 		- minimap.pn.x;
-	if (is_out(i_scl, j_scl, minimap, map) || i_scl == 0 || i_scl == map.height - 1)
-		mlx_put_pixel(minimap.img, ind.j, ind.i, GREY);
+	if (is_out(i_scl, j_scl, map))
+		mlx_put_pixel(minimap.img, ind.j, ind.i, SEMI_BLACK);
 	else if (map.layout[i_scl][j_scl] == 'C')
 		mlx_put_pixel(minimap.img, ind.j, ind.i, SEMI_YELLOW);
+	else if (map.layout[i_scl][j_scl] == ' ')
+		mlx_put_pixel(minimap.img, ind.j, ind.i, SEMI_GREY);
 	else if (map.layout[i_scl][j_scl] == '1')
 		mlx_put_pixel(minimap.img, ind.j, ind.i, GREY);
 	return (1);
@@ -131,49 +82,6 @@ int	set_walls(t_data *data)
 	return (1);
 }
 
-int	set_rays(mlx_image_t *img, t_ray rays[NUM_RAYS])
-{
-	int	i;
-	int	x;
-	int	y;
-
-	i = 0;
-	x = (img->width - img->width / 2);
-	y = (img->height - img->height / 2);
-	while (i < NUM_RAYS)
-	{
-		draw_line(
-			new_line(
-				(t_point){x, y},
-				(t_point){rays[i].dx * SCALE + x, (rays[i].dy * SCALE + y)},
-				YELLOW),
-			img
-			);
-		i++;
-	}
-	return (1);
-}
-
-int	reset_minimap(mlx_image_t *img, t_circle c)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while ((size_t)i < img->height)
-	{
-		j = 0;
-		while ((size_t)j < img->width)
-		{
-			if (pow(j - c.x, 2) + pow(i - c.y, 2) < pow(img->width / 2, 2))
-				mlx_put_pixel(img, j, i, SEMI_WHITE);
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
-
 int	draw_minimap(t_data *data)
 {
 	mlx_image_t	*img;
@@ -196,6 +104,7 @@ int	draw_minimap(t_data *data)
 					* SCALE)
 				), WHITE
 			);
+	set_rays(img, data->rays);
 	draw_line(line, img);
 	border_minimap(img, c);
 	return (1);

@@ -25,6 +25,7 @@ SRC = $(MANDATORY)/main.c $(MANDATORY)/draw_objects.c $(MANDATORY)/player.c  \
 	$(MANDATORY)/$(PARSING)/load_map_data.c $(MANDATORY)/$(PARSING)/load_map_data_utils.c \
 	$(MANDATORY)/$(PARSING)/init_clrs_dirs.c $(MANDATORY)/$(PARSING)/parse_map.c \
 	$(MANDATORY)/$(PARSING)/utils.c $(MANDATORY)/$(PARSING)/validate_dirs_clrs.c \
+	$(MANDATORY)/mem_mgr/mem_mgr.c \
 	$(MANDATORY)/$(PARSING)/validate_dirs_clrs_utils.c $(MANDATORY)/$(PARSING)/validate_top_map.c \
 
 OBJ = $(SRC:.c=.o)

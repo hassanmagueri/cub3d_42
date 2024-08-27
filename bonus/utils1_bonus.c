@@ -1,56 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_help_bonus.c                                   :+:      :+:    :+:   */
+/*   utils1_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:30:52 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/27 04:25:43 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/27 04:26:15 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./cub3d_bonus.h"
 
-t_point	new_point(double x, double y)
+int	add_pixel(int direct)
 {
-	t_point	p;
-
-	p.x = x;
-	p.y = y;
-	return (p);
+	if (direct == -1)
+		return (-1);
+	return (0);
 }
 
-t_line	new_line(t_point p1, t_point p2, int color)
+double	normalize_angle(double angle)
 {
-	t_line	line;
+	double	res;
 
-	line.p1.x = p1.x;
-	line.p1.y = p1.y;
-	line.p2.x = p2.x;
-	line.p2.y = p2.y;
-	line.color = color;
-	return (line);
+	res = fmod(angle, 2 * M_PI);
+	if (res < 0)
+		res += 2 * M_PI;
+	return (res);
 }
 
-t_rect	new_rect(int x, int y, int side, int color)
+int	ft_pixel(t_clr color)
 {
-	t_rect	rect;
+	uint8_t	r;
+	uint8_t	g;
+	uint8_t	b;
 
-	rect.x = x;
-	rect.y = y;
-	rect.side = side;
-	rect.color = color;
-	return (rect);
-}
-
-t_circle	new_circle(int x, int y, int radius, int color)
-{
-	t_circle	circle;
-
-	circle.x = x;
-	circle.y = y;
-	circle.radius = radius;
-	circle.color = color;
-	return (circle);
+	r = color.red;
+	g = color.green;
+	b = color.blue;
+	return (r << 24 | g << 16 | b << 8 | 255);
 }

@@ -6,12 +6,11 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 15:59:53 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/26 14:31:55 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/27 04:34:01 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./cub3d_bonus.h"
-
 
 void	delete_image(mlx_t *mlx, mlx_image_t *img)
 {

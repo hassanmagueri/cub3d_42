@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   sprite_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:43:21 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/25 23:00:39 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/26 16:50:40 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
-
 
 void ft_put_image(t_data *data, mlx_image_t *img)
 {
@@ -36,7 +35,6 @@ void load_and_display_image(t_data *data, int i)
 	static mlx_image_t *remove_img;
 	char path[100];
 	char index[10];
-	char png[10];
 
 	if (remove_img)
 		mlx_delete_image(data->mlx, remove_img);
@@ -45,12 +43,12 @@ void load_and_display_image(t_data *data, int i)
 	ft_strcut(path, index);
 	ft_strcut(path, ".png");
 	data->tex = mlx_load_png(path);
-	if(!data->tex)
+	if (!data->tex)
 		terminate_mlx(data);
 	save_imgs_texs(data, data->tex, TEXTURE);
 	data->img = mlx_texture_to_image(data->mlx, data->tex);
-	if(!data->img)
-		terminate_mlx( data);
+	if (!data->img)
+		terminate_mlx(data);
 	save_imgs_texs(data, data->img, IMAGE);
 	remove_img = data->img;
 	ft_put_image(data, data->img);
@@ -60,13 +58,15 @@ void animation_sprite(void *arg)
 	t_data *data;
 	static bool is_pressed;
 	static int i;
-
 	data = (t_data *)arg;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_SPACE))
 	{
-		mlx_delete_image(data->mlx, data->default_img);
+		delete_texture(data->tex_plr);
+		delete_image(data->mlx, data->default_img);
 		is_pressed = true;
 		data->tex_plr = mlx_load_png("./sprite/Stechkin01.png");
+		if (!data->tex_plr)
+			terminate_mlx(data);
 	}
 	if (is_pressed)
 	{

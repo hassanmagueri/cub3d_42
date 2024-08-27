@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/26 17:28:21 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/27 06:25:50 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,7 +228,8 @@ int new_ray(t_data *data, double ray_angle);
 int cast_rays(t_data *data, t_map map, t_player player, t_ray (*rays)[NUM_RAYS]);
 // bool is_wall(t_map map, int x, int y);
 bool is_wall(t_data *data, int x, int y);
-
+t_ray	low_ray(t_ray ver, t_ray hor);
+bool	check_is_wall(t_map map, t_player player, double x, double y);
 t_ray horizontal_ray(t_player player, t_map map, double ray_angle);
 t_ray vertical_ray(t_player player, t_map map, double ray_angle);
 
@@ -271,5 +272,5 @@ double	ray_distance(double dx, double dy);
 char	*swap_bytes(char *str);
 int	ret_offset_x(double wall_hit_x, double wall_hit_y,
 		bool is_vr, mlx_texture_t *texture);
-// void *malloc(size_t size, int status);
+void *ft_malloc(size_t size, int status);
 #endif
