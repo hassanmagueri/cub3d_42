@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 18:56:00 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/26 04:10:32 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/26 14:44:27 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	wall_col_putpixel(t_minimap minimap, t_player player,
 		- minimap.pn.y;
 	j_scl = index_scale(minimap.player_p.x, player.x, minimap.start_p.x, ind.j)
 		- minimap.pn.x;
-	if (is_out(i_scl, j_scl, minimap, map) || i_scl == 0)
+	if (is_out(i_scl, j_scl, minimap, map) || i_scl == 0 || i_scl == map.height - 1)
 		mlx_put_pixel(minimap.img, ind.j, ind.i, GREY);
 	else if (map.layout[i_scl][j_scl] == 'C')
 		mlx_put_pixel(minimap.img, ind.j, ind.i, SEMI_YELLOW);

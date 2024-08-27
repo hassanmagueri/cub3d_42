@@ -1,5 +1,5 @@
 CC = cc -Ofast #-Wall -Wextra -Werror 
-# CC += -g -fsanitize=address 
+CC += -g -fsanitize=address 
 
 #==============folders==============#
 PARSING=parsing
@@ -29,7 +29,8 @@ SRC = $(MANDATORY)/main.c $(MANDATORY)/draw_objects.c $(MANDATORY)/player.c  \
 
 OBJ = $(SRC:.c=.o)
 
-SRC_BONUS=$(BONUS)/main_bonus.c $(BONUS)/draw_objects_bonus.c $(BONUS)/player_bonus.c $(BONUS)/protected_mlx.c \
+SRC_BONUS=$(BONUS)/main_bonus.c $(BONUS)/draw_objects_bonus.c $(BONUS)/player_bonus.c\
+	$(BONUS)/protected_mlx_bonus.c $(BONUS)/protected_mlx_utils_bonus.c \
 	$(BONUS)/$(GET_NEXT_LINE)/get_next_line_bonus.c \
 	$(BONUS)/$(GET_NEXT_LINE)/get_next_line_utils_bonus.c \
 	$(BONUS)/$(UTILS)/ft_strcmp_bonus.c $(BONUS)/$(UTILS)/ft_strlcat_bonus.c \

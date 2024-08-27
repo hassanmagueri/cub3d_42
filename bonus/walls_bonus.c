@@ -6,19 +6,18 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:04:15 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/26 03:14:37 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/26 21:06:10 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
-#include <stdio.h>
 
-double ray_distance(double dx, double dy)
+double	ray_distance(double dx, double dy)
 {
 	return (sqrt(pow(dx, 2) + pow(dy, 2)));
 }
 
-char *swap_bytes(char *str)
+char	*swap_bytes(char *str)
 {
 	unsigned char tmp;
 
@@ -31,7 +30,7 @@ char *swap_bytes(char *str)
 	return str;
 }
 
-void ft_put_pixel( t_data *data, int y, uint32_t color)
+void	ft_put_pixel( t_data *data, int y, uint32_t color)
 {
 	swap_bytes((char *)(&color));
 	if (data->x_ray>= 0 && (size_t)data->x_ray < data->window_img->width 
@@ -39,14 +38,14 @@ void ft_put_pixel( t_data *data, int y, uint32_t color)
 		mlx_put_pixel(data->window_img, data->x_ray, y, color);
 }
 
-int painting_part_col(mlx_image_t *img, int start, int end, int x)
+int		painting_part_col(mlx_image_t *img, int start, int end, int x)
 {
 	int y = start;
 	while (y < end)
 		mlx_put_pixel(img, x, y++, 0);
 	return 0;
 }
-int get_distance_door(t_data *data, double x, double y)
+int	get_distance_door(t_data *data, double x, double y)
 {
 	int p_x = data->player.x / TILE_SIZE;
 	int p_y = data->player.y / TILE_SIZE;
@@ -55,7 +54,7 @@ int get_distance_door(t_data *data, double x, double y)
 	return abs(d_x - p_x) + abs(d_y - p_y);
 }
 
-double wall_top_pixle(double wall_height)
+double	wall_top_pixle(double wall_height)
 {
 	double wall_top_pixel;
 
@@ -64,7 +63,7 @@ double wall_top_pixle(double wall_height)
 		wall_top_pixel = 0;
 	return (wall_top_pixel);
 }
-int ret_offset_x(double wall_hit_x, double wall_hit_y,
+int	ret_offset_x(double wall_hit_x, double wall_hit_y,
 				 bool is_vr, mlx_texture_t *texture)
 {
 	int offset_x;
@@ -75,7 +74,7 @@ int ret_offset_x(double wall_hit_x, double wall_hit_y,
 		offset_x = (int)wall_hit_x % texture->width;
 	return (offset_x);
 }
-void render_texture(t_data *data , double wall_height , 
+void	render_texture(t_data *data , double wall_height , 
 	double wall_bottom_pixel , mlx_texture_t *texture)
 {
 	double			wall_top_pixel;
@@ -99,7 +98,8 @@ void render_texture(t_data *data , double wall_height ,
 	}
 	painting_part_col(data->window_img, wall_bottom_pixel, WINDOW_HEIGHT, data->x_ray);
 }
-int wall_painting(t_data *data, t_ray ray, 
+
+int	wall_painting(t_data *data, t_ray ray, 
 	double wall_height, int x, mlx_texture_t *texture)
 {
 	uint32_t *p_clrs;
@@ -127,20 +127,18 @@ int wall_painting(t_data *data, t_ray ray,
 	return (1);
 }
 
-void project_walls(t_data *data, t_ray ray, int x)
+void	project_walls(t_data *data, t_ray ray, int x)
 {
 	t_textures	textures;
-	int			distance_projection_plane;
 	double		ray_dist;
 	double		correct_ray;
 	double		wall_expected_height;
 
-	
-	distance_projection_plane = (WINDOW_WIDTH / 2) / tan(FOV / 2);
+
 	textures = data->textures;
 	ray_dist = ray_distance(ray.dx, ray.dy);
 	correct_ray = ray_dist * cos(ray.angle - data->player.angle);
-	wall_expected_height = (TILE_SIZE / correct_ray * distance_projection_plane);
+	wall_expected_height = (TILE_SIZE * (TILE_SIZE + TILE_SIZE / 2) / correct_ray );
 	if (ray.direct == -1 && ray.is_vr)
 		wall_painting(data, ray, wall_expected_height, x, textures.NO);
 	else if (ray.direct == -1 && !ray.is_vr)

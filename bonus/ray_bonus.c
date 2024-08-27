@@ -6,28 +6,11 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:10:59 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/26 03:12:50 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/27 02:22:58 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
-
-int	add_pixel(int direct)
-{
-	if (direct == -1)
-		return (-1);
-	return (0);
-}
-
-double	normalize_angle(double angle)
-{
-	double	res;
-
-	res = fmod(angle, 2 * M_PI);
-	if (res < 0)
-		res += 2 * M_PI;
-	return (res);
-}
+#include "./cub3d_bonus.h"
 
 t_ray	low_ray(t_ray ver, t_ray hor)
 {
@@ -70,8 +53,8 @@ int	cast_rays(t_data *data, t_map map, t_player player, t_ray (*rays)[NUM_RAYS])
 	angle = player.angle - FOV / 2;
 	while (i < NUM_RAYS)
 	{
-		vr = vertical_ray(player, map, normalize_angle(angle));
 		hr = horizontal_ray(player, map, normalize_angle(angle));
+		vr = vertical_ray(player, map, normalize_angle(angle), ray_distance(hr.dx, hr.dy));
 		(*rays)[i] = low_ray(vr, hr);
 		project_walls(data, (*rays)[i], i);
 		angle += FOV / NUM_RAYS;
@@ -80,15 +63,25 @@ int	cast_rays(t_data *data, t_map map, t_player player, t_ray (*rays)[NUM_RAYS])
 	return (0);
 }
 
-t_ray	vertical_ray(t_player player, t_map map, double ray_angle)
+bool still_in_ver(t_player player, t_map map, double dx, double ray_angle)
 {
-	size_t			i;	
+	return ((player.x + dx) <= (map.width * TILE_SIZE) && (player.y + dx * tan(ray_angle)) <= (map.height * TILE_SIZE)
+		&& (player.x + dx) >= 0 && (player.y + dx * tan(ray_angle)) >= 0);
+}
+
+bool still_in_hor(t_player player, t_map map, double dy, double ray_angle)
+{
+	return ((player.x + dy / tan(ray_angle)) <= (map.width * TILE_SIZE) && (player.y + dy) <= (map.height * TILE_SIZE)
+		&& (player.x + dy / tan(ray_angle)) >= 0 && player.y + dy >= 0);
+}
+
+t_ray	vertical_ray(t_player player, t_map map, double ray_angle, double ray_dist)
+{
 	int			direct;	
 	double		dx;
 	double		player_tile_x;
 	double		player_x_distance;
 
-	i = 0;
 	direct = 1;
 	player_tile_x = (floor(player.x / TILE_SIZE) + 1) * TILE_SIZE;
 	if (ray_angle > M_PI / 2 && ray_angle < M_PI * 1.5)
@@ -98,15 +91,13 @@ t_ray	vertical_ray(t_player player, t_map map, double ray_angle)
 	}
 	player_x_distance = (player_tile_x - player.x) * direct;
 	dx = player_x_distance * direct;
-	while (i < map.width)
+	while (still_in_ver(player, map, dx, ray_angle))
 	{
-		if (check_is_wall(map, player, dx + add_pixel(direct),
-				dx * tan(ray_angle)))
-			break ;
+		if (check_is_wall(map, player, dx + add_pixel(direct),dx * tan(ray_angle)) && ray_distance(dx, dx * tan(ray_angle) < ray_dist))
+			return ((t_ray){dx, dx * tan(ray_angle), ray_angle, 1, direct});
 		dx += (double)TILE_SIZE * direct;
-		i++;
 	}
-	return ((t_ray){dx, dx * tan(ray_angle), ray_angle, 1, direct});
+	return ((t_ray){DBL_MAX, DBL_MAX, ray_angle, 2, direct});
 }
 
 t_ray	horizontal_ray(t_player player, t_map map, double ray_angle)
@@ -115,9 +106,7 @@ t_ray	horizontal_ray(t_player player, t_map map, double ray_angle)
 	double		player_y_distance;
 	int			direct;
 	double		dy;
-	size_t			i;
 
-	i = 0;
 	direct = -1;
 	player_tile_y = floor((player.y) / TILE_SIZE) * TILE_SIZE;
 	if (ray_angle < M_PI)
@@ -127,13 +116,11 @@ t_ray	horizontal_ray(t_player player, t_map map, double ray_angle)
 	}
 	player_y_distance = (player_tile_y - player.y) * direct;
 	dy = player_y_distance * direct;
-	while (i < map.height)
+	while (still_in_hor(player, map, dy, ray_angle))
 	{
-		if (check_is_wall(map, player, dy / tan(ray_angle),
-				dy + add_pixel(direct)))
-			break ;
+		if (check_is_wall(map, player, dy / tan(ray_angle),dy + add_pixel(direct)))
+			return ((t_ray){dy / tan(ray_angle), dy, ray_angle, 0, direct});
 		dy += (double)TILE_SIZE * direct;
-		i++;
 	}
-	return ((t_ray){dy / tan(ray_angle), dy, ray_angle, 0, direct});
+	return ((t_ray){ DBL_MAX, DBL_MAX, ray_angle, 0, direct});
 }

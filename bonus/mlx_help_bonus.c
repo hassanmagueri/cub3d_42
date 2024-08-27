@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:30:52 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/25 15:50:17 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/26 14:28:19 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,23 @@ int	ytoi(int y)
 
 	i = y / TILE_SIZE;
 	return (y / TILE_SIZE);
+}
+
+int	add_pixel(int direct)
+{
+	if (direct == -1)
+		return (-1);
+	return (0);
+}
+
+double	normalize_angle(double angle)
+{
+	double	res;
+
+	res = fmod(angle, 2 * M_PI);
+	if (res < 0)
+		res += 2 * M_PI;
+	return (res);
 }
 
 t_line	new_line(t_point p1, t_point p2, int color)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doors_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 13:34:56 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/24 14:25:05 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/26 14:35:29 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 void validate_door_positions(t_data *data, int y)
 {
-	int x;
-	bool x_door;
-	bool y_door;
+	int		x;
+	bool	x_door;
+	bool	y_door;
 
 	x = 0;
 	while (x < data->map.width)

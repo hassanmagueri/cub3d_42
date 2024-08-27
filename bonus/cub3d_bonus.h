@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 04:42:49 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/25 16:55:50 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/26 21:00:22 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ typedef struct s_ray
 	double dx;
 	double dy;
 	double angle;
-	bool is_vr;
+	int is_vr;
 	short direct;
 } t_ray;
 
@@ -268,6 +268,8 @@ double radtodeg(double rad);
 mlx_image_t *new_image_to_window(mlx_t *mlx, int width, int height);
 mlx_image_t *reset_img(mlx_image_t *img);
 int32_t ft_pixel(t_clr color);
+double	normalize_angle(double angle);
+int		add_pixel(int direct);
 
 // ================== ray functions ==================
 int				new_ray(t_data *data, double ray_angle);
@@ -276,11 +278,13 @@ int				cast_rays(t_data *data, t_map map, t_player player, t_ray (*rays)[NUM_RAY
 bool			is_wall(t_data *data, int x, int y);
 
 t_ray			horizontal_ray(t_player player, t_map map, double ray_angle);
-t_ray			vertical_ray(t_player player, t_map map, double ray_angle);
+// t_ray			vertical_ray(t_player player, t_map map, double ray_angle);
+t_ray	vertical_ray(t_player player, t_map map, double ray_angle, double ray_dist);
 
 // ================== walls functions ==================
 void			project_walls(t_data *data, t_ray ray, int x);
 int				update_player(t_data *data);
+double	ray_distance(double dx, double dy);
 // ================== minimap functions ==================
 int				draw_minimap(t_data *data);
 
