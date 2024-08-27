@@ -1,5 +1,5 @@
 CC = cc -Ofast #-Wall -Wextra -Werror 
-CC += -g -fsanitize=address 
+# CC += -g -fsanitize=address 
 
 #==============folders==============#
 PARSING=parsing
@@ -15,7 +15,7 @@ NAME_BONUS=cub3D_bonus
 MLX_NAME = MLX/libmlx42.a
 MLX_FLAGS = -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
 SRC = $(MANDATORY)/main.c $(MANDATORY)/draw_objects.c $(MANDATORY)/player.c  \
-	$(MANDATORY)/mlx_help.c $(MANDATORY)/ray.c $(MANDATORY)/walls.c $(MANDATORY)/wall_utils.c\
+	$(MANDATORY)/mlx_help.c $(MANDATORY)/rays.c $(MANDATORY)/rays_utils	.c $(MANDATORY)/walls.c $(MANDATORY)/wall_utils.c\
 	$(MANDATORY)/$(GET_NEXT_LINE)/get_next_line.c \
 	$(MANDATORY)/$(GET_NEXT_LINE)/get_next_line_utils.c \
 	$(MANDATORY)/$(UTILS)/ft_strcmp.c $(MANDATORY)/$(UTILS)/ft_strlcat.c \
@@ -30,15 +30,18 @@ SRC = $(MANDATORY)/main.c $(MANDATORY)/draw_objects.c $(MANDATORY)/player.c  \
 
 OBJ = $(SRC:.c=.o)
 
+
 SRC_BONUS=$(BONUS)/main_bonus.c $(BONUS)/draw_objects_bonus.c $(BONUS)/player_bonus.c\
 	$(BONUS)/protected_mlx_bonus.c $(BONUS)/protected_mlx_utils_bonus.c \
+	$(BONUS)/utils_bonus.c $(BONUS)/utils1_bonus.c \
 	$(BONUS)/$(GET_NEXT_LINE)/get_next_line_bonus.c \
 	$(BONUS)/$(GET_NEXT_LINE)/get_next_line_utils_bonus.c \
 	$(BONUS)/$(UTILS)/ft_strcmp_bonus.c $(BONUS)/$(UTILS)/ft_strlcat_bonus.c \
 	$(BONUS)/$(UTILS)/ft_putendl_fd_bonus.c $(BONUS)/$(UTILS)/ft_split_bonus.c \
 	$(BONUS)/$(UTILS)/ft_substr_bonus.c $(BONUS)/$(UTILS)/ft_strtrim_bonus.c \
 	$(BONUS)/$(UTILS)/ft_isdigit_bonus.c $(BONUS)/$(UTILS)/ft_atoi_bonus.c $(BONUS)/$(UTILS)/ft_itoa_bonus.c \
-	$(BONUS)/mlx_help_bonus.c $(BONUS)/ray_bonus.c $(BONUS)/walls_bonus.c $(BONUS)/minimap_bonus.c \
+	$(BONUS)/mlx_help_bonus.c $(BONUS)/rays_bonus.c $(BONUS)/rays_utils_bonus.c $(BONUS)/walls_bonus.c \
+	$(BONUS)/minimap_bonus.c $(BONUS)/minimap_utils_bonus.c \
 	$(BONUS)/$(PARSING)/load_map_data_bonus.c $(BONUS)/$(PARSING)/load_map_data_utils_bonus.c \
 	$(BONUS)/$(PARSING)/init_clrs_dirs_bonus.c $(BONUS)/$(PARSING)/parse_map_bonus.c \
 	$(BONUS)/$(PARSING)/utils_bonus.c $(BONUS)/$(PARSING)/validate_dirs_clrs_bonus.c \
@@ -52,7 +55,6 @@ SRC_BONUS=$(BONUS)/main_bonus.c $(BONUS)/draw_objects_bonus.c $(BONUS)/player_bo
 OBJ_BONUS = $(SRC_BONUS:.c=.o)
 
 all: $(NAME) 
-
 
 
 $(NAME): $(OBJ) 
