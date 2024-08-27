@@ -1,4 +1,5 @@
-CC = cc -Ofast #-Wall -Wextra -Werror 
+CC = cc -Ofast 
+CC += -Wall -Wextra -Werror 
 # CC += -g -fsanitize=address 
 
 #==============folders==============#
@@ -14,8 +15,13 @@ NAME = cub3D
 NAME_BONUS=cub3D_bonus
 MLX_NAME = MLX/libmlx42.a
 MLX_FLAGS = -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
+# $(MANDATORY)/ray.c 
 SRC = $(MANDATORY)/main.c $(MANDATORY)/draw_objects.c $(MANDATORY)/player.c  \
-	$(MANDATORY)/mlx_help.c $(MANDATORY)/rays.c $(MANDATORY)/rays_utils	.c $(MANDATORY)/walls.c $(MANDATORY)/wall_utils.c\
+	$(MANDATORY)/mlx_help.c \
+	$(MANDATORY)/utils.c \
+	$(MANDATORY)/protected_mlx.c $(MANDATORY)/protected_mlx_utils.c \
+	$(MANDATORY)/rays.c $(MANDATORY)/rays_utils.c \
+	$(MANDATORY)/walls.c $(MANDATORY)/wall_utils.c\
 	$(MANDATORY)/$(GET_NEXT_LINE)/get_next_line.c \
 	$(MANDATORY)/$(GET_NEXT_LINE)/get_next_line_utils.c \
 	$(MANDATORY)/$(UTILS)/ft_strcmp.c $(MANDATORY)/$(UTILS)/ft_strlcat.c \
@@ -49,8 +55,6 @@ SRC_BONUS=$(BONUS)/main_bonus.c $(BONUS)/draw_objects_bonus.c $(BONUS)/player_bo
 	$(BONUS)/mem_mgr/mem_mgr_bonus.c $(BONUS)/cleanup_mlx/cleanup_imges_textures.c\
 	$(BONUS)/sprite_bonus.c \
 	$(BONUS)/$(PARSING)/validate_dirs_clrs_utils_bonus.c $(BONUS)/$(PARSING)/validate_top_map_bonus.c \
-
-
 
 OBJ_BONUS = $(SRC_BONUS:.c=.o)
 

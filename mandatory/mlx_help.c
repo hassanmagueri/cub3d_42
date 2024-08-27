@@ -6,84 +6,66 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:30:52 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/05 12:14:24 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/27 17:32:33 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
-#include <stdint.h>
+#include "./cub3d.h"
 
-mlx_image_t		*clear_image(mlx_t *mlx, mlx_image_t *img)
+void	draw_floor_ceiling(t_data *data)
 {
-	uint32_t	width;
-	uint32_t	height;
 
-	width = img->width;
-	height = img->height;
-	mlx_delete_image(mlx, img);
-	img = mlx_new_image(mlx, width, height);
-	return (img);
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (i < data->background_img->height / 2)
+	{
+		j = 0;
+		while (j < data->background_img->width)
+		{
+			mlx_put_pixel(data->background_img, j, i, ft_pixel(data->ceiling));
+			mlx_put_pixel(data->background_img, j,
+				i + data->background_img->height / 2, ft_pixel(data->floor));
+			j++;
+		}
+		i++;
+	}
 }
 
 mlx_image_t	*reset_img(mlx_image_t *img)
 {
-	size_t i;
-	for (i = 0; i  < img->width; i++)
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (i < img->width)
 	{
-		size_t j;
-		for (j = 0; j < img->height; j++)
-			mlx_put_pixel(img, i, j, 0);
+		j = 0;
+		while (j < img->height)
+			mlx_put_pixel(img, i, j++, 0);
+		i++;
 	}
-	return img;
-}
-
-mlx_image_t		*new_image_to_window(mlx_t *mlx, int width, int height)
-{
-	mlx_image_t *img;
-
-	img = mlx_new_image(mlx, width, height);
-	mlx_image_to_window(mlx, img, 0, 0);
 	return (img);
 }
 
-t_line new_line(t_point p1,t_point p2, int color)
+int32_t	ft_pixel(t_clr color)
 {
-	t_line line;
+	uint8_t	r;
+	uint8_t	g;
+	uint8_t	b;
 
-	line.p1.x = p1.x;
-	line.p1.y = p1.y;
-	line.p2.x = p2.x;
-	line.p2.y = p2.y;
-	line.color = color;
-	return (line);
-}
-
-int32_t ft_pixel(t_clr color)
-{
-	uint8_t r = color.red;
-	uint8_t g = color.green;
-	uint8_t b = color.blue;
-	
+	b = color.blue;
+	r = color.red;
+	g = color.green;
 	return (r << 24 | g << 16 | b << 8 | 255);
 }
-t_rect new_rect(int x, int y, int side, int color)
+
+t_point	new_point(double x, double y)
 {
-	t_rect rect;
+	t_point	p;
 
-	rect.x = x;
-	rect.y = y;
-	rect.side = side;
-	rect.color = color;
-	return rect;
-}
-
-t_circle new_circle(int x, int y, int radius, int color)
-{
-	t_circle circle;
-
-	circle.x = x;
-	circle.y = y;
-	circle.radius = radius;
-	circle.color = color;
-	return circle;
+	p.x = x;
+	p.y = y;
+	return (p);
 }

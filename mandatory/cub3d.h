@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/27 06:25:50 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/27 17:36:38 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 #define TILE_SIZE 1024
 #define SCALE 0.02
+#define SCALE_SIZE (TILE_SIZE * SCALE)
 #define BACKGROUND 0xFD42EE55
 
 #define WINDOW_WIDTH 1500
@@ -222,6 +223,8 @@ double radtodeg(double rad);
 mlx_image_t *new_image_to_window(mlx_t *mlx, int width, int height);
 mlx_image_t *reset_img(mlx_image_t *img);
 int32_t ft_pixel(t_clr color);
+void	draw_floor_ceiling(t_data *data);
+void set_player(t_data *data, char *map, int i);
 
 // ================== ray functions ==================
 int new_ray(t_data *data, double ray_angle);
@@ -232,6 +235,8 @@ t_ray	low_ray(t_ray ver, t_ray hor);
 bool	check_is_wall(t_map map, t_player player, double x, double y);
 t_ray horizontal_ray(t_player player, t_map map, double ray_angle);
 t_ray vertical_ray(t_player player, t_map map, double ray_angle);
+double normalize_angle(double angle);
+int	add_pixel(int direct);
 
 // ================== walls functions ==================
 void project_walls(t_data *data, t_ray ray, int x);
@@ -247,6 +252,19 @@ void			image_to_window(t_data *data, mlx_image_t *img, int x, int y);
 mlx_image_t*	new_image(t_data *data, int width, int height);
 mlx_image_t*	texture_to_image(t_data *data, mlx_texture_t *texture);
 mlx_texture_t*	load_png(t_data *data, char *path);
+
+// ================== protected function ==================
+
+void			init_vars(t_data *data);
+void			delete_image(mlx_t *mlx, mlx_image_t *img);
+void			delete_texture(mlx_texture_t *texture);
+void			terminate_mlx(t_data *data);
+void			set_mlx_vars_null(t_data *data);
+void			image_to_window(t_data *data, mlx_image_t *img, int x, int y);
+mlx_image_t*	new_image(t_data *data, int width, int height);
+mlx_image_t*	texture_to_image(t_data *data, mlx_texture_t *texture);
+mlx_texture_t*	load_png(t_data *data, char *path);
+
 
 // ================== parsing functions ==================
 void ft_putendl_fd_color(char *s, int fd, char *color);
