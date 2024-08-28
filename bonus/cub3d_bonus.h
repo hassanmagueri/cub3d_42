@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 04:42:49 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/27 16:19:46 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/28 00:21:34 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,12 @@ typedef enum e_status
     DELETE
 } t_status;
 
-typedef struct cleanup
+typedef struct s_sprite
 {
     void *address;
     t_status status;
-    struct cleanup *next;
-} t_delete;
+    struct s_sprite *next;
+} t_sprite;
 
 typedef struct t_colors
 {
@@ -243,6 +243,8 @@ typedef struct s_data
 	mlx_texture_t *tex;
 	mlx_image_t *img;
 	double wall_height;
+	void  **sprite_images;
+	void  **sprite_textures;
 } t_data;
 // ===================== functions utils =====================
 char *ft_itoa(int n);
@@ -353,4 +355,9 @@ void	move_mouse(double x_pos, double y_pos, void *arg);
 int	painting_part_col(mlx_image_t *img, int start, int end, int x);
 void	ft_put_pixel( t_data *data, int y, uint32_t color);
 void	check_newline(char **map);
+void	addback(t_sprite **head, t_sprite *new);
+t_sprite	*create_node(void *adrress, t_status status);
+void	ft_strcpy(char *dest, char *src);
+void	ft_strcut(char *dest, char *src);
+bool skip_spaces(char *line);
 #endif

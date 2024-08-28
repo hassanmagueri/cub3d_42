@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 21:40:55 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/27 16:18:03 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/28 00:22:42 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,17 @@ void	validate_colors(t_data *data)
 		i++;
 	}
 }
+bool skip_spaces(char *line)
+{
+	int i;
 
+	i = 0;
+	while (line[i] && line[i] == ' ')
+		i++;
+	if (line[i] == '\0')
+		return (true);
+	return (false);
+}
 void	validate_top_map(t_data *data)
 {
 	int		fd;

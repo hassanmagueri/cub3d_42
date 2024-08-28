@@ -6,17 +6,17 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 11:46:14 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/27 20:06:19 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/27 21:23:13 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_bonus.h"
 
-t_delete	*create_node(void *adrress, t_status status)
+t_sprite	*create_node(void *adrress, t_status status)
 {
-	t_delete	*node;
+	t_sprite	*node;
 
-	node = malloc(sizeof(t_delete));
+	node = malloc(sizeof(t_sprite));
 	if (!node)
 		return (NULL);
 	node->address = adrress;
@@ -25,9 +25,9 @@ t_delete	*create_node(void *adrress, t_status status)
 	return (node);
 }
 
-void	addback(t_delete **head, t_delete *new)
+void	addback(t_sprite **head, t_sprite *new)
 {
-	t_delete	*tmp;
+	t_sprite	*tmp;
 
 	if (!*head)
 	{
@@ -42,8 +42,8 @@ void	addback(t_delete **head, t_delete *new)
 
 void	save_imgs_texs(t_data *data, void *address, t_status status)
 {
-	static t_delete	*head;
-	t_delete		*new;
+	static t_sprite	*head;
+	t_sprite		*new;
 
 	new = create_node(address, status);
 	if (!new)

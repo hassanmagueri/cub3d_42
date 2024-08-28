@@ -6,16 +6,11 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:43:21 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/27 15:15:43 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/28 00:02:15 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
-
-void	ft_put_image(t_data *data, mlx_image_t *img)
-{
-	mlx_image_to_window(data->mlx, img, 300, 300);
-}
 
 void	ft_strcpy(char *dest, char *src)
 {
@@ -36,25 +31,14 @@ void	ft_strcut(char *dest, char *src)
 void	load_and_display_image(t_data *data, int i)
 {
 	static mlx_image_t	*remove_img;
-	char				path[100];
-	char				index[10];
-
+	
 	if (remove_img)
 		mlx_delete_image(data->mlx, remove_img);
-	ft_strcpy(path, "./sprite/StechkinEx");
-	ft_strcpy(index, ft_itoa(i + 1));
-	ft_strcut(path, index);
-	ft_strcut(path, ".png");
-	data->tex = mlx_load_png(path);
-	if (!data->tex)
-		terminate_mlx(data);
-	save_imgs_texs(data, data->tex, TEXTURE);
-	data->img = mlx_texture_to_image(data->mlx, data->tex);
+	data->img = mlx_texture_to_image(data->mlx, data->sprite_textures[i]);
 	if (!data->img)
 		terminate_mlx(data);
-	save_imgs_texs(data, data->img, IMAGE);
 	remove_img = data->img;
-	ft_put_image(data, data->img);
+	mlx_image_to_window(data->mlx, data->img, 300, 300);
 }
 
 void	animation_sprite(void *arg)
@@ -71,7 +55,7 @@ void	animation_sprite(void *arg)
 		is_pressed = true;
 		data->tex_plr = mlx_load_png("./sprite/Stechkin01.png");
 		if (!data->tex_plr)
-			terminate_mlx(data);
+			terminate_mlx(data); 
 	}
 	if (is_pressed)
 	{

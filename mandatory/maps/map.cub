@@ -1,13 +1,16 @@
 NO ./images/wall04.png
+
 EA ./images/steel1.png
-SO ./images/wall05.png
-WE ./images/wall03.png
-
-C 0,0,150
 F 255,123,145
-
-111111 111
-100001101
-100S01001
-101111001
-111111111
+C 0,0,150
+SO ./images/wall05.png
+      
+WE ./images/wall_03.png
+         
+             
+       
+1111111111111
+1000000000001
+1000000000001
+100000N000001
+1111111111111
