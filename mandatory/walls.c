@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   walls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:04:15 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/28 14:47:58 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/28 23:11:27 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,11 @@ void	render_texture(t_data *data, double wall_height,
 
 int	wall_painting(t_data *data, t_ray ray, int x, mlx_texture_t *texture)
 {
-	uint32_t	*p_clrs;
 	double		wall_bottom_pixel;
 	int			offsetx;
 	double		wall_hit_x;
 	double		wall_hit_y;
 
-	p_clrs = (uint32_t *)texture->pixels;
 	wall_hit_x = data->player.x + ray.dx;
 	wall_hit_y = data->player.y + ray.dy;
 	offsetx = ret_offset_x(wall_hit_x, wall_hit_y, ray.is_vr, texture);
