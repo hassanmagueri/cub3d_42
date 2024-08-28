@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 21:38:32 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/28 15:25:51 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/28 17:51:03 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	count_empty_lines(char **map_data, int max_count)
 	count = 0;
 	i = 0;
 	while (map_data[i] && count < max_count)
-	{	
+	{
 		if (skip_spaces(map_data[i]))
 		{
 			i++;
@@ -112,4 +112,4 @@ void	set_top_map(t_data *data)
 	}
 	data->dirs[j] = NULL;
 	data->clrs[z] = NULL;
-}	
+}

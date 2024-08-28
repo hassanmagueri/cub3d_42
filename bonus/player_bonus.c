@@ -6,11 +6,35 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:51:11 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/26 04:13:06 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:46:05 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
+
+void	set_player_direction(t_data *data, t_index index)
+{
+	t_map	map;
+	int		angle;
+	int		i;
+	int		j;
+
+	angle = 0;
+	map = data->map;
+	i = index.i;
+	j = index.j;
+	map = data->map;
+	if (map.layout[i][j] == 'N')
+		angle = 270;
+	else if (map.layout[i][j] == 'W')
+		angle = 180;
+	else if (map.layout[i][j] == 'S')
+		angle = 90;
+	else if (map.layout[i][j] == 'E')
+		angle = 0;
+	data->player = new_player(data, j * TILE_SIZE + TILE_SIZE / 2,
+			i * TILE_SIZE + TILE_SIZE / 2, angle);
+}
 
 t_player	new_player(t_data *data, int x, int y, int angle)
 {

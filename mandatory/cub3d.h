@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/28 16:41:43 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/28 17:43:35 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define DBL_MAX 1.7976931348623157e+308
 
 # define WINDOW_WIDTH 1500
-# define WINDOW_HEIGHT 1200
+# define WINDOW_HEIGHT 1000
 
 # define FREE 0
 # define ALLOC 1

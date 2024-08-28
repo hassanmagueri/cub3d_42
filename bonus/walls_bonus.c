@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:04:15 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/28 17:19:35 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/28 17:44:43 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,11 @@ void	render_texture(t_data *data, double wall_height,
 
 int	wall_painting(t_data *data, t_ray ray, int x, mlx_texture_t *texture)
 {
+	int			offsetx;
+	double		wall_hit_x;
+	double		wall_hit_y;
+	double		wall_bottom_pixel;
 	uint32_t	*p_clrs;
-	int	offsetx;
-	double wall_hit_x;
-	double wall_hit_y;
-	double wall_bottom_pixel;
 
 	p_clrs = (uint32_t *)texture->pixels;
 	wall_hit_x = data->player.x + ray.dx;
@@ -89,8 +89,8 @@ int	wall_painting(t_data *data, t_ray ray, int x, mlx_texture_t *texture)
 
 void	project_walls(t_data *data, t_ray ray, int x)
 {
-	t_textures	textures;
 	int			distance_projection_plane;
+	t_textures	textures;
 	double		ray_dist;
 	double		correct_ray;
 
@@ -98,14 +98,14 @@ void	project_walls(t_data *data, t_ray ray, int x)
 	textures = data->textures;
 	ray_dist = ray_distance(ray.dx, ray.dy);
 	correct_ray = ray_dist * cos(ray.angle - data->player.angle);
-	data->wall_height = (TILE_SIZE * (TILE_SIZE + (TILE_SIZE / 3)))\
+	data->wall_height = (TILE_SIZE * (TILE_SIZE + (TILE_SIZE / 3)))
 		/ correct_ray;
 	if (ray.direct == -1 && !ray.is_vr)
-		wall_painting(data, ray, x, textures.NO);
+		wall_painting(data, ray, x, textures.no);
 	else if (ray.direct == -1 && ray.is_vr)
-		wall_painting(data, ray, x, textures.WE);
+		wall_painting(data, ray, x, textures.we);
 	else if (ray.direct == 1 && ray.is_vr)
-		wall_painting(data, ray, x, textures.EA);
+		wall_painting(data, ray, x, textures.ea);
 	else if (ray.direct == 1 && !ray.is_vr)
-		wall_painting(data, ray, x, textures.SO);
+		wall_painting(data, ray, x, textures.so);
 }

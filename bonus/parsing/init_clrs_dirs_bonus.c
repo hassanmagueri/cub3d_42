@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:23:02 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/28 17:19:45 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/28 17:58:08 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,13 @@ void	set_directions(t_data *data)
 		if (!out)
 			ft_putendl_fd_color("Error\nmalloc failure", 2, RED_E);
 		if (!ft_strcmp(out[0], "NO"))
-			data->NO = out[1];
+			data->no = out[1];
 		else if (!ft_strcmp(out[0], "SO"))
-			data->SO = out[1];
+			data->so = out[1];
 		else if (!ft_strcmp(out[0], "WE"))
-			data->WE = out[1];
+			data->we = out[1];
 		else
-			data->EA = out[1];
+			data->ea = out[1];
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 15:59:53 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/28 17:19:06 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/28 17:57:45 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,22 @@
 
 void	terminate_mlx(t_data *data)
 {
-	
-	// delete_texture(data->tex_plr);
-	// delete_image(data->mlx, data->default_img);
+	delete_texture(data->tex_plr);
+	delete_image(data->mlx, data->default_img);
 	delete_texture(data->tex);
 	delete_texture(data->tex_door);
 	delete_texture(data->texture);
-	delete_texture(data->textures.EA);
-	delete_texture(data->textures.NO);
-	delete_texture(data->textures.SO);
-	delete_texture(data->textures.WE);
+	delete_texture(data->textures.ea);
+	delete_texture(data->textures.no);
+	delete_texture(data->textures.so);
+	delete_texture(data->textures.we);
 	delete_image(data->mlx, data->minimap.img);
 	delete_image(data->mlx, data->background_img);
 	delete_image(data->mlx, data->img);
 	delete_image(data->mlx, data->spr_img);
 	delete_image(data->mlx, data->spr_img);
 	delete_image(data->mlx, data->window_img);
-	// mlx_terminate(data->mlx);
-	// ft_malloc(FREE, FREE);
+	mlx_terminate(data->mlx);
 	exit(EXIT_FAILURE);
 }
 
@@ -53,10 +51,10 @@ void	set_mlx_vars_null(t_data *data)
 void	init_vars(t_data *data)
 {
 	set_mlx_vars_null(data);
-	data->textures.EA = load_png(data, data->EA);
-	data->textures.NO = load_png(data, data->NO);
-	data->textures.SO = load_png(data, data->SO);
-	data->textures.WE = load_png(data, data->WE);
+	data->textures.ea = load_png(data, data->ea);
+	data->textures.no = load_png(data, data->no);
+	data->textures.so = load_png(data, data->so);
+	data->textures.we = load_png(data, data->we);
 	data->tex_door = load_png(data, "./images/door_close.png");
 	data->window_img = new_image(data, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data->background_img = new_image(data, WINDOW_WIDTH, WINDOW_HEIGHT);
