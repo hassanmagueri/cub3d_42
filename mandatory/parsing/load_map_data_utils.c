@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 21:38:32 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/27 16:37:37 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/28 15:30:01 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ int	count_empty_lines(char **map_data, int max_count)
 	i = 0;
 	while (map_data[i] && count < max_count)
 	{
+		if (skip_spaces(map_data[i]))
+		{
+			i++;
+			continue ;
+		}
 		if (map_data[i][0])
 			count++;
 		i++;

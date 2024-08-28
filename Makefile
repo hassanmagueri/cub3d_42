@@ -1,6 +1,6 @@
 CC = cc -Ofast 
 CC += -Wall -Wextra -Werror 
-CC += -g -fsanitize=address 
+# CC += -g -fsanitize=address
 
 #==============folders==============#
 PARSING=parsing
@@ -55,7 +55,7 @@ SRC_BONUS=$(BONUS)/main_bonus.c $(BONUS)/draw_objects_bonus.c $(BONUS)/player_bo
 	$(BONUS)/$(PARSING)/init_clrs_dirs_bonus.c $(BONUS)/$(PARSING)/parse_map_bonus.c \
 	$(BONUS)/$(PARSING)/utils_bonus.c $(BONUS)/$(PARSING)/validate_dirs_clrs_bonus.c \
 	$(BONUS)/doors_bonus.c $(BONUS)/doors_utils_bonus.c \
-	$(BONUS)/mem_mgr/mem_mgr_bonus.c $(BONUS)/cleanup_mlx/cleanup_imges_textures.c\
+	$(BONUS)/mem_mgr/mem_mgr_bonus.c \
 	$(BONUS)/sprite_bonus.c $(BONUS)/mouse_bonus.c $(BONUS)/walls_utils_bonus.c\
 	$(BONUS)/$(PARSING)/validate_dirs_clrs_utils1_bonus.c $(BONUS)/$(PARSING)/validate_top_map_bonus.c \
 	$(BONUS)/$(PARSING)/validate_dirs_clrs_utils2_bonus.c

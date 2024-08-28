@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/28 17:08:55 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/28 17:34:31 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	ft_hook(void *param)
 {
-	t_data		*data;
-	t_map		map;
-	t_player	*player;
+	t_data *data;
+	t_map map;
+	t_player *player;
 
 	data = (t_data *)param;
 	map = data->map;
@@ -89,9 +89,40 @@ void	f()
 	system("leaks cub3D_bonus");
 }
 
-int	main(int ac, char const **av)
+void free_and_exit(t_data *data, int i)
 {
-	t_data	data;
+	while (--i >= 0)
+		mlx_delete_texture((mlx_texture_t *)data->sprite_textures[i]);
+	ft_malloc(FREE, FREE);
+	exit(EXIT_FAILURE);
+}
+
+void init_sprites(t_data *data)
+{
+	char path[100];
+	char index[10];
+	int i;
+
+	data->sprite_textures = NULL;
+	i = 0;
+	data->sprite_textures = (void **)malloc(sizeof(void *) * (NUM_IMAGES + 1));
+	while (i < NUM_IMAGES)
+	{
+		ft_strcpy(path, "./sprite/StechkinEx");
+		ft_strcpy(index, ft_itoa(i + 1));
+		ft_strcut(path, index);
+		ft_strcut(path, ".png");
+		data->tex = mlx_load_png(path);
+		if (!data->tex)
+			free_and_exit(data, i);
+		data->sprite_textures[i] = data->tex;
+		i++;
+	}
+	data->sprite_textures[i] = NULL;
+}
+int main(int ac, char const **av)
+{
+	t_data data;
 
 	atexit(f);
 	if (ac != 2)
@@ -100,8 +131,9 @@ int	main(int ac, char const **av)
 	data.map_path = ft_strdup(av[1]);
 	parsing_part(&data);
 	data.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D_bonus", false);
-	if (data.mlx == NULL)
-		return (ft_malloc(FREE,FREE), EXIT_FAILURE);
+	// if (data.mlx == NULL)
+	// return (ft_malloc(FREE,FREE), EXIT_FAILURE);
+	init_sprites(&data);
 	init_vars(&data);
 	image_to_window(&data, data.background_img, 0, 0);
 	image_to_window(&data, data.window_img, 0, 0);

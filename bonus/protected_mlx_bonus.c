@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 15:59:53 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/28 16:36:44 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/28 17:39:33 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	terminate_mlx(t_data *data)
 {
+	delete_texture(data->tex_plr);
+	delete_image(data->mlx, data->default_img);
 	delete_texture(data->tex);
 	delete_texture(data->tex_door);
 	delete_texture(data->texture);
@@ -28,7 +30,6 @@ void	terminate_mlx(t_data *data)
 	delete_image(data->mlx, data->spr_img);
 	delete_image(data->mlx, data->window_img);
 	mlx_terminate(data->mlx);
-	save_imgs_texs(data, NULL, DELETE);
 	exit(EXIT_FAILURE);
 }
 

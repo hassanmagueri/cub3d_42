@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_top_map_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 21:40:55 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/27 16:18:03 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/28 17:40:14 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,18 @@ void	validate_colors(t_data *data)
 	}
 }
 
+bool skip_spaces(char *line)
+{
+	int i;
+
+	i = 0;
+	while (line[i] && line[i] == ' ')
+		i++;
+	if (line[i] == '\0')
+		return (true);
+	return (false);
+}
+
 void	validate_top_map(t_data *data)
 {
 	int		fd;
@@ -50,6 +62,11 @@ void	validate_top_map(t_data *data)
 	j = 0;
 	while (data->map_data[i] && j < 6)
 	{
+		if (skip_spaces(data->map_data[i]))
+		{
+			i++;
+			continue ;
+		}
 		if (data->map_data[i][0])
 			data->top_map[j++] = data->map_data[i];
 		i++;

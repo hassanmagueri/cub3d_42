@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 04:42:49 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/28 17:15:57 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/28 17:36:24 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ typedef enum e_status
 	DELETE
 }	t_status;
 
-typedef struct cleanup
+typedef struct s_sprite
 {
 	void			*address;
 	t_status		status;
@@ -228,6 +228,7 @@ typedef struct s_data
 	char			wall_door;
 	char			**top_map;
 	char			*map_path;
+	void			**sprite_textures;
 	double			angle_mouse;
 	double			wall_height;
 	uint32_t		*p_clrs;
@@ -261,6 +262,9 @@ char			*ft_substr(char const *s, unsigned int start, size_t len);
 char			*ft_strtrim(char const *s1, char const *set);
 char			**ft_split(char const *s, char c);
 void			ft_putendl_fd(char *s, int fd);
+void			ft_strcut(char *dest, char *src);
+void			ft_strcpy(char *dest, char *src);
+bool			skip_spaces(char *line);
 
 // ===================== functions parsing =====================
 
