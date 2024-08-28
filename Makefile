@@ -44,7 +44,8 @@ SRC_BONUS=$(BONUS)/main_bonus.c $(BONUS)/draw_objects_bonus.c $(BONUS)/player_bo
 	$(BONUS)/utils_bonus.c $(BONUS)/utils1_bonus.c \
 	$(BONUS)/$(GET_NEXT_LINE)/get_next_line_bonus.c \
 	$(BONUS)/$(GET_NEXT_LINE)/get_next_line_utils_bonus.c \
-	$(BONUS)/$(UTILS)/ft_strcmp_bonus.c $(BONUS)/$(UTILS)/ft_strlcat_bonus.c \
+	$(BONUS)/$(UTILS)/ft_strcmp_bonus.c $(BONUS)/$(UTILS)/ft_strncmp_bonus.c \
+	$(BONUS)/$(UTILS)/ft_strlcat_bonus.c \
 	$(BONUS)/$(UTILS)/ft_putendl_fd_bonus.c $(BONUS)/$(UTILS)/ft_split_bonus.c \
 	$(BONUS)/$(UTILS)/ft_substr_bonus.c $(BONUS)/$(UTILS)/ft_strtrim_bonus.c \
 	$(BONUS)/$(UTILS)/ft_isdigit_bonus.c $(BONUS)/$(UTILS)/ft_atoi_bonus.c $(BONUS)/$(UTILS)/ft_itoa_bonus.c \

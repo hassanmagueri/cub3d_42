@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/27 15:51:14 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/28 17:08:55 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./cub3d_bonus.h"
-
-#define NUM_IMAGES 68
-
-size_t	get_digits(int n)
-{
-	size_t	i;
-
-	i = 1;
-	while (n /= 10)
-		i++;
-	return (i);
-}
 
 void	ft_hook(void *param)
 {
@@ -50,30 +38,6 @@ void	ft_hook(void *param)
 		player->rotation_angle = degtorad(-1);
 	if (player->rotation_angle != 0 || player->walk_direction != 0)
 		update_player(data);
-}
-
-void	set_player_direction(t_data *data, t_index index)
-{
-	t_map	map;
-	int		angle;
-	int		i;
-	int		j;
-
-	angle = 0;
-	map = data->map;
-	i = index.i;
-	j = index.j;
-	map = data->map;
-	if (map.layout[i][j] == 'N')
-		angle = 270;
-	else if (map.layout[i][j] == 'W')
-		angle = 180;
-	else if (map.layout[i][j] == 'S')
-		angle = 90;
-	else if (map.layout[i][j] == 'E')
-		angle = 0;
-	data->player = new_player(data, j * TILE_SIZE + TILE_SIZE / 2,
-			i * TILE_SIZE + TILE_SIZE / 2, angle);
 }
 
 int	render_map(t_data *data)
@@ -114,48 +78,17 @@ void	parsing_part(t_data *data)
 	parsing_doors(data);
 }
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
-{
-	size_t			i;
-	unsigned char	*str1;
-	unsigned char	*str2;
-
-	str1 = (unsigned char *)s1;
-	str2 = (unsigned char *)s2;
-	if (n == 0)
-		return (0);
-	i = 0;
-	while (str1[i] && (str1[i] == str2[i]) && i < n - 1)
-		i++;
-	return (str1[i] - str2[i]);
-}
-
 void	check_extension(char const *file)
 {
 	if (ft_strncmp(file + ft_strlen(file) - 4, ".cub", 4))
 		ft_putendl_fd_color("Error\nInvalid file extension", 2, RED_E);
 }
 
-int	painting_background(mlx_image_t *img, t_clr ceiling, t_clr floor)
+void	f()
 {
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	while (i < img->height / 2)
-	{
-		j = 0;
-		while (j < img->width)
-		{
-			mlx_put_pixel(img, j, i, ft_pixel(ceiling));
-			mlx_put_pixel(img, j, i + img->height / 2, ft_pixel(floor));
-			j++;
-		}
-		i++;
-	}
-	return (0);
+	system("leaks cub3D_bonus");
 }
-void f(){system("leaks cub3D_bonus");}
+
 int	main(int ac, char const **av)
 {
 	t_data	data;
@@ -167,8 +100,8 @@ int	main(int ac, char const **av)
 	data.map_path = ft_strdup(av[1]);
 	parsing_part(&data);
 	data.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D_bonus", false);
-	// if (data.mlx == NULL)
-		// return (ft_malloc(FREE,FREE), EXIT_FAILURE);
+	if (data.mlx == NULL)
+		return (ft_malloc(FREE,FREE), EXIT_FAILURE);
 	init_vars(&data);
 	image_to_window(&data, data.background_img, 0, 0);
 	image_to_window(&data, data.window_img, 0, 0);

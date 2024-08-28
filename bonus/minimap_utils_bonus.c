@@ -6,11 +6,31 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 03:36:09 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/27 04:17:20 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:42:40 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./cub3d_bonus.h"
+
+int	painting_background(mlx_image_t *img, t_clr ceiling, t_clr floor)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (i < img->height / 2)
+	{
+		j = 0;
+		while (j < img->width)
+		{
+			mlx_put_pixel(img, j, i, ft_pixel(ceiling));
+			mlx_put_pixel(img, j, i + img->height / 2, ft_pixel(floor));
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
 
 int	draw_react_minimap(t_rect rect, mlx_image_t *image, int width, int height)
 {
