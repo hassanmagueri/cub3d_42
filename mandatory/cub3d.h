@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/28 14:49:09 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/28 15:33:12 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,5 +304,5 @@ void			set_top_map(t_data *data);
 void			*ft_malloc(size_t size, int status);
 void			check_newline(char **map);
 double			ray_distance(double dx, double dy);
-
+bool			skip_spaces(char *line);
 #endif

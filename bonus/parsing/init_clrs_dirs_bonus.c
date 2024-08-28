@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:23:02 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/28 00:22:10 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/28 15:14:15 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,6 @@ int	find_dirs(char **data)
 	i = 0;
 	while (data[i])
 	{
-		if(data[i][0] == '\0')
-		{
-			i++;
-			continue;
-		}
 		line = ft_strtrim(data[i], " ");
 		if (check_dirs(line, "NO")
 			|| check_dirs(line, "SO")

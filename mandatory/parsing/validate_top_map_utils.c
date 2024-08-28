@@ -6,11 +6,23 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 16:43:35 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/27 20:30:59 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/28 15:32:49 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+bool skip_spaces(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] && line[i] == ' ')
+		i++;
+	if (line[i] == '\0')
+		return (true);
+	return (false);
+}
 
 void	check_newline(char **map)
 {
