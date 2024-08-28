@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/28 18:05:14 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/28 20:52:47 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	main(int ac, char const **av)
 	init_sprites(&data);
 	data.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D_bonus", false);
 	if (data.mlx == NULL)
-		return (free_and_exit(&data,68), EXIT_FAILURE);
+		return (free_and_exit(&data, 68), EXIT_FAILURE);
 	init_vars(&data);
 	image_to_window(&data, data.background_img, 0, 0);
 	image_to_window(&data, data.window_img, 0, 0);

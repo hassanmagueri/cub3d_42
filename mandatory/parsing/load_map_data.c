@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 21:30:58 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/27 16:37:05 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/28 20:20:30 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	load_map_data(t_data *data)
 			* (count_lines(data) + 1), ALLOC);
 	i = 0;
 	line = get_next_line(fd);
+	if(!line)
+		ft_putendl_fd_color("Error\nEmpty file", 2, RED_E);
 	while (line)
 	{
 		last_line = line;
@@ -68,6 +70,7 @@ void	load_map_data(t_data *data)
 	}
 	if (last_line[ft_strlen(last_line) - 1] == '\n')
 		ft_putendl_fd_color("Error\nInvalid map", 2, RED_E);
+	
 	data->map_data[i] = NULL;
 	close(fd);
 }

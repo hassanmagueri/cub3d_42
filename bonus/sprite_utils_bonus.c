@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 17:55:29 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/28 18:03:42 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/28 20:53:21 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	free_and_exit(t_data *data, int i)
 {
 	while (--i >= 0)
 		mlx_delete_texture((mlx_texture_t *)data->sprite_textures[i]);
-    free(data->sprite_textures);
+	free(data->sprite_textures);
 	ft_malloc(FREE, FREE);
 	exit(EXIT_FAILURE);
 }

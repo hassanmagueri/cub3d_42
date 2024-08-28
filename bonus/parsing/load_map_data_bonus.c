@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 21:30:58 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/27 16:10:20 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/28 20:21:59 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	load_map_data(t_data *data)
 			* (count_lines(data) + 1), ALLOC);
 	i = 0;
 	line = get_next_line(fd);
+	if (!line)
+		ft_putendl_fd_color("Error\nEmpty map", 2, RED_E);
 	while (line)
 	{
 		last_line = line;

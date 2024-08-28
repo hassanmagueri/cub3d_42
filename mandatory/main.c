@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/28 20:14:12 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/28 20:53:44 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,6 @@ void	check_extension(char const *file)
 {
 	if (ft_strncmp(file + ft_strlen(file) - 4, ".cub", 4))
 		ft_putendl_fd_color("Error\nInvalid file extension", 2, RED_E);
-}
-
-void	f(void)
-{
-	system("leaks cub3D");
 }
 
 int32_t	main(int ac, char const **av)
