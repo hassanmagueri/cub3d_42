@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   walls_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:04:15 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/28 17:44:43 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/28 23:58:27 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,10 @@ int	wall_painting(t_data *data, t_ray ray, int x, mlx_texture_t *texture)
 
 void	project_walls(t_data *data, t_ray ray, int x)
 {
-	int			distance_projection_plane;
 	t_textures	textures;
 	double		ray_dist;
 	double		correct_ray;
 
-	distance_projection_plane = (WINDOW_WIDTH / 2) / tan(FOV / 2);
 	textures = data->textures;
 	ray_dist = ray_distance(ray.dx, ray.dy);
 	correct_ray = ray_dist * cos(ray.angle - data->player.angle);

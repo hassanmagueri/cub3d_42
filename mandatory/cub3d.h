@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/28 17:43:35 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/29 00:02:49 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,7 @@ typedef struct s_data
 }	t_data;
 
 // ===================== functions parsing =====================
+
 int				ft_strcmp(char *str1, char *str2);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 int				ft_atoi(const char *str);
