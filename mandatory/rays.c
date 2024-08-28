@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:10:59 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/27 15:30:21 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/28 10:21:35 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_ray	vertical_ray(t_player player, t_map map, double ray_angle)
 			return ((t_ray){dx, dx * tan(ray_angle), ray_angle, 1, direct});
 		dx += (double)TILE_SIZE * direct;
 	}
-	return ((t_ray){DBL_MAX, DBL_MAX, ray_angle, 2, direct});
+	return ((t_ray){DBL_MAX, DBL_MAX, ray_angle, 1, direct});
 }
 
 t_ray	horizontal_ray(t_player player, t_map map, double ray_angle)

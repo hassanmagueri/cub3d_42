@@ -6,28 +6,16 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 15:32:10 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/27 17:36:30 by emagueri         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   player.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/09 20:51:11 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/27 15:31:51 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/27 19:11:20 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./cub3d.h"
 
-void set_player(t_data *data, char *map, int i)
+void	set_player(t_data *data, char *map, int i)
 {
-	size_t j;
-	size_t angle;
+	size_t	j;
+	size_t	angle;
 
 	angle = 0;
 	j = 0;
@@ -44,8 +32,8 @@ void set_player(t_data *data, char *map, int i)
 			else if (map[j] == 'E')
 				angle = 0;
 			data->player = new_player(data, j * TILE_SIZE + TILE_SIZE / 2,
-									  i * TILE_SIZE + TILE_SIZE / 2, angle);
-			break;
+					i * TILE_SIZE + TILE_SIZE / 2, angle);
+			break ;
 		}
 		j++;
 	}

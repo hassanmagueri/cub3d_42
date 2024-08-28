@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 15:59:53 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/27 15:23:16 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/28 10:36:53 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	terminate_mlx(t_data *data)
 	delete_image(data->mlx, data->img);
 	delete_image(data->mlx, data->window_img);
 	mlx_terminate(data->mlx);
+	// ft_malloc(0, FREE);
 	// save_imgs_texs(data, NULL, DELETE);
 	exit(EXIT_FAILURE);
 }

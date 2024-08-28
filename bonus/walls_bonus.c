@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:04:15 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/27 02:28:55 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/27 20:41:03 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ void render_texture(t_data *data, double wall_height,
 int wall_painting(t_data *data, t_ray ray,
 				  double wall_height, int x, mlx_texture_t *texture)
 {
-	uint32_t *p_clrs;
-	int offsetx;
+	uint32_t	*p_clrs;
+	int	offsetx;
 	double wall_hit_x;
 	double wall_hit_y;
 	double wall_bottom_pixel;
@@ -128,17 +128,15 @@ int wall_painting(t_data *data, t_ray ray,
 
 void	project_walls(t_data *data, t_ray ray, int x)
 {
-	t_textures textures;
-	int distance_projection_plane;
-	double ray_dist;
-	double correct_ray;
-	double wall_expected_height;
+	t_textures	textures;
+	double		ray_dist;
+	double		correct_ray;
+	double		wall_expected_height;
 
-	distance_projection_plane = (WINDOW_WIDTH / 2) / tan(FOV / 2);
 	textures = data->textures;
 	ray_dist = ray_distance(ray.dx, ray.dy);
 	correct_ray = ray_dist * cos(ray.angle - data->player.angle);
-	wall_expected_height = (TILE_SIZE * (TILE_SIZE + TILE_SIZE / 2) / correct_ray );
+	wall_expected_height = (TILE_SIZE * (TILE_SIZE + (TILE_SIZE / 3))) / correct_ray;
 	if (ray.direct == -1 && ray.is_vr)
 		wall_painting(data, ray, wall_expected_height, x, textures.NO);
 	else if (ray.direct == -1 && !ray.is_vr)
