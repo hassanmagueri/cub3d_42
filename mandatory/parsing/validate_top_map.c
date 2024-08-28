@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 21:40:55 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/27 16:43:54 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/28 15:57:30 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,11 @@ void	validate_top_map(t_data *data)
 	j = 0;
 	while (data->map_data[i] && j < 6)
 	{
+		if (skip_spaces(data->map_data[i]))
+		{
+			i++;
+			continue ;
+		}
 		if (data->map_data[i][0])
 			data->top_map[j++] = data->map_data[i];
 		i++;

@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/28 15:33:12 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:41:43 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,10 +170,10 @@ typedef struct s_data
 {
 	int				x_ray;
 	int				offsetx;
-	char			*NO;
-	char			*SO;
-	char			*WE;
-	char			*EA;
+	char			*no;
+	char			*so;
+	char			*we;
+	char			*es;
 	char			**map_data;
 	char			**dirs;
 	char			**clrs;

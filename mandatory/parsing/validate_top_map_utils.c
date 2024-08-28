@@ -6,13 +6,13 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 16:43:35 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/28 15:32:49 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:13:17 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-bool skip_spaces(char *line)
+bool	skip_spaces(char *line)
 {
 	int	i;
 

@@ -6,18 +6,17 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 04:42:49 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/28 00:21:34 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:44:52 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#ifndef CUB3D_H
-#define CUB3D_H
+#ifndef CUB3D_BONUS_H
+#define CUB3D_BONUS_H
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
-#include <float.h>
 #include <math.h>
 #include <stdbool.h>
 #include <math.h>
@@ -26,10 +25,12 @@
 #include "./MLX/MLX42.h"
 #include "utils/get_next_line/get_next_line_bonus.h"
 
-#define TILE_SIZE 1024
-#define SCALE 0.02
-#define BACKGROUND 0xFD42EE55
-#define SCALE_SIZE (TILE_SIZE * SCALE)
+# define DBL_MAX 1.7976931348623157e+308
+
+#define	TILE_SIZE 1024
+#define	SCALE 0.02
+#define	BACKGROUND 0xFD42EE55
+#define	SCALE_SIZE (TILE_SIZE * SCALE)
 
 #define WINDOW_WIDTH 1800
 #define WINDOW_HEIGHT 1000
@@ -81,8 +82,8 @@
 
 typedef struct s_mem_mgr
 {
-    void *address;
-    struct s_mem_mgr *next;
+	void	*address;
+	struct s_mem_mgr *next;
 } t_free;
 
 typedef struct s_splt

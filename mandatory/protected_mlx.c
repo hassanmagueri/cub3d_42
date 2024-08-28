@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   protected_mlx.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 15:59:53 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/28 14:49:45 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:18:40 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ void	terminate_mlx(t_data *data)
 	delete_image(data->mlx, data->img);
 	delete_image(data->mlx, data->window_img);
 	mlx_terminate(data->mlx);
-	// ft_malloc(0, FREE);
-	// save_imgs_texs(data, NULL, DELETE);
 	exit(EXIT_FAILURE);
 }
 
@@ -40,10 +38,10 @@ void	set_mlx_vars_null(t_data *data)
 void	init_vars(t_data *data)
 {
 	set_mlx_vars_null(data);
-	data->textures.ea = load_png(data, data->EA);
-	data->textures.no = load_png(data, data->NO);
-	data->textures.so = load_png(data, data->SO);
-	data->textures.we = load_png(data, data->WE);
+	data->textures.ea = load_png(data, data->es);
+	data->textures.no = load_png(data, data->no);
+	data->textures.so = load_png(data, data->so);
+	data->textures.we = load_png(data, data->we);
 	data->window_img = new_image(data, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data->background_img = new_image(data, WINDOW_WIDTH, WINDOW_HEIGHT);
 }
