@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 02:37:07 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/26 14:35:52 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/27 20:30:47 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static	char	*get_new_save(char *save)
 		i++;
 	while (!save[i])
 		return (free(save), NULL);
-	new_save = (char *)ft_malloc(ft_strlen(save) - i + 1 , ALLOC);
+	new_save = (char *)ft_malloc(ft_strlen(save) - i + 1, ALLOC);
 	if (!new_save)
 		return (free(save), save = NULL, NULL);
 	while (save[i])
@@ -48,7 +48,7 @@ static	char	*get_newline(char *save)
 		i++;
 	if (save[i] == '\n')
 		i++;
-	line = (char *)ft_malloc((i + 1) * sizeof(char),ALLOC);
+	line = (char *)ft_malloc((i + 1) * sizeof(char), ALLOC);
 	if (!line)
 		return (NULL);
 	j = 0;
@@ -63,7 +63,7 @@ static	char	*get_newline(char *save)
 	return (line);
 }
 
-static	bool	check_newline(char *str)
+static	bool	ft_check_newline(char *str)
 {
 	int	i;
 
@@ -95,7 +95,7 @@ static char	*read_line(int fd, char *save)
 		save = ft_strjoin(save, buffer);
 		if (!save)
 			break ;
-		if (check_newline(save))
+		if (ft_check_newline(save))
 			break ;
 	}
 	free(buffer);

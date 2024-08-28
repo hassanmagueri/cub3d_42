@@ -6,76 +6,73 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 11:46:14 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/26 14:41:22 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/27 20:31:14 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-typedef struct s_mem_mgr
+void	ft_free(t_free *head)
 {
-    void *address;
-    struct s_mem_mgr *next;
-} t_free;
-void ft_free(t_free *head)
-{
-    t_free *temp;
+	t_free	*temp;
 
-    while (head)
-    {
-        temp = head;
-        head = head->next;
-        free(temp->address);
-        free(temp);
-    }
-    
-}
-t_free *create_new_node(void *address)
-{
-    t_free *new;
-    new = (t_free *)malloc(sizeof(t_free));
-    if (!new)
-        return (NULL);
-    new->address = address;
-    new->next = NULL;
-    return (new);
+	while (head)
+	{
+		temp = head;
+		head = head->next;
+		free(temp->address);
+		free(temp);
+	}
 }
 
-void add_back(t_free **list, t_free *new)
+t_free	*create_new_node(void *address)
 {
-    t_free *temp;
+	t_free	*new;
 
-    if (!*list)
-    {
-        *list = new;
-        return;
-    }
-    temp = *list;
-    while (temp->next)
-        temp = temp->next;
-    temp->next = new;
+	new = (t_free *)malloc(sizeof(t_free));
+	if (!new)
+		return (NULL);
+	new->address = address;
+	new->next = NULL;
+	return (new);
 }
 
-void *ft_malloc(size_t size, int status)
+void	add_back(t_free **list, t_free *new)
 {
-    static t_free *head = NULL;
-    t_free *new_node;
+	t_free	*temp;
 
-    t_free *new;
-    if (status == ALLOC)
-    {
-        new = malloc(size);
-        if (!new)
-            return (NULL);
-        new_node = create_new_node(new);
-        
-        add_back(&head, new_node);
-        return (new);
-    }
-    else if (status == FREE)
-    {
-        ft_free(head);
-        head = NULL;
-    }
-    return (NULL);
+	if (!*list)
+	{
+		*list = new;
+		return ;
+	}
+	temp = *list;
+	while (temp->next)
+		temp = temp->next;
+	temp->next = new;
+}
+
+void	*ft_malloc(size_t size, int status)
+{
+	static t_free	*head;
+	t_free			*new_node;
+	t_free			*new;
+
+	if (status == ALLOC)
+	{
+		new = malloc(size);
+		if (!new)
+			return (NULL);
+		new_node = create_new_node(new);
+		if (!new_node)
+			ft_putendl_fd_color("Error: Failed to create node", 2, RED_E);
+		add_back(&head, new_node);
+		return (new);
+	}
+	else if (status == FREE)
+	{
+		ft_free(head);
+		head = NULL;
+	}
+	return (NULL);
 }

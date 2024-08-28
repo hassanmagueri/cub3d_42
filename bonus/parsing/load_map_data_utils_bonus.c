@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 21:38:32 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/24 16:12:10 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/27 16:10:43 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*remove_new_line(char *line)
 	i = 0;
 	while (line[i] && line[i] != '\n')
 		i++;
-	new_ret = (char *)ft_malloc(i + 1 , ALLOC);
+	new_ret = (char *)ft_malloc(i + 1, ALLOC);
 	if (!new_ret)
 		return (NULL);
 	i = 0;
@@ -77,7 +77,7 @@ char	*get_two_char(char *line)
 
 	i = 0;
 	j = 0;
-	re_line = ft_malloc(3 , ALLOC);
+	re_line = ft_malloc(3, ALLOC);
 	if (!re_line)
 		ft_putendl_fd_color("Error\nmalloc failure", 2, RED_E);
 	while (line[i] && line[i] == ' ')

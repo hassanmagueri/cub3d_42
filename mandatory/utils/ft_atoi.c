@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 21:15:38 by belguabd          #+#    #+#             */
-/*   Updated: 2024/07/25 22:42:44 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/27 16:49:37 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_atoi(const char *str)
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		res = (str[i] - 48) + (res * 10);
-		if(res > 255)
+		if (res > 255)
 			ft_putendl_fd_color("Error\nInvalid color", 2, RED_E);
 		i++;
 	}

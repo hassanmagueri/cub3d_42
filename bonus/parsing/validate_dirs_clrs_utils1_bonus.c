@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate_dirs_clrs_utils_bonus.c                   :+:      :+:    :+:   */
+/*   validate_dirs_clrs_utils1_bonus.c                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:02:08 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/24 13:23:00 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/27 16:17:40 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,13 @@ int	validate_line(char *line)
 	}
 	return (0);
 }
-void check_isspace(char *line)
-{
-	int i;
 
-	i = 0;
-	while (line[i] && line[i] == ' ')
-		i++;
-	if (!line[i])
-		print_error("Error\nInvalid map");
-}
 void	validate_map(t_data *data)
 {
 	char	*line;
 	int		i;
 
-	if(!data->map.layout[0])
+	if (!data->map.layout[0])
 		print_error("Error\nInvalid map");
 	if (validate_line(data->map.layout[0])
 		|| validate_line(data->map.layout[get_len_map(data) - 1]))
@@ -77,10 +68,8 @@ void	validate_map(t_data *data)
 	i = 0;
 	while (data->map.layout[i])
 	{
-		check_isspace(data->map.layout[i]);
-		line = ft_strtrim(data->map.layout[i], " ");
-		if(!line || validate_char(line[0]) 
-			|| validate_char(line[ft_strlen(line) - 1]))
+		line = data->map.layout[i];
+		if (validate_char(line[0]) || validate_char(line[ft_strlen(line) - 1]))
 			print_error("Error\nInvalid character");
 		i++;
 	}

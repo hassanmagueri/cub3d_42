@@ -6,17 +6,17 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 21:40:55 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/26 14:34:39 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/27 16:43:54 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void validate_colors(t_data *data)
+void	validate_colors(t_data *data)
 {
-	char *clr;
-	int j;
-	int i;
+	char	*clr;
+	int		j;
+	int		i;
 
 	i = 0;
 	while (data->clrs[i])
@@ -36,11 +36,11 @@ void validate_colors(t_data *data)
 	}
 }
 
-void validate_top_map(t_data *data)
+void	validate_top_map(t_data *data)
 {
-	int fd;
-	int i;
-	int j;
+	int	fd;
+	int	i;
+	int	j;
 
 	data->top_map = (char **)ft_malloc(sizeof(char *) * 7, ALLOC);
 	fd = open(data->map_path, O_RDONLY);
@@ -59,17 +59,17 @@ void validate_top_map(t_data *data)
 		ft_putendl_fd_color("Error\nInvalid top map", 2, RED_E);
 }
 
-bool check_color(char *line, char *to_find)
+bool	check_color(char *line, char *to_find)
 {
 	if (ft_strcmp(get_first_char(line), to_find))
 		return (false);
 	return (true);
 }
 
-int find_colors(char **data)
+int	find_colors(char **data)
 {
-	int count_clr;
-	int i;
+	int	count_clr;
+	int	i;
 
 	i = 0;
 	count_clr = 0;
@@ -84,25 +84,15 @@ int find_colors(char **data)
 	return (0);
 }
 
-void check_newline(char **map)
+void	set_map(t_data *data)
 {
-
-	int y = 0;
-	while (map[y])
-	{
-		if (!map[y][0])
-			ft_putendl_fd_color("Error\nInvalid map", 2, RED_E);
-		y++;
-	}
-}
-void set_map(t_data *data)
-{
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	set_top_map(data);
 	i = count_empty_lines(data->map_data, 6);
-	data->map.layout = (char **)ft_malloc(sizeof(char *) * (get_count_map(data, i) + 1), ALLOC);
+	data->map.layout = (char **)ft_malloc(sizeof(char *)
+			* (get_count_map(data, i) + 1), ALLOC);
 	j = 0;
 	while (data->map_data[i])
 	{

@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 02:37:07 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/24 16:32:16 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/27 20:05:50 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static	char	*get_newline(char *save)
 	return (line);
 }
 
-static	bool	check_newline(char *str)
+static	bool	ft_check_newline(char *str)
 {
 	int	i;
 
@@ -95,7 +95,7 @@ static char	*read_line(int fd, char *save)
 		save = ft_strjoin(save, buffer);
 		if (!save)
 			break ;
-		if (check_newline(save))
+		if (ft_check_newline(save))
 			break ;
 	}
 	free(buffer);

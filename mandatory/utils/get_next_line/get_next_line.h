@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 02:37:25 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/13 12:43:30 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/28 13:53:36 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <limits.h>
 # include <stdlib.h>
 # include <stdbool.h>
-#include "../../cub3d.h"
+# include "../../cub3d.h"
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 44
 # endif

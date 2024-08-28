@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 04:42:49 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/27 04:15:26 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/27 16:19:46 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,21 @@
 #define COLORS_H
 #define RED_E "\033[31m"
 #endif
+
+
+typedef struct s_mem_mgr
+{
+    void *address;
+    struct s_mem_mgr *next;
+} t_free;
+
+typedef struct s_splt
+{
+	char	**res;
+	int		i;
+	int		j;
+	int		to_find;
+}	t_splt;
 
 typedef enum e_status
 {
@@ -227,6 +242,7 @@ typedef struct s_data
 	uint32_t *p_clrs;
 	mlx_texture_t *tex;
 	mlx_image_t *img;
+	double wall_height;
 } t_data;
 // ===================== functions utils =====================
 char *ft_itoa(int n);
@@ -333,4 +349,8 @@ bool draw_doors(t_data *data ,double wall_hit_x, double wall_hit_y, t_ray ray);
 void animation_sprite(void *arg);
 void *ft_malloc(size_t size, int status);
 void save_imgs_texs(t_data *data, void *adrress, t_status status);
+void	move_mouse(double x_pos, double y_pos, void *arg);
+int	painting_part_col(mlx_image_t *img, int start, int end, int x);
+void	ft_put_pixel( t_data *data, int y, uint32_t color);
+void	check_newline(char **map);
 #endif

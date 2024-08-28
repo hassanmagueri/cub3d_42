@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:10:59 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/28 10:21:35 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/28 13:08:53 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ t_ray	vertical_ray(t_player player, t_map map, double ray_angle)
 	dx = player_x_distance * direct;
 	while (still_in_ver(player, map, dx, ray_angle))
 	{
-		if (check_is_wall(map, player,
-				dx + add_pixel(direct), dx * tan(ray_angle)))
+		if (check_is_wall(map, player, dx + add_pixel(direct),
+				dx * tan(ray_angle)))
 			return ((t_ray){dx, dx * tan(ray_angle), ray_angle, 1, direct});
 		dx += (double)TILE_SIZE * direct;
 	}
@@ -92,8 +92,8 @@ t_ray	horizontal_ray(t_player player, t_map map, double ray_angle)
 	dy = player_y_distance * direct;
 	while (still_in_hor(player, map, dy, ray_angle))
 	{
-		if (check_is_wall(map, player,
-				dy / tan(ray_angle), dy + add_pixel(direct)))
+		if (check_is_wall(map, player, dy / tan(ray_angle),
+				dy + add_pixel(direct)))
 			return ((t_ray){dy / tan(ray_angle), dy, ray_angle, 0, direct});
 		dy += (double)TILE_SIZE * direct;
 	}

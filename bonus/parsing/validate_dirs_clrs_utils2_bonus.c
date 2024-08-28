@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   validate_dirs_clrs_utils2_bonus.c                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/11 23:17:56 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/26 14:32:55 by belguabd         ###   ########.fr       */
+/*   Created: 2024/08/27 16:17:30 by belguabd          #+#    #+#             */
+/*   Updated: 2024/08/27 16:18:10 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3d_bonus.h"
 
-t_data	*ft_lstnew(void *content)
+void	check_newline(char **map)
 {
-	t_data	*newstr;
+	int	y;
 
-	newstr = (t_data *)ft_malloc(sizeof(t_data) );
-	if (!newstr)
-		return (NULL);
-	newstr->content = content;
-	newstr->next = NULL;
-	return (newstr);
+	y = 0;
+	while (map[y])
+	{
+		if (!map[y][0])
+			ft_putendl_fd_color("Error\nInvalid map", 2, RED_E);
+		y++;
+	}
 }

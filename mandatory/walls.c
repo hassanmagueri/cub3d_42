@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:04:15 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/27 19:21:10 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/28 14:47:58 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,15 +84,14 @@ void	project_walls(t_data *data, t_ray ray, int x)
 	textures = data->textures;
 	ray_dist = ray_distance(ray.dx, ray.dy);
 	correct_ray = ray_dist * cos(ray.angle - data->player.angle);
-	data->wall_height = (TILE_SIZE * (TILE_SIZE + (TILE_SIZE / 3))) / correct_ray;
-	if (ray.direct == -1 && ray.is_vr)
-		wall_painting(data, ray, x, textures.NO);
-	else if (ray.direct == -1 && !ray.is_vr)
-		wall_painting(data, ray, x, textures.SO);
+	data->wall_height = (TILE_SIZE * (TILE_SIZE + (TILE_SIZE / 3))) \
+		/ correct_ray;
+	if (ray.direct == -1 && !ray.is_vr)
+		wall_painting(data, ray, x, textures.no);
+	else if (ray.direct == -1 && ray.is_vr)
+		wall_painting(data, ray, x, textures.we);
 	else if (ray.direct == 1 && ray.is_vr)
-		wall_painting(data, ray, x, textures.WE);
+		wall_painting(data, ray, x, textures.ea);
 	else if (ray.direct == 1 && !ray.is_vr)
-		wall_painting(data, ray, x, textures.EA);
+		wall_painting(data, ray, x, textures.so);
 }
-
-// tchecki textures w

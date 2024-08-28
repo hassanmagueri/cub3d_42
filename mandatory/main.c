@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/28 12:00:00 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/28 13:07:40 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,22 +53,6 @@ int	render_map(t_data *data)
 	return (1);
 }
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
-{
-	unsigned char	*str1;
-	unsigned char	*str2;
-	size_t			i;
-
-	str1 = (unsigned char *)s1;
-	str2 = (unsigned char *)s2;
-	if (n == 0)
-		return (0);
-	i = 0;
-	while (str1[i] && (str1[i] == str2[i]) && i < n - 1)
-		i++;
-	return (str1[i] - str2[i]);
-}
-
 void	check_extension(char const *file)
 {
 	if (ft_strncmp(file + ft_strlen(file) - 4, ".cub", 4))
@@ -96,7 +80,7 @@ int32_t	main(int ac, char const **av)
 	validate_colors(&data);
 	parse_map(&data);
 	init_clrs_dirs(&data);
-	data.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "CUB_3D",false);
+	data.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "CUB_3D", false);
 	if (data.mlx == NULL)
 		return (EXIT_FAILURE); // expetead leaks
 	init_vars(&data);
