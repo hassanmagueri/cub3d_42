@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   walls_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:04:15 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/27 15:27:57 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/28 13:04:38 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ void	render_texture(t_data *data, double wall_height,
 int	wall_painting(t_data *data, t_ray ray, int x, mlx_texture_t *texture)
 {
 	uint32_t	*p_clrs;
-	int			offsetx;
-	double		wall_hit_x;
-	double		wall_hit_y;
-	double		wall_bottom_pixel;
+	int	offsetx;
+	double wall_hit_x;
+	double wall_hit_y;
+	double wall_bottom_pixel;
 
 	p_clrs = (uint32_t *)texture->pixels;
 	wall_hit_x = data->player.x + ray.dx;
@@ -98,8 +98,8 @@ void	project_walls(t_data *data, t_ray ray, int x)
 	textures = data->textures;
 	ray_dist = ray_distance(ray.dx, ray.dy);
 	correct_ray = ray_dist * cos(ray.angle - data->player.angle);
-	data->wall_height \
-		= (TILE_SIZE * (TILE_SIZE + TILE_SIZE / 2) / correct_ray);
+	data->wall_height = (TILE_SIZE * (TILE_SIZE + (TILE_SIZE / 3)))\
+		/ correct_ray;
 	if (ray.direct == -1 && !ray.is_vr)
 		wall_painting(data, ray, x, textures.NO);
 	else if (ray.direct == -1 && ray.is_vr)

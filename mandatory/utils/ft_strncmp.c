@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/08 02:37:25 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/28 13:53:36 by emagueri         ###   ########.fr       */
+/*   Created: 2024/08/28 12:27:43 by emagueri          #+#    #+#             */
+/*   Updated: 2024/08/28 12:28:12 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "../cub3d.h"
 
-# include <unistd.h>
-# include <fcntl.h>
-# include <limits.h>
-# include <stdlib.h>
-# include <stdbool.h>
-# include "../../cub3d.h"
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 44
-# endif
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	unsigned char	*str1;
+	unsigned char	*str2;
+	size_t			i;
 
-char	*get_next_line(int fd);
-size_t	ft_strlen(const char *s);
-char	*ft_strdup(const char *s1);
-char	*ft_strjoin(char *line, char *buffer);
-#endif
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
+	if (n == 0)
+		return (0);
+	i = 0;
+	while (str1[i] && (str1[i] == str2[i]) && i < n - 1)
+		i++;
+	return (str1[i] - str2[i]);
+}

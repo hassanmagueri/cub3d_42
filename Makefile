@@ -24,7 +24,8 @@ SRC = $(MANDATORY)/main.c $(MANDATORY)/draw_objects.c $(MANDATORY)/player.c  \
 	$(MANDATORY)/walls.c $(MANDATORY)/wall_utils.c\
 	$(MANDATORY)/$(GET_NEXT_LINE)/get_next_line.c \
 	$(MANDATORY)/$(GET_NEXT_LINE)/get_next_line_utils.c \
-	$(MANDATORY)/$(UTILS)/ft_strcmp.c $(MANDATORY)/$(UTILS)/ft_strlcat.c \
+	$(MANDATORY)/$(UTILS)/ft_strcmp.c $(MANDATORY)/$(UTILS)/ft_strncmp.c \
+	$(MANDATORY)/$(UTILS)/ft_strlcat.c \
 	$(MANDATORY)/$(UTILS)/ft_putendl_fd.c $(MANDATORY)/$(UTILS)/ft_split.c \
 	$(MANDATORY)/$(UTILS)/ft_substr.c $(MANDATORY)/$(UTILS)/ft_strtrim.c \
 	$(MANDATORY)/$(UTILS)/ft_isdigit.c $(MANDATORY)/$(UTILS)/ft_atoi.c \

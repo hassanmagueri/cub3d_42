@@ -6,24 +6,24 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/27 17:36:25 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/28 13:07:40 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./cub3d.h"
 
-void ft_hook(void *param)
+void	ft_hook(void *param)
 {
-	t_data *data;
-	t_player *player;
+	t_data		*data;
+	t_player	*player;
 
 	data = param;
 	player = &data->player;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(data->mlx);
-	if (mlx_is_key_down(data->mlx, MLX_KEY_W) || mlx_is_key_down(data->mlx, MLX_KEY_UP))
+	if (mlx_is_key_down(data->mlx, MLX_KEY_W))
 		player->walk_direction = 1;
-	if (mlx_is_key_down(data->mlx, MLX_KEY_S) || mlx_is_key_down(data->mlx, MLX_KEY_DOWN))
+	if (mlx_is_key_down(data->mlx, MLX_KEY_S))
 		player->walk_direction = -1;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_A))
 		player->walk_direction = -2;
@@ -37,10 +37,10 @@ void ft_hook(void *param)
 		update_player(data);
 }
 
-int render_map(t_data *data)
+int	render_map(t_data *data)
 {
-	t_map map;
-	size_t i;
+	t_map	map;
+	size_t	i;
 
 	i = 0;
 	map = data->map;
@@ -53,36 +53,21 @@ int render_map(t_data *data)
 	return (1);
 }
 
-int ft_strncmp(const char *s1, const char *s2, size_t n)
-{
-	unsigned char *str1;
-	unsigned char *str2;
-	size_t i;
-
-	str1 = (unsigned char *)s1;
-	str2 = (unsigned char *)s2;
-	if (n == 0)
-		return (0);
-	i = 0;
-	while (str1[i] && (str1[i] == str2[i]) && i < n - 1)
-		i++;
-	return (str1[i] - str2[i]);
-}
-
-void check_extension(char const *file)
+void	check_extension(char const *file)
 {
 	if (ft_strncmp(file + ft_strlen(file) - 4, ".cub", 4))
 		ft_putendl_fd_color("Error\nInvalid file extension", 2, RED_E);
 }
 
-void f(){
+void	f(void)
+{
 	system("leaks cub3D");
 }
 
-int32_t main(int ac, char const **av)
+int32_t	main(int ac, char const **av)
 {
+	t_data	data;
 
-	t_data data;
 	atexit(f);
 	if (ac != 2)
 		ft_putendl_fd_color("Error\nInvalid number of arguments", 2, RED_E);
@@ -95,9 +80,9 @@ int32_t main(int ac, char const **av)
 	validate_colors(&data);
 	parse_map(&data);
 	init_clrs_dirs(&data);
-	data.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "CUB_3D",false);
+	data.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "CUB_3D", false);
 	if (data.mlx == NULL)
-		return EXIT_FAILURE; // expetead leaks
+		return (EXIT_FAILURE); // expetead leaks
 	init_vars(&data);
 	draw_floor_ceiling(&data);
 	image_to_window(&data, data.background_img, 0, 0);
