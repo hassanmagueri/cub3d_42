@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:19:21 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/27 16:38:49 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/29 13:46:08 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	invalid_character(t_data *data)
 		while (data->map.layout[y][x])
 		{
 			if (check_character(data->map.layout[y][x]))
-				print_error("Error\nInvalid character in map");
+				(ft_malloc(0, FREE), print_error("Error\nInvalid \
+					character in map"));
 			if (data->map.layout[y][x] == 'N'
 				|| data->map.layout[y][x] == 'S'
 				|| data->map.layout[y][x] == 'W'
@@ -64,8 +65,8 @@ void	invalid_character(t_data *data)
 		y++;
 	}
 	if (count != 1)
-		print_error("Error\nMap must contain \
-		exactly one start position ('N', 'S', 'E', or 'W')");
+		(ft_malloc(0, FREE), print_error("Error\nInvalid \
+			map - player position"));
 }
 
 void	validate_zero_adjacent(t_data *data)
@@ -86,8 +87,8 @@ void	validate_zero_adjacent(t_data *data)
 					|| data->map.layout[y][x - 1] == '$'
 					|| data->map.layout[y + 1][x] == '$'
 					|| data->map.layout[y - 1][x] == '$')
-					print_error("Error\nInvalid \
-						map -adjacent to '0' is a space");
+					(ft_malloc(0, FREE), print_error("Error\nInvalid \
+							map -adjacent to '0' is a space"));
 			}
 			x++;
 		}

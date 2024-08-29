@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:19:21 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/27 16:14:16 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/29 14:51:30 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,14 @@ void	space_surrounded_one(t_data *data)
 		x = 0;
 		while (data->map.layout[y][x])
 		{
-			if (data->map.layout[y][x] == 'N'
-			|| data->map.layout[y][x] == 'S'
-			|| data->map.layout[y][x] == 'E'
-			|| data->map.layout[y][x] == 'W')
-				if (data->map.layout[y][x + 1] == '$'
-				|| data->map.layout[y][x - 1] == '$'
-				|| data->map.layout[y + 1][x] == '$'
-				|| data->map.layout[y - 1][x] == '$')
-					ft_putendl_fd_color("Error\nSpace is \
-						not surrounded by '1'--",
-						2, RED_E);
+			if (is_direction_character(data, x, y))
+			{
+				if (is_adjacent_to_dollar(data, x, y))
+				{
+					ft_malloc(FREE, FREE);
+					print_error("Error\nInvalid map");
+				}
+			}
 			x++;
 		}
 		y++;
@@ -53,9 +50,8 @@ void	invalid_character(t_data *data)
 		while (data->map.layout[y][x])
 		{
 			if (check_character(data->map.layout[y][x]))
-				ft_putendl_fd_color("Error\nInvalid \
-					character in map",
-					2, RED_E);
+				(ft_malloc(FREE, FREE), print_error("Error\n\
+				Invalid character"));
 			if (data->map.layout[y][x] == 'N' || data->map.layout[y][x] == 'S'
 			|| data->map.layout[y][x] == 'W' || data->map.layout[y][x] == 'E')
 				count++;
@@ -64,8 +60,10 @@ void	invalid_character(t_data *data)
 		y++;
 	}
 	if (count != 1)
-		print_error("Error\nMap must contain exactly \
-		one start position ('N', 'S', 'E', or 'W')");
+	{
+		ft_mamalloc(FREE, FREE);
+		print_error("Error\nInvalid map");
+	}
 }
 
 void	validate_zero_adjacent(t_data *data)
@@ -82,12 +80,12 @@ void	validate_zero_adjacent(t_data *data)
 		{
 			if (data->map.layout[y][x] == '0')
 			{
-				if (data->map.layout[y][x + 1] == '$'
-				|| data->map.layout[y][x - 1] == '$'
-				|| data->map.layout[y + 1][x] == '$'
-				|| data->map.layout[y - 1][x] == '$')
+				if (is_adjacent_to_dollar(data, x, y))
+				{
+					ft_malloc(FREE, FREE);
 					print_error("Error\nInvalid map -\
 						adjacent to '0' is a space");
+				}
 			}
 			x++;
 		}

@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 11:12:08 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/24 16:32:41 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/29 14:14:37 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ char	*ft_strjoin(char *line, char *buffer)
 	size_t	j;
 
 	if (!line && !buffer)
-		return (free(line), NULL);
+		return (NULL);
 	string = ft_malloc((ft_strlen(line) + ft_strlen(buffer)) + 1, ALLOC);
 	if (!string)
-		return (free(line), line = NULL, NULL);
+		return (line = NULL, NULL);
 	i = 0;
 	while (line[i])
 	{
@@ -63,5 +63,5 @@ char	*ft_strjoin(char *line, char *buffer)
 	while (buffer[j])
 		string[i++] = buffer[j++];
 	string[i] = '\0';
-	return (free(line), line = NULL, string);
+	return (line = NULL, string);
 }

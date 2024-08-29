@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 04:42:49 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/28 20:48:14 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/29 14:51:23 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -375,6 +375,8 @@ bool			check_dirs(char *line, char *to_find);
 bool			check_character(char c);
 void			init_sprites(t_data *data);
 void			free_and_exit(t_data *data, int i);
+int				is_adjacent_to_dollar(t_data *data, int x, int y);
+int				is_direction_character(t_data *data, int x, int y);
 bool			draw_doors(t_data *data, double wall_hit_x,
 					double wall_hit_y, t_ray ray);
 #endif

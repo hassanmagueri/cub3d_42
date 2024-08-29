@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 16:43:35 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/28 16:13:17 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/29 13:56:35 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ void	check_newline(char **map)
 	while (map[y])
 	{
 		if (!map[y][0])
+		{
+			ft_malloc(0, FREE);
 			ft_putendl_fd_color("Error\nInvalid map", 2, RED_E);
+		}
 		y++;
 	}
 }

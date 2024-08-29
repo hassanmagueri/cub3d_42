@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 21:53:09 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/12 23:01:00 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/29 13:48:08 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,20 @@ void	validate_color(char *clr)
 
 	line = ft_strtrim(clr + 1, " ");
 	if (check_comma(line))
+	{
+		ft_malloc(0, FREE);
 		ft_putendl_fd_color("Error\nInvalid color", 2, RED_E);
+	}
 	out = ft_split(line, ',');
 	i = 0;
 	while (out[i])
 	{
 		if (check_is_number(out[i]) || ft_atoi(out[i]) > 255)
-			ft_putendl_fd_color("Error\nInvalid color", 2, RED_E);
+			(ft_malloc(0, FREE), print_error("Error\nInvalid color"));
 		i++;
 	}
 	if (i != 3)
-		ft_putendl_fd_color("Error\nInvalid color", 2, RED_E);
+		(ft_malloc(0, FREE), print_error("Error\nInvalid color"));
 }
 
 int	get_len_dirs(char **args)
@@ -69,7 +72,10 @@ void	validate_all_dirs(t_data *data)
 		out = ft_split(data->dirs[i], ' ');
 		line = ft_strtrim(data->dirs[i], " ");
 		if (line[2] != ' ' || get_len_dirs(out) != 2)
+		{
+			ft_malloc(0, FREE);
 			ft_putendl_fd_color("Error\nInvalid directions", 2, RED_E);
+		}
 		i++;
 	}
 }

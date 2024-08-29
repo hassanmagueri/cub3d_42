@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 21:40:55 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/28 22:29:21 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/29 14:58:31 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ void	validate_colors(t_data *data)
 		j = 0;
 		clr = ft_strtrim(data->clrs[i], " ");
 		if (clr[j + 1] != ' ')
+		{
+			ft_malloc(FREE, FREE);
 			ft_putendl_fd_color("Error\nInvalid colors", 2, RED_E);
+		}
 		i++;
 	}
 	i = 0;
@@ -45,7 +48,7 @@ void	validate_top_map(t_data *data)
 	data->top_map = (char **)ft_malloc(sizeof(char *) * 7, ALLOC);
 	fd = open(data->map_path, O_RDONLY);
 	if (fd < 0)
-		ft_putendl_fd_color("Error\nOpen failure", 2, RED_E);
+		(ft_malloc(FREE, FREE), print_error("Error\nOpen failure"));
 	i = 0;
 	j = 0;
 	while (data->map_data[i] && j < 6)
@@ -61,7 +64,7 @@ void	validate_top_map(t_data *data)
 	}
 	data->top_map[j] = NULL;
 	if (find_colors(data->top_map) || find_dirs(data->top_map))
-		(close(fd), ft_putendl_fd_color("Error\nInvalid top map", 2, RED_E));
+		(ft_malloc(FREE, FREE), close(fd), print_error("Error\nInvalid map"));
 	close(fd);
 }
 

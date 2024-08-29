@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 21:30:58 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/28 22:28:41 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/29 14:19:49 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ void	load_map_data(t_data *data)
 
 	fd = open(data->map_path, O_RDONLY, 0666);
 	if (fd < 0)
-		ft_putendl_fd_color("Error\nOpen failure", 2, RED_E);
+		(ft_malloc(FREE, FREE), print_error("Error\nOpen failure"));
 	data->map_data = (char **)ft_malloc(sizeof(char *)
 			* (count_lines(data) + 1), ALLOC);
 	i = 0;
 	line = get_next_line(fd);
 	if (!line)
-		(close(fd), ft_putendl_fd_color("Error\nEmpty map", 2, RED_E));
+		(ft_malloc(FREE, FREE), close(fd), print_error("Error\nEmpty file"));
 	while (line)
 	{
 		last_line = line;
@@ -69,7 +69,7 @@ void	load_map_data(t_data *data)
 		line = get_next_line(fd);
 	}
 	if (last_line[ft_strlen(last_line) - 1] == '\n')
-		(close(fd), ft_putendl_fd_color("Error\nInvalid map", 2, RED_E));
+		(ft_malloc(FREE, FREE), close(fd), print_error("Error\nInvalid map"));
 	data->map_data[i] = NULL;
 	close(fd);
 }

@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:23:02 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/28 17:58:08 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/29 14:16:02 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ int	count_lines(t_data *data)
 
 	fd = open(data->map_path, O_RDONLY, 0666);
 	if (fd < 0)
+	{
+		ft_malloc(FREE, FREE);
 		ft_putendl_fd_color("Error\nOpen failure", 2, RED_E);
+	}
 	line = get_next_line(fd);
 	i = 0;
 	while (line)
@@ -87,8 +90,6 @@ void	set_directions(t_data *data)
 	while (data->dirs[i])
 	{
 		out = ft_split(data->dirs[i], ' ');
-		if (!out)
-			ft_putendl_fd_color("Error\nmalloc failure", 2, RED_E);
 		if (!ft_strcmp(out[0], "NO"))
 			data->no = out[1];
 		else if (!ft_strcmp(out[0], "SO"))
@@ -113,7 +114,7 @@ void	init_clrs_dirs(t_data *data)
 	{
 		clr = ft_strtrim(data->clrs[i], " ");
 		if (clr[ft_strlen(clr) - 1] == ',')
-			ft_putendl_fd_color("Error\nInvalid colors", 2, RED_E);
+			(ft_malloc(FREE, FREE), print_error("Error\nInvalid color"));
 		clrs = ft_split(clr + 1, ',');
 		if (clr[0] == 'F')
 		{

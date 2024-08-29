@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:02:08 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/27 16:17:40 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/29 14:56:06 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,22 @@ void	validate_map(t_data *data)
 	int		i;
 
 	if (!data->map.layout[0])
-		print_error("Error\nInvalid map");
+		(ft_malloc(FREE, FREE), print_error("Error\nInvalid map"));
 	if (validate_line(data->map.layout[0])
 		|| validate_line(data->map.layout[get_len_map(data) - 1]))
+	{
+		ft_malloc(FREE, FREE);
 		print_error("Error\nInvalid character");
+	}
 	i = 0;
 	while (data->map.layout[i])
 	{
 		line = data->map.layout[i];
 		if (validate_char(line[0]) || validate_char(line[ft_strlen(line) - 1]))
+		{
+			ft_malloc(FREE, FREE);
 			print_error("Error\nInvalid character");
+		}
 		i++;
 	}
 }

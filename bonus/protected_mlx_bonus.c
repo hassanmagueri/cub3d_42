@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 15:59:53 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/28 17:57:45 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/29 14:11:43 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	terminate_mlx(t_data *data)
 	delete_image(data->mlx, data->spr_img);
 	delete_image(data->mlx, data->window_img);
 	mlx_terminate(data->mlx);
-	exit(EXIT_FAILURE);
+	free_and_exit(data, NUM_IMAGES);
 }
 
 void	set_mlx_vars_null(t_data *data)

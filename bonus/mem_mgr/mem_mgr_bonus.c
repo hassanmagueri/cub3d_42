@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 11:46:14 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/27 20:06:06 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/29 13:59:02 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@ void	*ft_malloc(size_t size, int status)
 	{
 		new = malloc(size);
 		if (!new)
-			return (NULL);
+			(ft_free(head), print_error("Error\nFailed to allocate memory"));
 		new_node = create_new_node(new);
 		if (!new_node)
-			ft_putendl_fd_color("Error\nFailed to create node", 2, RED_E);
+			(ft_free(head), print_error("Error\nFailed to allocate memory"));
 		add_back(&head, new_node);
 		return (new);
 	}

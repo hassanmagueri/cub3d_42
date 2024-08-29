@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 17:55:29 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/28 20:53:21 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/29 14:16:56 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	init_sprites(t_data *data)
 	i = 0;
 	data->sprite_textures = (void **)malloc(sizeof(void *) * (NUM_IMAGES + 1));
 	if (!data->sprite_textures)
-		ft_putendl_fd_color("Error\nmalloc failure", 2, RED_E);
+		(ft_malloc(FREE, FREE), print_error("Error\nMalloc failed"));
 	while (i < NUM_IMAGES)
 	{
 		ft_strcpy(path, "./sprite/StechkinEx");

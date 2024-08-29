@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 02:37:07 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/27 20:30:47 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/29 12:58:49 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ static	char	*get_new_save(char *save)
 	if (save[i] == '\n')
 		i++;
 	while (!save[i])
-		return (free(save), NULL);
+		return (NULL);
 	new_save = (char *)ft_malloc(ft_strlen(save) - i + 1, ALLOC);
 	if (!new_save)
-		return (free(save), save = NULL, NULL);
+		return (save = NULL, NULL);
 	while (save[i])
 		new_save[j++] = save[i++];
 	new_save[j] = '\0';
-	return (free(save), save = NULL, new_save);
+	return (save = NULL, new_save);
 }
 
 static	char	*get_newline(char *save)
@@ -84,13 +84,13 @@ static char	*read_line(int fd, char *save)
 
 	buffer = ft_malloc((size_t)(BUFFER_SIZE) + 1, ALLOC);
 	if (!buffer)
-		return (free(save), save = NULL, NULL);
+		return (save = NULL, NULL);
 	stop_read = 1;
 	while (stop_read > 0)
 	{
 		stop_read = read(fd, buffer, BUFFER_SIZE);
 		if (stop_read == -1)
-			return (free(save), free(buffer), NULL);
+			return (NULL);
 		buffer[stop_read] = '\0';
 		save = ft_strjoin(save, buffer);
 		if (!save)
@@ -98,7 +98,6 @@ static char	*read_line(int fd, char *save)
 		if (ft_check_newline(save))
 			break ;
 	}
-	free(buffer);
 	return (save);
 }
 
@@ -118,7 +117,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line = get_newline(save);
 	if (!line)
-		return (free(save), save = NULL, NULL);
+		return (save = NULL, NULL);
 	save = get_new_save(save);
 	return (line);
 }

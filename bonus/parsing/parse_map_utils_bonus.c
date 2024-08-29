@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate_dirs_clrs_utils2_bonus.c                  :+:      :+:    :+:   */
+/*   parse_map_utils_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/27 16:17:30 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/29 14:56:25 by belguabd         ###   ########.fr       */
+/*   Created: 2024/08/29 14:49:01 by belguabd          #+#    #+#             */
+/*   Updated: 2024/08/29 14:49:31 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d_bonus.h"
 
-void	check_newline(char **map)
+int	is_direction_character(t_data *data, int x, int y)
 {
-	int	y;
+	return (data->map.layout[y][x] == 'N'
+		|| data->map.layout[y][x] == 'S'
+		|| data->map.layout[y][x] == 'E'
+		|| data->map.layout[y][x] == 'W');
+}
 
-	y = 0;
-	while (map[y])
-	{
-		if (!map[y][0])
-		{
-			ft_malloc(FREE, FREE);
-			ft_putendl_fd_color("Error\nInvalid map", 2, RED_E);
-		}
-		y++;
-	}
+int	is_adjacent_to_dollar(t_data *data, int x, int y)
+{
+	return (data->map.layout[y][x + 1] == '$'
+		|| data->map.layout[y][x - 1] == '$'
+		|| data->map.layout[y + 1][x] == '$'
+		|| data->map.layout[y - 1][x] == '$');
 }

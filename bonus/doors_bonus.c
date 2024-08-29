@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 13:34:56 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/27 15:11:38 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/29 14:16:30 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ void	validate_door_positions(t_data *data, int y)
 				&& data->map.layout[y - 1][x] == '1')
 				y_door = true;
 			if (!x_door && !y_door)
+			{
+				ft_malloc(FREE, FREE);
 				print_error("Error\nInvalid door");
+			}
 		}
 		x++;
 	}

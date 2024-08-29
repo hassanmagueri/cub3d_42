@@ -3,7 +3,7 @@
 SO ./images/b.png
 WE ./images/wall03.png
         
-EA ./images/steel1.png
+EA ./images/wall03.png
 
 
 NO ./images/wall04.png

@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:23:02 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/28 16:18:46 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/29 13:39:13 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	init_clrs_dirs(t_data *data)
 	{
 		clr = ft_strtrim(data->clrs[i], " ");
 		if (clr[ft_strlen(clr) - 1] == ',')
-			ft_putendl_fd_color("Error\nInvalid colors", 2, RED_E);
+			(ft_malloc(0, FREE), print_error("Error\nInvalid colors"));
 		clrs = ft_split(clr + 1, ',');
 		if (clr[0] == 'F')
 		{
