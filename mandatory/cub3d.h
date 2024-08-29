@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/29 20:06:35 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/29 20:09:07 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <stdio.h>
 # include <unistd.h>
-# include <string.h>
 # include <stdlib.h>
 # include <math.h>
 # include <stdbool.h>
@@ -197,7 +196,7 @@ typedef struct s_data
 
 // ===================== functions parsing =====================
 
-int				ft_strcmp(char *str1, char *str2);
+int				ft_strcmp(const char *str1, char *str2);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 int				ft_atoi(const char *str);
 int				ft_isdigit(int c);

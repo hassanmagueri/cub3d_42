@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   sprite_utils_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 17:55:29 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/29 15:03:11 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:56:18 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
+#include <unistd.h>
 
 void	free_and_exit(t_data *data, int i)
 {
+	write(2, "Error\nfaild to load png\n", 25);
 	while (--i >= 0)
 		mlx_delete_texture((mlx_texture_t *)data->sprite_textures[i]);
 	free(data->sprite_textures);

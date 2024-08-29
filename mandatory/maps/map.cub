@@ -4,7 +4,13 @@ SO ./images/b.png
 WE ./images/wall03.png
         
 EA ./images/wall03.png
+<<<<<<< HEAD
 NO ./images/wall04.png
+=======
+
+
+NO ./images/wall 04.png
+>>>>>>> bcb9d5cc5f31eb732b548b30e28cea6c8acf25aa
 
 C 0,0,1
 F 255,123,145
