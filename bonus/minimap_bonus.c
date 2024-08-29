@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 18:56:00 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/27 04:15:59 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/29 00:36:14 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ int	draw_minimap(t_data *data)
 					* SCALE)
 				), WHITE
 			);
-	set_rays(img, data->rays);
 	draw_line(line, img);
 	border_minimap(img, c);
 	return (1);

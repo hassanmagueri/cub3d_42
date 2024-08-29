@@ -15,7 +15,7 @@ NAME = cub3D
 NAME_BONUS=cub3D_bonus
 MLX_NAME = MLX/libmlx42.a
 MLX_FLAGS = -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
-# $(MANDATORY)/ray.c 
+
 SRC = $(MANDATORY)/main.c $(MANDATORY)/draw_objects.c $(MANDATORY)/player.c  \
 	$(MANDATORY)/mlx_help.c \
 	$(MANDATORY)/utils.c \

@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 22:19:21 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/29 14:51:30 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/29 15:03:05 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	invalid_character(t_data *data)
 	}
 	if (count != 1)
 	{
-		ft_mamalloc(FREE, FREE);
+		ft_malloc(FREE, FREE);
 		print_error("Error\nInvalid map");
 	}
 }
