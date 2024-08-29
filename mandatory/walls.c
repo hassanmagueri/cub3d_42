@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   walls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:04:15 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/28 23:11:27 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/29 01:04:41 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	render_texture(t_data *data, double wall_height,
 	uint32_t		*p_clrs;
 	int				y_ver;
 	int				offsety;
-	int				dist_top_text;
+	int				dist_top_wall_height;
 
 	index = 0;
 	p_clrs = (uint32_t *)texture->pixels;
@@ -45,9 +45,9 @@ void	render_texture(t_data *data, double wall_height,
 	while (y_ver <= wall_bottom_pixel
 		&& index < texture->width * texture->height)
 	{
-		dist_top_text = y_ver - (WINDOW_HEIGHT / 2) + (wall_height / 2);
-		offsety = dist_top_text * texture->height / wall_height;
-		index = (texture->width * offsety) + data->offsetx;
+		dist_top_wall_height = y_ver - (WINDOW_HEIGHT / 2) + (wall_height / 2);
+		offsety = dist_top_wall_height * texture->height / wall_height;
+		index = (texture->width * offsety) + (data->offsetx % texture->width);
 		if (index < texture->height * texture->width)
 			ft_put_pixel(data->window_img, data->x_ray, y_ver, p_clrs[index]);
 		y_ver++;

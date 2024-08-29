@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_map_data.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 21:30:58 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/28 22:42:15 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/29 00:30:34 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	load_map_data(t_data *data)
 			* (count_lines(data) + 1), ALLOC);
 	i = 0;
 	line = get_next_line(fd);
-	if (!line)	
+	if (!line)
 		(close(fd), ft_putendl_fd_color("Error\nEmpty file", 2, RED_E));
 	while (line)
 	{

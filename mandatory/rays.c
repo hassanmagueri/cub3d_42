@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:10:59 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/28 13:08:53 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/29 00:37:55 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ t_ray	vertical_ray(t_player player, t_map map, double ray_angle)
 
 t_ray	horizontal_ray(t_player player, t_map map, double ray_angle)
 {
+	int			direct;
 	double		player_tile_y;
 	double		player_y_distance;
-	int			direct;
 	double		dy;
 
 	direct = -1;
