@@ -6,7 +6,7 @@
 /*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 21:30:58 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/29 15:02:27 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/29 20:04:16 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ char	*get_util_comma(char *line)
 	return (ft_substr(line, 0, i));
 }
 
-bool	is_direction(const char *str)
+bool	is_direction(char *str)
 {
-	return (!strcmp(str, "NO") || !strcmp(str, "SO")
-		|| !strcmp(str, "WE") || !strcmp(str, "EA"));
+	return (!ft_strcmp(str, "NO") || !ft_strcmp(str, "SO")
+		|| !ft_strcmp(str, "WE") || !ft_strcmp(str, "EA"));
 }
 
-bool	is_color(const char *str)
+bool	is_color(char *str)
 {
-	return (!strcmp(str, "F") || !strcmp(str, "C"));
+	return (!ft_strcmp(str, "F") || !ft_strcmp(str, "C"));
 }
 
 int	get_count_map(t_data *data, int i)
