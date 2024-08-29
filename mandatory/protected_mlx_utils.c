@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 15:59:53 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/28 10:34:03 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:49:53 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ mlx_texture_t	*load_png(t_data *data, char *path)
 
 	texture = mlx_load_png(path);
 	if (texture == NULL)
+	{
+		write(2, "Error\nfaild to load png\n", 25);
 		terminate_mlx(data);
+	}
 	return (texture);
 }
 
@@ -42,7 +45,10 @@ mlx_image_t	*new_image(t_data *data, int width, int height)
 
 	img = mlx_new_image(data->mlx, width, height);
 	if (img == NULL)
+	{
+		write(2, "Error\nfaild to new image \n", 27);
 		terminate_mlx(data);
+	}
 	return (img);
 }
 
@@ -54,6 +60,9 @@ mlx_image_t	*texture_to_image(t_data *data, mlx_texture_t *texture)
 		terminate_mlx(data);
 	img = mlx_texture_to_image(data->mlx, texture);
 	if (img == NULL)
+	{
+		write(2, "Error\nfaild to image to texture\n", 33);
 		terminate_mlx(data);
+	}
 	return (img);
 }

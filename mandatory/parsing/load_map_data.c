@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_map_data.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 21:30:58 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/29 15:02:27 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/29 18:31:50 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ char	*get_util_comma(char *line)
 
 bool	is_direction(const char *str)
 {
-	return (!strcmp(str, "NO") || !strcmp(str, "SO")
-		|| !strcmp(str, "WE") || !strcmp(str, "EA"));
+	return (!ft_strcmp(str, "NO") || !ft_strcmp(str, "SO")
+		|| !ft_strcmp(str, "WE") || !ft_strcmp(str, "EA"));
 }
 
 bool	is_color(const char *str)
 {
-	return (!strcmp(str, "F") || !strcmp(str, "C"));
+	return (!ft_strcmp(str, "F") || !ft_strcmp(str, "C"));
 }
 
 int	get_count_map(t_data *data, int i)
@@ -55,13 +55,13 @@ void	load_map_data(t_data *data)
 
 	fd = open(data->map_path, O_RDONLY, 0666);
 	if (fd < 0)
-		(ft_malloc(0, FREE), printf("Error\nOpen failure\n"));
+		(ft_malloc(0, FREE), print_error("Error\nOpen failure"));
 	data->map_data = (char **)ft_malloc(sizeof(char *)
 			* (count_lines(data) + 1), ALLOC);
 	i = 0;
 	line = get_next_line(fd);
 	if (!line)
-		(ft_malloc(0, FREE), close(fd), printf("Error\nEmpty file\n"));
+		(ft_malloc(0, FREE), close(fd), print_error("Error\nEmpty file"));
 	while (line)
 	{
 		last_line = line;

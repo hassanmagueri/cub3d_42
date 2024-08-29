@@ -1,7 +1,4 @@
-CC = cc -Ofast 
-CC += -Wall -Wextra -Werror 
-# CC += -g -fsanitize=address
-
+CC = cc -Wall -Wextra -Werror -Ofast
 #==============folders==============#
 PARSING=parsing
 UTILS=utils

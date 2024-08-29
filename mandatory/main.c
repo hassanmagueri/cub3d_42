@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:55:50 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/29 15:01:37 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/29 18:35:46 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,6 @@ int32_t	main(int ac, char const **av)
 
 	if (ac != 2)
 		ft_putendl_fd_color("Error\nInvalid number of arguments", 2, RED_E);
-	data.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT,
-			"CUB_3D", false);
-	if (!data.mlx)
-		return (EXIT_FAILURE);
 	check_extension(av[1]);
 	data.map_path = ft_strdup(av[1]);
 	load_map_data(&data);
@@ -81,6 +77,10 @@ int32_t	main(int ac, char const **av)
 	validate_colors(&data);
 	parse_map(&data);
 	init_clrs_dirs(&data);
+	data.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT,
+			"CUB_3D", false);
+	if (!data.mlx)
+		return (ft_malloc(FREE, FREE), EXIT_FAILURE);
 	init_vars(&data);
 	draw_floor_ceiling(&data);
 	image_to_window(&data, data.background_img, 0, 0);
