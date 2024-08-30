@@ -5,13 +5,11 @@ UTILS=utils
 MEM_MGR=mem_mgr
 GET_NEXT_LINE=$(UTILS)/get_next_line
 MANDATORY=mandatory
-BONUS=bonus
-
+BONUS = bonus
 
 NAME = cub3D
 NAME_BONUS=cub3D_bonus
-MLX_NAME = MLX/libmlx42.a
-MLX_FLAGS = -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
+MLX_FLAGS = -I$(HOME)/local/include -L$(HOME)/local/lib -lmlx42 -lglfw
 
 SRC = $(MANDATORY)/main.c $(MANDATORY)/draw_objects.c $(MANDATORY)/player.c  \
 	$(MANDATORY)/mlx_help.c \
@@ -64,15 +62,15 @@ all: $(NAME)
 
 
 $(NAME): $(OBJ) 
-	$(CC) $(MLX_FLAGS) $(MANDATORY)/$(MLX_NAME) $(OBJ) -o $(NAME)
+	$(CC) $(MLX_FLAGS) $(OBJ) -o $(NAME)
 
 $(MANDATORY)/%.o:$(MANDATORY)/%.c $(MANDATORY)/cub3d.h $(MANDATORY)/$(GET_NEXT_LINE)/get_next_line.h
-	$(CC) -c $< -o $@  
+	$(CC) -c $< -o $@
 
 bonus: $(NAME_BONUS)
 
 $(NAME_BONUS): $(OBJ_BONUS)
-	$(CC) $(MLX_FLAGS) $(BONUS)/$(MLX_NAME) $(OBJ_BONUS) -o $(NAME_BONUS)
+	$(CC) $(MLX_FLAGS) $(OBJ_BONUS) -o $(NAME_BONUS)
 
 $(BONUS)/%.o:$(BONUS)/%.c $(BONUS)/cub3d_bonus.h $(BONUS)/$(GET_NEXT_LINE)/get_next_line_bonus.h
 	$(CC) -c $< -o $@

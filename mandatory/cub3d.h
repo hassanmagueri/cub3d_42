@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/29 18:34:27 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/30 05:07:49 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdlib.h>
 # include <math.h>
 # include <stdbool.h>
-# include "./MLX/.MLX42.h"
+# include "MLX42.h"
 # include "./utils/get_next_line/get_next_line.h"
 
 # define RED_E "\033[31m"

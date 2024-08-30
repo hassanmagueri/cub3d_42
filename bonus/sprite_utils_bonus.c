@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 17:55:29 by belguabd          #+#    #+#             */
-/*   Updated: 2024/08/29 16:56:18 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/30 16:52:55 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 void	free_and_exit(t_data *data, int i)
 {
-	write(2, "Error\nfaild to load png\n", 25);
 	while (--i >= 0)
 		mlx_delete_texture((mlx_texture_t *)data->sprite_textures[i]);
 	free(data->sprite_textures);
@@ -41,7 +40,10 @@ void	init_sprites(t_data *data)
 		ft_strcut(path, ".png");
 		data->tex = mlx_load_png(path);
 		if (!data->tex)
+		{
+			write(2, "Error\nfaild to load png\n", 25);
 			free_and_exit(data, i);
+		}
 		data->sprite_textures[i] = data->tex;
 		i++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 04:42:49 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/29 14:51:23 by belguabd         ###   ########.fr       */
+/*   Updated: 2024/08/30 16:45:23 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <math.h>
 # include <stdbool.h>
 # include <sys/fcntl.h>
-# include "./MLX/.MLX42.h"
+# include "MLX42.h"
 # include "utils/get_next_line/get_next_line_bonus.h"
 
 # define RED_E "\033[31m"
