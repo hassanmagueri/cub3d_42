@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   protected_mlx_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 15:59:53 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/29 16:48:15 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/29 21:35:53 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
