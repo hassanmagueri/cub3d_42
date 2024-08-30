@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:59:38 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/30 05:07:49 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/30 16:59:01 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,8 +289,8 @@ int				count_empty_lines(char **map_data, int max_count);
 int				get_count_map(t_data *data, int i);
 int				ret_offset_x(double wall_hit_x,
 					double wall_hit_y, bool is_vr, mlx_texture_t *texture);
-bool			is_direction(const char *str);
-bool			is_color(const char *str);
+bool			is_direction(char *str);
+bool			is_color(char *str);
 bool			check_dirs(char *line, char *to_find);
 bool			check_character(char c);
 void			validate_map(t_data *data);

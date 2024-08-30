@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   protected_mlx_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: belguabd <belguabd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 15:59:53 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/29 16:47:49 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/29 21:35:17 by belguabd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	image_to_window(t_data *data, mlx_image_t *img, int x, int y)
 	res = mlx_image_to_window(data->mlx, img, x, y);
 	if (res == -1)
 	{
-		write(2, "Error\nfaild to image to window\n", 32);
+		write(2, "Error\nfaild to image to window", 32);
 		terminate_mlx(data);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: emagueri <emagueri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 04:42:49 by emagueri          #+#    #+#             */
-/*   Updated: 2024/08/30 16:45:23 by emagueri         ###   ########.fr       */
+/*   Updated: 2024/08/30 16:58:33 by emagueri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -369,8 +369,8 @@ void			check_newline(char **map);
 char			*remove_new_line(char *line);
 char			*get_two_char(char *line);
 char			*get_first_char(char *line);
-bool			is_direction(const char *str);
-bool			is_color(const char *str);
+bool			is_direction(char *str);
+bool			is_color(char *str);
 bool			check_dirs(char *line, char *to_find);
 bool			check_character(char c);
 void			init_sprites(t_data *data);
